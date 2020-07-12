@@ -1,3 +1,7 @@
+# Fortran module files
+fortran_module*/
+fortran_module*
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
