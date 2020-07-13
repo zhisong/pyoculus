@@ -22,6 +22,10 @@ class PoincarePlot:
         compute -- Solve the ODE until a given time
     """
 
+    # flagging if the computation is done and successful
+    successful = False
+    iota_successful = False
+
     class PoincareData:
         """Used to return the Poincare plot data
         """
@@ -96,6 +100,8 @@ class PoincarePlot:
     def compute(self):
         '''Compute the Poincare plot 
         '''
+
+        self.successful = False
 
         # the zeta interval for each integration
         self.dt = 2*np.pi / float(self._params['Nfp'])
@@ -178,6 +184,22 @@ class PoincarePlot:
                 self.y[ii,jj] = xyz[1]
                 self.z[ii,jj] = xyz[2]
 
+        self.successful = True
+
+        pdata = PoincarePlot.PoincareData(self.x, self.y, self.z)
+
+        return pdata
+
+
+    def compute_iota(self):
+        '''Compute the iota profile
+        '''
+
+        if not self.successful:
+            raise Exception('A successful call of compute() is needed')
+
+        self.iota_successful = False
+
         # fit iota
         self.siota = self.s[:,0]
         self.iota = np.zeros_like(self.siota)
@@ -193,24 +215,35 @@ class PoincarePlot:
             
             self.iota[ii]= ( leastfit[5]*leastfit[3]-leastfit[2]*leastfit[4] ) / ( leastfit[5]*leastfit[1]-leastfit[2]*leastfit[2] )
 
-        pdata = PoincarePlot.PoincareData(self.x, self.y, self.z)
-        pdata.siota = self.siota
-        pdata.iota = self.iota
+        self.iota_successful = True
 
-        return pdata
+        return self.iota
 
-    def plot(self, type='RZ', **kwargs):
+    def plot(self, plottype=None, xlabel=None, ylabel=None, **kwargs):
         import matplotlib.pyplot as plt
         '''generate the poincare plot
         parameters:
-            type -- which variables to plot: 'RZ' or 'yx'
+            plottype -- which variables to plot: 'RZ' or 'yx', by default using poincare_plot_type set in the problem
+            xlabel -- what to put for the xlabel, by default using poincare_plot_xlabel set in the problem
+            ylable -- what to put for the ylabel, by default using poincare_plot_ylabel set in the problem
             **kwargs -- passed to the plotting routine "scatter"
         '''
+
+        if not self.successful:
+            raise Exception('A successful call of compute() is needed')
+
         # default setting
-        if type=='RZ':
+        if plottype is None:
+            plottype = self._problem.poincare_plot_type
+        if xlabel is None:
+            xlabel = self._problem.poincare_plot_xlabel
+        if ylabel is None:
+            ylabel = self._problem.poincare_plot_ylabel
+
+        if plottype=='RZ':
             xdata = self.x
             ydata = self.z
-        elif type=='yx':
+        elif plottype=='yx':
             xdata = self.y
             ydata = self.x
         else:
@@ -236,21 +269,25 @@ class PoincarePlot:
             dots = ax.scatter(xdata[ii,:], ydata[ii,:], **kwargs)
 
         # adjust figure properties
-        if type=='RZ':
-            plt.xlabel('R [m]', fontsize=20)
-            plt.ylabel('Z [m]', fontsize=20)
-            plt.xticks(fontsize=16)
-            plt.yticks(fontsize=16)
+        if plottype=='RZ':
             plt.axis('equal')
-        if type=='yx':
-            plt.xlabel('y')
-            plt.ylabel('x')
+        if plottype=='yx':
+            pass
 
-        plt.tight_layout()
+        plt.xlabel(xlabel, fontsize=20)
+        plt.ylabel(ylabel, fontsize=20)
+        plt.xticks(fontsize=16)
+        plt.yticks(fontsize=16)
+
+        #plt.tight_layout()
 
         plt.show()
 
     def plotiota(self, **kwargs):
+
+        if not self.iota_successful:
+            raise Exception('A successful call of compute_iota() is needed')
+
         import matplotlib.pyplot as plt
         fig, ax = plt.subplots()
         ax.plot(self.siota, self.iota, **kwargs)

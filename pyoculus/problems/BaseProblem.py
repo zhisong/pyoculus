@@ -19,6 +19,11 @@ class BaseProblem:
     # this is the size of the ODE system
     problem_size = 2
 
+    # specifies the way to present the phase space
+    poincare_plot_type = 'yx'
+    poincare_plot_xlabel = 'y'
+    poincare_plot_ylabel = 'x'
+
     def __init__(self):
         pass
 

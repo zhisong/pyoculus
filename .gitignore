@@ -1,3 +1,6 @@
+# vscode
+.vscode*
+
 # Fortran module files
 fortran_module*/
 fortran_module*

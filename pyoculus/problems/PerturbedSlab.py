@@ -33,6 +33,9 @@ class PerturbedSlab(BaseProblem):
     """
 
     problem_size = 2
+    poincare_plot_type = 'yx'
+    poincare_plot_xlabel = 'q'
+    poincare_plot_ylabel = 'p'
 
     def __init__(self, k=0.002):
         '''Set up the problem

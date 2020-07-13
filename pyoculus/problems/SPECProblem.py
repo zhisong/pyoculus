@@ -50,6 +50,14 @@ class SPECProblem(BaseProblem):
         self.NOTstellsym = (spec_data.input.physics.Istellsym == 0)
         self.Nfp = spec_data.input.physics.Nfp
 
+        # rpol and rtol for ploting, in case they are not saved into SPEC output
+        try:
+            self.rpol = spec_data.input.physics.rpol
+            self.rtor = spec_data.input.physics.rtor
+        except:
+            self.rpol = 1.0
+            self.rtor = 1.0
+
         if (lvol > 0 and lvol <= spec_data.output.Mvol):
             # setting up the fortran module
             fortran_module.variables.ivol = lvol

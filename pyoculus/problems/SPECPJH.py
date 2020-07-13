@@ -16,6 +16,7 @@ class SPECPJH(SPECProblem):
         coords_convert - function that converts curvilinear coordinates to real coordinates
     """
     problem_size = 2
+    poincare_plot_type = 'yx'
 
     def __init__(self, spec_data, lvol):
         '''Set up the equilibrium for use of the fortran module 
