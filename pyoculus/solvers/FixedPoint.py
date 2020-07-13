@@ -167,12 +167,12 @@ class FixedPoint(BaseSolver):
                 self.z[jj] = xyz[2]
 
             rdata = FixedPoint.OutputData()
-            rdata.x = self.x
-            rdata.y = self.y
-            rdata.z = self.z
-            rdata.s = self.s
-            rdata.theta = self.theta
-            rdata.zeta = self.zeta
+            rdata.x = self.x.copy()
+            rdata.y = self.y.copy()
+            rdata.z = self.z.copy()
+            rdata.s = self.s.copy()
+            rdata.theta = self.theta.copy()
+            rdata.zeta = self.zeta.copy()
 
             # the jacobian
             rdata.jacobian = np.array([[st[2],st[4]],[st[3],st[5]]], dtype=np.float64)
@@ -272,13 +272,17 @@ class FixedPoint(BaseSolver):
         self.history.append(ic[0:1].copy())
 
         t0 = zeta
-        dt = dzeta * qq
+        dt = dzeta
 
         succeeded = False
 
         for ii in range(niter):
+            t = t0
             self._integrator.set_initial_value(t0, ic)
-            output = self._integrator.integrate(t0 + dt)
+
+            for jj in range(qq):
+                output = self._integrator.integrate(t + dt)
+                t = t+dt
 
             dtheta = output[1] - theta - 2 * np.pi * pp
             jacobian = output[3]
@@ -324,15 +328,18 @@ class FixedPoint(BaseSolver):
         self.history.append(ic[0:1].copy())
 
         t0 = zeta
-        dt = dzeta * qq
+        dt = dzeta
 
         succeeded = False
 
         st = np.array([s,theta],dtype=np.float64)
 
         for ii in range(niter):
+            t = t0
             self._integrator.set_initial_value(t0, ic)
-            output = self._integrator.integrate(t0 + dt)
+            for jj in range(qq):
+                output = self._integrator.integrate(t + dt)
+                t = t + dt
 
             dtheta = output[1] - theta - 2 * np.pi * pp
             ds = output[0] - s

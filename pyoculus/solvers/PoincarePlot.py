@@ -170,9 +170,12 @@ class PoincarePlot(BaseSolver):
         self.successful = True
 
         pdata = PoincarePlot.OutputData()
-        pdata.x=self.x
-        pdata.y=self.y
-        pdata.z=self.z
+        pdata.x=self.x.copy()
+        pdata.y=self.y.copy()
+        pdata.z=self.z.copy()
+        pdata.s=self.s.copy()
+        pdata.theta=self.theta.copy()
+        pdata.zeta=self.zeta.copy()
 
         return pdata
 
@@ -203,7 +206,7 @@ class PoincarePlot(BaseSolver):
 
         self.iota_successful = True
 
-        return self.iota
+        return self.iota.copy()
 
     def plot(self, plottype=None, xlabel=None, ylabel=None, xlim=None, ylim=None, **kwargs):
         import matplotlib.pyplot as plt

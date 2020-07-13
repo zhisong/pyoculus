@@ -33,7 +33,7 @@ class SPECBfield(SPECProblem):
         super().__init__(spec_data, lvol)
         if self.Igeometry == 1:
             self.poincare_plot_type = 'yx'
-            self.poincare_plot_xlabel = '\theta'
+            self.poincare_plot_xlabel = 'theta'
             self.poincare_plot_ylabel = 'R'
         elif self.Igeometry == 2:
             pass
@@ -64,7 +64,7 @@ class SPECBfield(SPECProblem):
         return:
             array size 6, the RHS of the ODE
         '''
-    #return self.fortran_module.bfield.get_bfield_tangent(zeta, st)
+        return self.fortran_module.bfield.get_bfield_tangent(zeta, st)
 
     def convert_coords(self, stz):
         '''Python wrapper for getting the xyz coordinates from stz
@@ -79,7 +79,7 @@ class SPECBfield(SPECProblem):
         # depending on the geometry, return RZ or yx
         if self.Igeometry == 1:
             # for a slab, return x=R, y=theta, z=zeta
-            return np.array([xyz[0], stz[1]*self.rpol, stz[2]*self.rtor], dtype=np.float64)
+            return np.array([xyz[0], np.mod(stz[1],2*np.pi)*self.rpol, np.mod(stz[2],2*np.pi)*self.rtor], dtype=np.float64)
         if self.Igeometry == 2:
             # for cylinderical geometry, return x=r*cos theta, y=zeta*rtor, z=sin theta
             return np.array([xyz[0]*np.cos(stz[1]), stz[2]*self.rtor, xyz[0]*np.sin(stz[1])], dtype=np.float64)

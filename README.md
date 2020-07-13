@@ -1,5 +1,5 @@
 # pyoculus
-A Python version of Oculus - The eye into the chaos: a comprehensive magnetic field diagnostic package for non-integrable, toroidal magnetic fields (and more general 1 1/2-D Hamiltonian system).
+A Python version of Oculus - The eye into the chaos: a comprehensive magnetic field diagnostic package for non-integrable, toroidal magnetic fields (and more general 1 1/2-D or 2D Hamiltonian system).
 
 Link to Oculus:
 
