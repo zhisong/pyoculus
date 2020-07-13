@@ -2,14 +2,23 @@
 # LyapunovExponent: class for computing the LyapunovExponent
 # written by @zhisong (zhisong.qu@anu.edu.au)
 #
-from pyoculus.integrators.BaseIntegrator import BaseIntegrator
-from pyoculus.integrators.RKIntegrator import RKIntegrator
 from pyoculus.problems.BaseProblem import BaseProblem
+from .BaseSolver import BaseSolver
 import numpy as np
 
-class LyapunovExponent:
-    def __init__(self, problem,  params=dict(), integrator=RKIntegrator, integrator_params=dict()):
-        '''Set up the class
+class LyapunovExponent(BaseSolver):
+    """
+    Class that used to setup the Lyapunov exponent computation.
+
+    Call signature:
+        my_le= LyapunovExponent(problem, params, integrator, integrator_params) 
+
+    Contains:
+        compute -- compute the maximal Lyapunov Exponent
+        plot -- plot the maximal Lyapunov Exponent as a function of number of iterations
+    """
+    def __init__(self, problem,  params=dict(), integrator=None, integrator_params=dict()):
+        '''Set up the class that compute the Lyapunov exponent
         parameters:
             system -- BaseProblem class, the problem to solve
             integrator -- the integrator to use, by default using RKIntegrator
@@ -36,18 +45,12 @@ class LyapunovExponent:
         self.Nfp = params['Nfp']
 
         integrator_params['ode'] = problem.f_tangent
-        self._integrator = integrator(integrator_params)
-        self._problem = problem
+        
+        super().__init__(problem=problem,  params=params, integrator=integrator, integrator_params=integrator_params)
 
-        # check the integrator and the coordinate fun
-        if not isinstance(self._integrator, BaseIntegrator):
-            raise Exception('The Integrator is not a derived type of BaseIntegrator class')
-        if not isinstance(self._problem, BaseProblem):
-            raise Exception('The problem is not a derived type of BaseProblem class')
-
-        self.ile = np.arange([0,self.nPpts+1,self.nsave], dtype=np.float64)
+        self.ile = np.arange(0,self.nPpts+1,self.nsave, dtype=np.int)
         self.ile = self.ile[2:]
-        self.le = np.zeros_like(self.ile)
+        self.le = np.zeros(self.ile.shape, dtype=np.float64)
 
     def compute(self, t0, ic, dic=[1.0, 0.0]):
         '''Set up the class
@@ -61,7 +64,7 @@ class LyapunovExponent:
         n = self._problem.problem_size
 
         # the zeta interval for each integration
-        self.dt = 2*np.pi / float(self._params['Nfp'])
+        self.dt = 2*np.pi / self.Nfp
 
         # normalize dic
         dic_norm = np.array(dic, dtype=np.float64).flatten()
@@ -81,7 +84,7 @@ class LyapunovExponent:
         ic_all = np.concatenate((icnp, np.tile(dic_norm, n)))
 
         # initialize di to save the data
-        self.di = np.zeros((self.nPpts), dtype=np.float64)
+        self.di = np.ones((self.nPpts), dtype=np.float64)
 
         t = t0
         dt = self.dt
@@ -113,6 +116,37 @@ class LyapunovExponent:
             # advance in time
             t = t + dt
 
+        for ii in range(len(self.le)):
+            self.le[ii] = np.sum(np.log(self.di[0:self.ile[ii]]))/self.ile[ii]/dt
 
+        result = LyapunovExponent.OutputData()
+        result.ile = self.ile.copy()
+        result.le = self.le.copy()
 
+        self.successful = True
+        
+        return result
+
+    def plot(self, **kwargs):
+        import matplotlib.pyplot as plt
+        '''generate the plot of maximal Lyapunov exponent vs number of iterations
+        parameters:
+            **kwargs -- passed to the plotting routine "plot"
+        '''
+
+        if not self.successful:
+            raise Exception('A successful call of compute() is needed')
+
+        if plt.get_fignums():
+            fig = plt.gcf()
+            ax = plt.gca()
+        else:
+            fig, ax = plt.subplots()
+
+        leplot = ax.plot(np.log10(self.ile.astype(np.float64)), np.log10(self.le), **kwargs)
+
+        plt.xlabel('Log10 Num of iters', fontsize=20)
+        plt.ylabel('Log10 Maximal LE', fontsize=20)
+        plt.xticks(fontsize=16)
+        plt.yticks(fontsize=16)
 

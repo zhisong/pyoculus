@@ -5,36 +5,27 @@
 
 import numpy as np
 import concurrent.futures
-from pyoculus.integrators.BaseIntegrator import BaseIntegrator
-from pyoculus.integrators.RKIntegrator import RKIntegrator
+from .BaseSolver import BaseSolver
 
-class PoincarePlot:
+class PoincarePlot(BaseSolver):
     """
     Class that used to setup the Poincare plot.
 
     Call signature:
-        my_plot = PoincarePlot(problem, integrator, params) 
-
-    Subclass: 
-        PoincareThread -- a worker for running the Poincare plot
+        my_plot = PoincarePlot(problem, params, integrator, integrator_params) 
 
     Contains:
-        compute -- Solve the ODE until a given time
+        compute -- construct the Poincare plot
+        compute_iota -- compute iota profile according to Poincare plot
+        plot -- plot the Poincare plot
+        plot_iota -- plot the iota profile
     """
 
     # flagging if the computation is done and successful
     successful = False
     iota_successful = False
 
-    class PoincareData:
-        """Used to return the Poincare plot data
-        """
-        def __init__(self, x, y, z):
-            self.x = x
-            self.y = y
-            self.z = z
-
-    def __init__(self, problem,  params=dict(), integrator=RKIntegrator, integrator_params=dict()):
+    def __init__(self, problem,  params=dict(), integrator=None, integrator_params=dict()):
         '''Set up the Poincare plot 
         parameters:
 
@@ -52,7 +43,6 @@ class PoincarePlot:
             params['Nfp']=1 -- the toroidal periodicity, used to save computation time if there is a symmetry
             params['nthreads']=1 -- the number of threads
         '''
-
 
         if 'theta' not in params.keys():
             params['theta'] = 0.0
@@ -79,15 +69,8 @@ class PoincarePlot:
         if 'nthreads' not in params.keys():
             params['nthreads'] = 1
 
-        self._params = dict(params)
-
         integrator_params['ode'] = problem.f
-        self._integrator = integrator(integrator_params)
-        self._problem = problem
-
-        # check the integrator and the coordinate fun
-        if not isinstance(self._integrator, BaseIntegrator):
-            raise Exception('The Integrator is not a derived type of BaseIntegrator class')
+        super().__init__(problem=problem,  params=params, integrator=integrator, integrator_params=integrator_params)
 
         # set up the result array
         self.x = np.zeros([self._params['nPtrj']+1,self._params['nPpts']+1],dtype=np.float64)
@@ -186,7 +169,10 @@ class PoincarePlot:
 
         self.successful = True
 
-        pdata = PoincarePlot.PoincareData(self.x, self.y, self.z)
+        pdata = PoincarePlot.OutputData()
+        pdata.x=self.x
+        pdata.y=self.y
+        pdata.z=self.z
 
         return pdata
 
@@ -219,13 +205,13 @@ class PoincarePlot:
 
         return self.iota
 
-    def plot(self, plottype=None, xlabel=None, ylabel=None, **kwargs):
+    def plot(self, plottype=None, xlabel=None, ylabel=None, xlim=None, ylim=None, **kwargs):
         import matplotlib.pyplot as plt
         '''generate the poincare plot
         parameters:
-            plottype -- which variables to plot: 'RZ' or 'yx', by default using poincare_plot_type set in the problem
-            xlabel -- what to put for the xlabel, by default using poincare_plot_xlabel set in the problem
-            ylable -- what to put for the ylabel, by default using poincare_plot_ylabel set in the problem
+            plottype -- which variables to plot: 'RZ' or 'yx', by default using "poincare_plot_type" in problem
+            xlabel, ylabel -- what to put for the xlabel and ylabel, by default using "poincare_plot_xlabel" in problem
+            xlim, ylim -- the range of plotting, by default plotting the range of all data
             **kwargs -- passed to the plotting routine "scatter"
         '''
 
@@ -247,7 +233,7 @@ class PoincarePlot:
             xdata = self.y
             ydata = self.x
         else:
-            raise Exception('Choose the correct type for PoincarePlot.plot')
+            raise Exception('Choose the correct type for plottype')
 
         if plt.get_fignums():
             fig = plt.gcf()
@@ -279,9 +265,12 @@ class PoincarePlot:
         plt.xticks(fontsize=16)
         plt.yticks(fontsize=16)
 
-        #plt.tight_layout()
+        if xlim is not None:
+            plt.xlim(xlim)
+        if ylim is not None:
+            plt.ylim(ylim)
 
-        plt.show()
+        #plt.tight_layout()
 
     def plotiota(self, **kwargs):
 
@@ -298,8 +287,6 @@ class PoincarePlot:
         plt.yticks(fontsize=16)
 
         #plt.tight_layout()
-
-        plt.show()
 
     @staticmethod
     def _run_poincare(params):

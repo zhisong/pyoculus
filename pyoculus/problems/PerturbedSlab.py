@@ -82,6 +82,25 @@ class PerturbedSlab(BaseProblem):
         return:
             array size 6, the RHS of the ODE, with tangent
         '''
+        q = qp[1]
+        p = qp[0]
+
+        dpq = np.array([[qp[2],qp[4]],[qp[3],qp[5]]], dtype=np.float64)
+        M = np.zeros([2,2], dtype=np.float64)
+
+        dqdt = p
+        dpdt = - self.k * (np.sin(2*q - t) + np.sin(3*q - 2*t))
+
+        M[0,0] = 0.0
+        M[0,1] = - self.k * (2.0*np.cos(2*q - t) + 3.0*np.cos(3*q - 2*t))
+        M[1,0] = 1.0
+        M[1,1] = 0.0
+
+        dqp = np.matmul(M, dpq)
+
+        return np.array([dpdt, dqdt, dqp[0,0], dqp[1,0], dqp[0,1], dqp[1,1]], dtype=np.float64)
+
+ 
     #return self.fortran_module.bfield.get_bfield_tangent(zeta, st)
 
     def convert_coords(self, incoords):
