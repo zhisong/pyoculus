@@ -68,6 +68,7 @@ class FixedPoint(BaseSolver):
 
     def compute(self, guess, pp, qq, sbegin=-1.0, send=1.0, tol=None):
         '''Look for the fixed point with rotation number pp/qq
+        parametes:
             guess -- the initial guess 
                     [s, theta], if params['theta'] == None
                     [s], if params['theta'] == somevalue
