@@ -81,7 +81,11 @@ class PoincarePlot(BaseSolver):
         self.zeta = np.zeros_like(self.x)
 
     def compute(self):
-        '''Compute the Poincare plot 
+        '''Compute the Poincare plot
+        Returns:
+            pdata -- a class that contains the results
+            pdata.x,pdata.y,pdata,z -- the Poincare data in xyz coordinates
+            pdata.s,pdata,theta,pdata,zeta -- the Poincare data in s,theta,zeta coordinates
         '''
 
         self.successful = False
@@ -236,7 +240,7 @@ class PoincarePlot(BaseSolver):
             xdata = self.y
             ydata = self.x
         else:
-            raise Exception('Choose the correct type for plottype')
+            raise ValueError('Choose the correct type for plottype')
 
         if plt.get_fignums():
             fig = plt.gcf()

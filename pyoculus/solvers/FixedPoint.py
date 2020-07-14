@@ -76,10 +76,18 @@ class FixedPoint(BaseSolver):
             sbegin=-1.0 -- the allowed minimum s
             send=1.0 -- the allowed maximum s
             tol=self._integrator_params['rtol']*qq -- the tolerance of the fixed point
+
+        Returns:
+            rdata -- a class that contains the results
+            rdata.x,rdata.y,rdata,z -- the fixed points in xyz coordinates
+            rdata.s,rdata,theta,rdata,zeta -- the fixed points in s,theta,zeta coordinates
+            rdata.jacobian -- the Jacobian of the fixed point constructed by following the tangent map
+            rdata.GreenesResidue -- the Greene's Residue of the fixed point
+            rdata.MeanResidue -- the 'Average Residue' f as defined by Greene
         '''
         
         if not isinstance(pp,int) or not isinstance(qq,int):
-            raise Exception('pp and qq should be integers')
+            raise ValueError('pp and qq should be integers')
 
         if tol is None:
             tol = self._integrator_params['rtol']*qq
@@ -105,10 +113,13 @@ class FixedPoint(BaseSolver):
 
         self.history = []
 
-        guess = np.array(guess, dtype=np.float64)
-
         # set up the guess
-        s_guess = guess[0]
+        if isinstance(guess, float):
+            s_guess = guess
+        else:
+            guess = np.array(guess, dtype=np.float64)
+            s_guess = guess[0]
+
         if self._params['theta'] is None:
             theta_guess = guess[1]
         else:
@@ -177,8 +188,12 @@ class FixedPoint(BaseSolver):
 
             # the jacobian
             rdata.jacobian = np.array([[st[2],st[4]],[st[3],st[5]]], dtype=np.float64)
-            # the trace
-            rdata.trace = np.trace(rdata.jacobian)
+
+            # Greene's Residue
+            rdata.GreenesResidue = 0.25 * (2.0 - np.trace(rdata.jacobian))
+            rdata.MeanResidue = (rdata.GreenesResidue / 0.25)**(1/float(qq))
+            self.GreenesResidue = rdata.GreenesResidue
+            self.MeanResidue = rdata.MeanResidue
 
             # set the successful flag
             self.successful = True
@@ -217,7 +232,7 @@ class FixedPoint(BaseSolver):
             xdata = self.y
             ydata = self.x
         else:
-            raise Exception('Choose the correct type for plottype')
+            raise ValueError('Choose the correct type for plottype')
 
         if plt.get_fignums():
             fig = plt.gcf()

@@ -34,7 +34,7 @@ class RKIntegrator(BaseIntegrator):
         # check if the ode is provided. If not, raise an error
 
         if 'ode' not in params.keys():
-            raise Exception('Please specify the ODE to solve for the Integrator class')
+            raise ValueError('Please specify the ODE to solve for the Integrator class')
         else:
             self.rhs = params['ode']
 
@@ -42,7 +42,7 @@ class RKIntegrator(BaseIntegrator):
             params['type'] = 'dopri5' # set default to RK45
         
         if params['type'] not in ['dopri5', 'dop853']:
-            raise Exception('Please specify the correct type of RK solver, dopri5 for RK45, dop853 for RK853')
+            raise ValueError('Please specify the correct type of RK solver, dopri5 for RK45, dop853 for RK853')
 
         if 'rtol' not in params.keys():
             params['rtol'] = 1e-7   # set to default value

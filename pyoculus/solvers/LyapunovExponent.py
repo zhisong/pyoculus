@@ -53,11 +53,16 @@ class LyapunovExponent(BaseSolver):
         self.le = np.zeros(self.ile.shape, dtype=np.float64)
 
     def compute(self, t0, ic, dic=[1.0, 0.0]):
-        '''Set up the class
+        '''Compute the maximal Lyapunov exponents
         parameters:
             t0 -- the start time (or angle)
             ic -- the initial conidition
             dic -- the initial perturbation direction (non-zero, for most of the cases it doesn't matter)
+
+        Returns:
+            result -- a class with results
+            result.le -- the computed maximal Lyapunov Exponent (as a function of number of map iterations)
+            result.ile -- the number of iterations
         '''
 
         # short hand for the size of the problem
@@ -97,7 +102,7 @@ class LyapunovExponent(BaseSolver):
             # run the integrator
             try:
                 st = self._integrator.integrate(t + dt)
-            except Exception:
+            except:
                 # integration failed, abort for this orbit
                 print('Integration failed for s=', ic[0])
                 break

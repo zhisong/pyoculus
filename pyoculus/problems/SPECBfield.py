@@ -40,7 +40,7 @@ class SPECBfield(SPECProblem):
         elif self.Igeometry == 3:
             pass
         else:
-            raise Exception('Unknown Igeometry!')
+            raise ValueError('Unknown Igeometry!')
 
     def f(self, zeta, st, arg1=None):
         '''Python wrapper for magnetic field ODE RHS 

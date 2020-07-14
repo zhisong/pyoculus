@@ -39,12 +39,13 @@ class BaseSolver:
             self._integrator_type = RKIntegrator
         else:
             # check the integrator
-            if not isinstance(self._integrator_type, BaseIntegrator):
-                raise Exception('The Integrator is not a derived type of BaseIntegrator class')
+            if not issubclass(integrator, BaseIntegrator):
+                raise ValueError('The Integrator is not a derived type of BaseIntegrator class')
+            self._integrator_type = integrator
 
         # check the problem
         if not isinstance(problem, BaseProblem):
-            raise Exception('The problem is not a derived type of BaseProblem class')
+            raise ValueError('The problem is not a derived type of BaseProblem class')
 
         self._params = dict(params)
         self._integrator = self._integrator_type(integrator_params)

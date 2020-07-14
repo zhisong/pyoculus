@@ -61,8 +61,8 @@ def fromcf(ai):
         numer = tmpi
         numer = numer + ai[-jj-2] * denom
 
-    pp = numer
-    qq = denom
+    pp = int(numer)
+    qq = int(denom)
 
     return (pp,qq)
 
