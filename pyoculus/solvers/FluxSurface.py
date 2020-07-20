@@ -215,3 +215,34 @@ class FluxSurface(BaseSolver):
                 plt.xlim(xlim)
             if ylim is not None:
                 plt.ylim(ylim)
+
+    def plot_residue(self):
+        import matplotlib.pyplot as plt
+        '''generate the plot for residue
+        '''
+
+        gamma = ((np.sqrt(5) + 1) / 2)
+
+        xlist_greene = np.arange(1, len(self.fixedpoints)+1)
+        greenes_list = np.zeros(len(self.fixedpoints), dtype=np.float64)
+
+        for ii, fp in enumerate(self.fixedpoints):
+            greenes_list[ii] = fp.GreenesResidue
+
+        xlist_Mackay = np.arange(2, len(self.fixedpoints)+1)
+        Mackay_list = np.zeros(len(self.fixedpoints)-1, dtype=np.float64)
+
+        for ii in range(len(self.fixedpoints)-1):
+            Mackay_list[ii] = (self.fixedpoints[ii].GreenesResidue + gamma*self.fixedpoints[ii+1].GreenesResidue) / (1.0+gamma)
+
+        fig, ax = plt.subplots()
+
+        geplot = ax.plot(xlist_greene, greenes_list, label='Greene')
+        mcplot = ax.plot(xlist_Mackay, Mackay_list, label='Mackay')
+
+        ax.legend()
+
+        plt.xlabel('Order of fixed point', fontsize=20)
+        plt.ylabel('Residue', fontsize=20)
+        plt.xticks(fontsize=16)
+        plt.yticks(fontsize=16)
