@@ -194,6 +194,8 @@ class FixedPoint(BaseSolver):
             rdata.MeanResidue = (rdata.GreenesResidue / 0.25)**(1/float(qq))
             self.GreenesResidue = rdata.GreenesResidue
             self.MeanResidue = rdata.MeanResidue
+            self.jacobian = rdata.jacobian
+
 
             # set the successful flag
             self.successful = True
@@ -210,6 +212,7 @@ class FixedPoint(BaseSolver):
 
         if not self.successful:
             raise Exception('A succesful call of compute() is needed')
+
         A=self.jacobian
 
         w, v=lina.eig(A)
