@@ -204,6 +204,25 @@ class FixedPoint(BaseSolver):
 
         return rdata
 
+    def compute_eig(self):
+        from numpy import linalg as lina
+        ''' calculates the eigenvalues through tangent map at fixed points'''
+
+        if not self.successful:
+            raise Exception('A succesful call of compute() is needed')
+        A=self.jacobian
+
+        w, v=lina.eig(A)
+        print('Eigenvalues')
+        print(w)
+        print('Eigenvector')
+        print(v)
+
+        if np.trace(A) > 0 :
+           print('Fixed point is unstable spiral, positiive real parts and complex conjugate pair')
+        else: 
+           print('Fixed point is stable spiral, negative real parts and complex conjugate pair')
+
     def plot(self, plottype=None, xlabel=None, ylabel=None, xlim=None, ylim=None, **kwargs):
         import matplotlib.pyplot as plt
         '''generate the plot for fixed points
