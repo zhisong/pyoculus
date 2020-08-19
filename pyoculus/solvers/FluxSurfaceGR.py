@@ -1,5 +1,5 @@
 ########################################
-# FluxSurface.py: class for finding flux surfaces
+# FluxSurfaceGR.py: class for finding flux surfaces using Greene's residue method
 # written by @zhisong (zhisong.qu@anu.edu.au)
 #
 
@@ -8,12 +8,12 @@ from .FixedPoint import FixedPoint
 import pyoculus.irrationals as ir
 import numpy as np
 
-class FluxSurface(BaseSolver):
+class FluxSurfaceGR(BaseSolver):
     """
     Class that used to set up the flux surface finder.
 
     Call signature:
-        my_fluxsurface = FluxSurface(problem, params, integrator, integrator_params) 
+        my_fluxsurface = FluxSurfaceGR(problem, params, integrator, integrator_params) 
 
     Contains:
         compute -- find the fluxsurface
@@ -145,7 +145,7 @@ class FluxSurface(BaseSolver):
         self.fixedpoints = fixedpoints
 
         # assemble the output data
-        fdata = FluxSurface.OutputData()
+        fdata = FluxSurfaceGR.OutputData()
         fdata.fixedpoints = fixedpoints
 
         # put the flag as successful
@@ -223,13 +223,13 @@ class FluxSurface(BaseSolver):
 
         gamma = ((np.sqrt(5) + 1) / 2)
 
-        xlist_greene = np.arange(1, len(self.fixedpoints)+1)
+        xlist_greene = np.arange(self.nstart+1, self.nstart+1+len(self.fixedpoints))
         greenes_list = np.zeros(len(self.fixedpoints), dtype=np.float64)
 
         for ii, fp in enumerate(self.fixedpoints):
             greenes_list[ii] = fp.GreenesResidue
 
-        xlist_Mackay = np.arange(2, len(self.fixedpoints)+1)
+        xlist_Mackay = xlist_greene[1:]
         Mackay_list = np.zeros(len(self.fixedpoints)-1, dtype=np.float64)
 
         for ii in range(len(self.fixedpoints)-1):
@@ -239,6 +239,7 @@ class FluxSurface(BaseSolver):
 
         geplot = ax.plot(xlist_greene, greenes_list, label='Greene')
         mcplot = ax.plot(xlist_Mackay, Mackay_list, label='Mackay')
+        mcplot = ax.plot(xlist_greene, 0.25*np.ones_like(greenes_list), label='Stable bound')
 
         ax.legend()
 
