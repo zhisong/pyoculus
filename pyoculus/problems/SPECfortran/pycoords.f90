@@ -15,9 +15,9 @@ MODULE coords
 !f2py threadsafe  
 !-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!
   
-    use typedefns, only : REAL_KIND
-    use constants, only : zero, one, half
-    use variables, only : Igeometry, Ntor, mn, im, in1, &
+    USE typedefns, ONLY : REAL_KIND
+    USE constants, ONLY : zero, one, half
+    USE variables, ONLY : Igeometry, Ntor, mn, im, in1, &
                           iRbc, iZbs, iRbs, iZbc, &
                           Lcoordinatesingularity, &
                           NOTstellsym, &
@@ -60,8 +60,8 @@ MODULE coords
           ELSE                      ; fj = sbar**2
           ENDIF
         ELSE
-          IF( Igeometry.EQ.2 ) THEN ; fj = sbar**im(ii)
-          ELSE                      ; fj = sbar**(im(ii)+1)
+          IF( Igeometry.EQ.2 ) THEN ; fj = sbar**(im(ii)+1)
+          ELSE                      ; fj = sbar**(im(ii))
           ENDIF                        ; 
         ENDIF
     
@@ -117,4 +117,163 @@ MODULE coords
 
 !-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!
 
+! get the metric for PJH calculation on the interface
+
+!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!
+
+  SUBROUTINE get_metric_interface(ioi, theta, zeta, dR, dZ, guvij, sg, ideriv)
+
+!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!
+
+    USE typedefns, ONLY : REAL_KIND
+    USE constants
+    USE variables
+
+!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!
+
+    IMPLICIT NONE
+    REAL(KIND=REAL_KIND),    INTENT(IN) :: theta, zeta ! the three coordinates (s,theta,zeta)
+    INTEGER             ,    INTENT(IN) :: ioi ! on which interface
+    INTEGER             ,    INTENT(IN) :: ideriv ! the level of derivatives. 0 for none, 1 for first, 2 for second
+
+    REAL(KIND=REAL_KIND),    INTENT(OUT):: dR(0:3,0:3,0:3), dZ(0:3,0:3,0:3)
+    REAL(KIND=REAL_KIND),    INTENT(OUT):: guvij(3,3,0:2), sg(0:2)
+
+    REAL(KIND=REAL_KIND) :: lss, rsign
+    REAL(KIND=REAL_KIND) :: cosarg(mn), sinarg(mn)
+
+    INTEGER              :: iother ! the index of the other interface with in the same volume
+    INTEGER              :: ii, jj
+
+    IF (ivol .EQ. ioi) THEN
+      ! inner interface, the other interface is the outer interface
+      iother = ivol + 1
+      rsign = -one
+    ELSE
+      ! outer interface, the other interface is the inner interface
+      iother = ivol - 1
+      rsign = one
+    ENDIF
+
+    cosarg = COS(im*theta-in1*zeta)
+    sinarg = SIN(im*theta-in1*zeta)
+
+    dR(0,0,0) = SUM(iRbc(ioi,:)*cosarg)             !dR(0,0,0) + iRbc(ioi,imn)*cs(1)
+    dR(2,0,0) = SUM(iRbc(ioi,:)*sinarg * (-im ))    !dR(2,0,0) + iRbc(ioi,imn)*cs(2)*(-im(imn))
+    dR(3,0,0) = SUM(iRbc(ioi,:)*sinarg * (+in1))    !dR(3,0,0) + iRbc(ioi,imn)*cs(2)*(+in(imn))
+
+    ! compute dR/ds, dZ/ds
+    IF (Lcoordinatesingularity) THEN
+      dR(1,0,0) = SUM(iRbc(ioi,:) * im * cosarg) + two * SUM((iRbc(ioi,1:Ntor+1)-iRbc(1,1:Ntor+1))*cosarg(1:Ntor+1))
+    ELSE
+      dR(1,0,0) = (dR(0,0,0) - SUM(iRbc(iother,:)*cosarg)) * rsign
+    ENDIF
+
+    IF (ideriv .ge. 1) THEN ! need 1st derivative w.r.t. theta
+
+      dR(2,2,0) = SUM(iRbc(ioi,:)*cosarg * (-im ) * (+im )) !dR(2,2,0) + iRbc(ioi,imn)*cs(1)*(-im(imn))*(+im(imn))
+      dR(3,2,0) = SUM(iRbc(ioi,:)*cosarg * (+in1) * (+im )) !dR(3,2,0) + iRbc(ioi,imn)*cs(1)*(+in(imn))*(+im(imn))
+
+      IF (Lcoordinatesingularity) THEN
+        dR(1,2,0) = SUM(iRbc(ioi,:) * im * (-im) * sinarg)
+      ELSE
+        dR(1,2,0) = (dR(2,0,0) - SUM(iRbc(iother,:) * (-im) *sinarg)) * rsign
+      ENDIF
+
+    END IF
+
+    IF (ideriv .ge. 2) THEN ! need 2nd derivative w.r.t. theta
+    
+      dR(2,2,2) = SUM(iRbc(ioi,:) * sinarg * (-im) * (+im) * (-im)) !dR(2,2,2) + iRbc(ioi,imn)*cs(2)*(-im(imn))*(+im(imn))*(-im(imn))
+      dR(3,2,2) = SUM(iRbc(ioi,:) * sinarg * (in1) * (+im) * (-im)) !dR(3,2,2) + iRbc(ioi,imn)*cs(2)*(+in(imn))*(+im(imn))*(-im(imn))
+
+      IF (Lcoordinatesingularity) THEN
+        dR(1,2,2) = SUM(iRbc(ioi,:) * im * (-im) * (+im) * cosarg)
+      ELSE
+        dR(1,2,2) = (dR(2,2,0) - SUM(iRbc(iother,:) * (-im) * (+im) * cosarg)) * rsign
+      ENDIF
+      
+    END IF
+
+    IF (Igeometry .eq. 3) THEN
+      dZ(0,0,0) = SUM(iZbs(ioi,:)*sinarg)             !dZ(0,0,0) + iZbs(ioi,imn)*cs(2)
+      dZ(2,0,0) = SUM(iZbs(ioi,:)*cosarg * (+im ))    !dZ(2,0,0) + iZbs(ioi,imn)*cs(1)*(+im(imn))
+      dZ(3,0,0) = SUM(iZbs(ioi,:)*cosarg * (-in1))    !dZ(3,0,0) + iZbs(ioi,imn)*cs(1)*(-in(imn))
+
+      ! compute dR/ds, dZ/ds
+      IF (Lcoordinatesingularity) THEN
+        dZ(1,0,0) = SUM(iZbs(ioi,:) * im * sinarg) + two * SUM((iZbs(ioi,1:Ntor+1)-iZbs(1,1:Ntor+1))*sinarg(1:Ntor+1))
+      ELSE
+        dZ(1,0,0) = (dZ(0,0,0) - SUM(iZbs(iother,:)*sinarg)) * rsign
+      ENDIF
+
+      IF (ideriv .ge. 1) THEN ! need 1st derivative w.r.t. theta
+
+        dZ(2,2,0) = SUM(iZbs(ioi,:)*sinarg * (+im ) * (-im )) !dZ(2,2,0) + iZbs(ioi,imn)*cs(2)*(+im(imn))*(-im(imn))
+        dZ(3,2,0) = SUM(iZbs(ioi,:)*sinarg * (-in1) * (-im )) !dZ(3,2,0) + iZbs(ioi,imn)*cs(2)*(-in(imn))*(-im(imn))
+
+        IF (Lcoordinatesingularity) THEN
+          dZ(1,2,0) = SUM(iZbs(ioi,:) * im * (+im) * cosarg)
+        ELSE
+          dZ(1,2,0) = (dZ(2,0,0) - SUM(iZbs(iother,:) * (+im) *sinarg)) * rsign
+        END IF
+
+      END IF
+
+      IF (ideriv .ge. 2) THEN ! need 2nd derivative w.r.t. theta
+      
+        dZ(2,2,2) = SUM(iZbs(ioi,:) * cosarg * (+im) * (-im) * (+im)) !dZ(2,2,2) + iZbs(ioi,imn)*cs(1)*(+im(imn))*(-im(imn))*(+im(imn))
+        dZ(3,2,2) = SUM(iZbs(ioi,:) * cosarg * (-in1)* (-im) * (+im)) !dZ(3,2,2) + iZbs(ioi,imn)*cs(1)*(-in(imn))*(-im(imn))*(+im(imn))
+
+        IF (Lcoordinatesingularity) THEN
+          dZ(1,2,2) = SUM(iZbs(ioi,:) * im * (+im) * (-im) * sinarg)
+        ELSE
+          dZ(1,2,2) = (dZ(2,2,0) - SUM(iZbs(iother,:) * (+im) * (-im) * sinarg)) * rsign
+        END IF
+        
+      END IF ! ideriv >= 2
+
+    END IF ! Igeometry == 3
+
+    ! assemble metric
+    IF (Igeometry .eq. 1) THEN
+
+      sg(0) = dR(1,0,0)*rpol*rtor
+
+      DO ii = 2, 3
+        DO jj = 2, 3
+          guvij(ii,jj,0) = dR(ii,0,0) * dR(jj,0,0)
+        ENDDO
+      ENDDO
+
+      guvij(2,2,0) = guvij(2,2,0) + rpol*rpol
+      guvij(3,3,0) = guvij(3,3,0) + rtor*rtor
+
+      IF (ideriv .ge. 1) THEN
+        sg(1) = dR(1,2,0)*rpol*rtor
+        DO ii = 2, 3
+          DO jj = 2, 3
+            guvij(ii,jj,1) = dR(ii,2,0) * dR(jj,0,0) + dR(ii,0,0) * dR(jj,2,0)
+          ENDDO
+        ENDDO
+      ENDIF
+
+      IF (ideriv .ge. 2) THEN
+        sg(2) = dR(1,2,2)*rpol*rtor
+        DO ii = 2, 3
+          DO jj = 2, 3
+            guvij(ii,jj,2) = two * dR(ii,2,0) * dR(jj,2,0) + dR(ii,2,2) * dR(jj,0,0) + dR(ii,0,0) * dR(jj,2,2)
+          ENDDO
+        ENDDO
+      ENDIF
+
+    ELSEIF (Igeometry .eq. 2) THEN
+
+    ELSEIF (Igeometry .eq. 3) THEN
+
+    ENDIF
+
+  END SUBROUTINE get_metric_interface
+
+!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!
 END MODULE coords

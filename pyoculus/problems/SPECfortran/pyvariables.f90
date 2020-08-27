@@ -59,16 +59,17 @@ MODULE variables
   INTEGER                         :: Nfp
   INTEGER                         :: mn
   LOGICAL                         :: NOTstellsym
-  INTEGER, allocatable            :: im(:), in1(:)            ! Fourier modes;
-  REAL(KIND=REAL_KIND),allocatable:: iRbc(:,:) , iZbs(:,:)   ! interface surface geometry;     stellarator symmetric;
-  REAL(KIND=REAL_KIND),allocatable:: iRbs(:,:) , iZbc(:,:)   ! interface surface geometry; non-stellarator symmetric;
+  INTEGER, ALLOCATABLE            :: im(:), in1(:)           ! Fourier modes;
+  REAL(KIND=REAL_KIND),ALLOCATABLE:: iRbc(:,:) , iZbs(:,:)   ! interface surface geometry;     stellarator symmetric;
+  REAL(KIND=REAL_KIND),ALLOCATABLE:: iRbs(:,:) , iZbc(:,:)   ! interface surface geometry; non-stellarator symmetric;
+  REAL(KIND=REAL_KIND)            :: rpol, rtor
 
   ! variables for the volume we are interested in
   INTEGER                         :: ivol       ! which volume we are stuyding
   INTEGER                         :: Lrad       ! what is the radial resolution for that volume
   LOGICAL                         :: Lcoordinatesingularity
-  REAL(KIND=REAL_KIND),allocatable:: Ate(:,:), Aze(:,:), Ato(:,:), Azo(:,:)
+  REAL(KIND=REAL_KIND),ALLOCATABLE:: Ate(:,:), Aze(:,:), Ato(:,:), Azo(:,:)
 
 CONTAINS
 
-END MODULE
+END MODULE variables

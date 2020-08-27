@@ -33,7 +33,7 @@ MODULE bfield
     REAL(KIND=REAL_KIND) :: teta, lss, sbar, arg, carg, sarg, dBu(1:3)
     REAL(KIND=REAL_KIND) :: cheby(0:Lrad,0:1), zernike(0:Lrad,0:Mpol,0:1)
     
-    REAL               :: TT(0:Lrad,0:1) ! this is almost identical to cheby; 17 Dec 15;
+    REAL(KIND=REAL_KIND) :: TT(0:Lrad,0:1) ! this is almost identical to cheby; 17 Dec 15;
 
   !-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!
 
