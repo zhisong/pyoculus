@@ -5,7 +5,7 @@
 ! written by Zhisong Qu (zhisong.qu@anu.edu.au)
 !-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!
 
-MODULE bfield
+MODULE SPECbfield
 
   CONTAINS
 
@@ -16,13 +16,13 @@ MODULE bfield
     
   !-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!
     
-    USE typedefns, ONLY : REAL_KIND
+    USE SPECtypedefns, ONLY : REAL_KIND
 
-    USE constants, ONLY : zero, one, half, two
+    USE SPECconstants, ONLY : zero, one, half, two
     
-    USE variables
+    USE SPECvariables
 
-    USE basefn
+    USE SPECbasefn
     
     IMPLICIT NONE
     
@@ -117,13 +117,13 @@ subroutine get_bfield_tangent( zeta, st, Bst )
 !f2py threadsafe 
 !-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!
 
-    USE typedefns, ONLY : REAL_KIND
+    USE SPECtypedefns, ONLY : REAL_KIND
 
-    USE constants, ONLY : zero, one, half, two
+    USE SPECconstants, ONLY : zero, one, half, two
     
-    USE variables
+    USE SPECvariables
 
-    USE basefn
+    USE SPECbasefn
     
     IMPLICIT NONE
     
@@ -242,4 +242,4 @@ subroutine get_bfield_tangent( zeta, st, Bst )
   END SUBROUTINE get_bfield_tangent
 
 ! !-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!
-END MODULE bfield
+END MODULE SPECbfield

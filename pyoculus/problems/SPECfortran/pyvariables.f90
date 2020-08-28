@@ -1,16 +1,16 @@
-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!
-! Fortran MODULE for SPEC problems
-! a MODULE that keeps all the global variables for other interfaced fortran SUBROUTINE
-! written by Zhisong Qu (zhisong.qu@anu.edu.au)
-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!
+!> @file pyvariables.f90
+!> @brief A MODULE that keeps all the global SPECvariables for other interfaced fortran SUBROUTINE
+!> @author Zhisong Qu (zhisong.qu@anu.edu.au)
 
-MODULE typedefns
+!> Defines the types used in the fortran module
+MODULE SPECtypedefns
   INTEGER, PARAMETER :: REAL_KIND = 8
-END MODULE typedefns
+END MODULE SPECtypedefns
 
-MODULE constants
+!> Defines all the constants
+MODULE SPECconstants
 
-  USE typedefns, only : REAL_KIND
+  USE SPECtypedefns, only : REAL_KIND
 
   IMPLICIT NONE
 
@@ -45,11 +45,12 @@ MODULE constants
 
   REAL(KIND=REAL_KIND), PARAMETER :: version    =   2.20
 
-END MODULE constants
+END MODULE SPECconstants
 
-MODULE variables
+!> The variables to be used in fortran, should be initialized in Python
+MODULE SPECvariables
 
-  USE typedefns, only : REAL_KIND
+  USE SPECtypedefns, only : REAL_KIND
 
   ! some general variables that exist in SPEC input and output
   INTEGER                         :: Igeometry
@@ -72,4 +73,4 @@ MODULE variables
 
 CONTAINS
 
-END MODULE variables
+END MODULE SPECvariables

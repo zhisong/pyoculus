@@ -5,7 +5,7 @@
 ! written by Zhisong Qu (zhisong.qu@anu.edu.au)
 !-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!
 
-MODULE coords
+MODULE SPECcoords
 
   CONTAINS
 
@@ -15,9 +15,9 @@ MODULE coords
 !f2py threadsafe  
 !-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!
   
-    USE typedefns, ONLY : REAL_KIND
-    USE constants, ONLY : zero, one, half
-    USE variables, ONLY : Igeometry, Ntor, mn, im, in1, &
+    USE SPECtypedefns, ONLY : REAL_KIND
+    USE SPECconstants, ONLY : zero, one, half
+    USE SPECvariables, ONLY : Igeometry, Ntor, mn, im, in1, &
                           iRbc, iZbs, iRbs, iZbc, &
                           Lcoordinatesingularity, &
                           NOTstellsym, &
@@ -125,9 +125,9 @@ MODULE coords
 
 !-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!
 
-    USE typedefns, ONLY : REAL_KIND
-    USE constants
-    USE variables
+    USE SPECtypedefns, ONLY : REAL_KIND
+    USE SPECconstants
+    USE SPECvariables
 
 !-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!
 
@@ -144,53 +144,53 @@ MODULE coords
 
     INTEGER              :: iother ! the index of the other interface with in the same volume
     INTEGER              :: ii, jj
-
+    
     IF (ivol .EQ. ioi) THEN
       ! inner interface, the other interface is the outer interface
       iother = ivol + 1
       rsign = -one
     ELSE
       ! outer interface, the other interface is the inner interface
-      iother = ivol - 1
+      iother = ivol
       rsign = one
     ENDIF
 
     cosarg = COS(im*theta-in1*zeta)
     sinarg = SIN(im*theta-in1*zeta)
 
-    dR(0,0,0) = SUM(iRbc(ioi,:)*cosarg)             !dR(0,0,0) + iRbc(ioi,imn)*cs(1)
-    dR(2,0,0) = SUM(iRbc(ioi,:)*sinarg * (-im ))    !dR(2,0,0) + iRbc(ioi,imn)*cs(2)*(-im(imn))
-    dR(3,0,0) = SUM(iRbc(ioi,:)*sinarg * (+in1))    !dR(3,0,0) + iRbc(ioi,imn)*cs(2)*(+in(imn))
+    dR(0,0,0) = SUM(iRbc(:,ioi)*cosarg)             !dR(0,0,0) + iRbc(ioi,imn)*cs(1)
+    dR(2,0,0) = SUM(iRbc(:,ioi)*sinarg * (-im ))    !dR(2,0,0) + iRbc(ioi,imn)*cs(2)*(-im(imn))
+    dR(3,0,0) = SUM(iRbc(:,ioi)*sinarg * (+in1))    !dR(3,0,0) + iRbc(ioi,imn)*cs(2)*(+in(imn))
 
     ! compute dR/ds, dZ/ds
     IF (Lcoordinatesingularity) THEN
-      dR(1,0,0) = SUM(iRbc(ioi,:) * im * cosarg) + two * SUM((iRbc(ioi,1:Ntor+1)-iRbc(1,1:Ntor+1))*cosarg(1:Ntor+1))
+      dR(1,0,0) = SUM(iRbc(:,ioi) * im * cosarg) + two * SUM((iRbc(ioi,1:Ntor+1)-iRbc(1,1:Ntor+1))*cosarg(1:Ntor+1))
     ELSE
-      dR(1,0,0) = (dR(0,0,0) - SUM(iRbc(iother,:)*cosarg)) * rsign
+      dR(1,0,0) = (dR(0,0,0) - SUM(iRbc(:,iother)*cosarg)) * rsign
     ENDIF
 
     IF (ideriv .ge. 1) THEN ! need 1st derivative w.r.t. theta
 
-      dR(2,2,0) = SUM(iRbc(ioi,:)*cosarg * (-im ) * (+im )) !dR(2,2,0) + iRbc(ioi,imn)*cs(1)*(-im(imn))*(+im(imn))
-      dR(3,2,0) = SUM(iRbc(ioi,:)*cosarg * (+in1) * (+im )) !dR(3,2,0) + iRbc(ioi,imn)*cs(1)*(+in(imn))*(+im(imn))
+      dR(2,2,0) = SUM(iRbc(:,ioi)*cosarg * (-im ) * (+im )) !dR(2,2,0) + iRbc(ioi,imn)*cs(1)*(-im(imn))*(+im(imn))
+      dR(3,2,0) = SUM(iRbc(:,ioi)*cosarg * (+in1) * (+im )) !dR(3,2,0) + iRbc(ioi,imn)*cs(1)*(+in(imn))*(+im(imn))
 
       IF (Lcoordinatesingularity) THEN
-        dR(1,2,0) = SUM(iRbc(ioi,:) * im * (-im) * sinarg)
+        dR(1,2,0) = SUM(iRbc(:,ioi) * im * (-im) * sinarg)
       ELSE
-        dR(1,2,0) = (dR(2,0,0) - SUM(iRbc(iother,:) * (-im) *sinarg)) * rsign
+        dR(1,2,0) = (dR(2,0,0) - SUM(iRbc(:,iother) * (-im) *sinarg)) * rsign
       ENDIF
 
     END IF
 
     IF (ideriv .ge. 2) THEN ! need 2nd derivative w.r.t. theta
     
-      dR(2,2,2) = SUM(iRbc(ioi,:) * sinarg * (-im) * (+im) * (-im)) !dR(2,2,2) + iRbc(ioi,imn)*cs(2)*(-im(imn))*(+im(imn))*(-im(imn))
-      dR(3,2,2) = SUM(iRbc(ioi,:) * sinarg * (in1) * (+im) * (-im)) !dR(3,2,2) + iRbc(ioi,imn)*cs(2)*(+in(imn))*(+im(imn))*(-im(imn))
+      dR(2,2,2) = SUM(iRbc(:,ioi) * sinarg * (-im) * (+im) * (-im)) !dR(2,2,2) + iRbc(ioi,imn)*cs(2)*(-im(imn))*(+im(imn))*(-im(imn))
+      dR(3,2,2) = SUM(iRbc(:,ioi) * sinarg * (in1) * (+im) * (-im)) !dR(3,2,2) + iRbc(ioi,imn)*cs(2)*(+in(imn))*(+im(imn))*(-im(imn))
 
       IF (Lcoordinatesingularity) THEN
-        dR(1,2,2) = SUM(iRbc(ioi,:) * im * (-im) * (+im) * cosarg)
+        dR(1,2,2) = SUM(iRbc(:,ioi) * im * (-im) * (+im) * cosarg)
       ELSE
-        dR(1,2,2) = (dR(2,2,0) - SUM(iRbc(iother,:) * (-im) * (+im) * cosarg)) * rsign
+        dR(1,2,2) = (dR(2,2,0) - SUM(iRbc(:,iother) * (-im) * (+im) * cosarg)) * rsign
       ENDIF
       
     END IF
@@ -276,4 +276,4 @@ MODULE coords
   END SUBROUTINE get_metric_interface
 
 !-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!
-END MODULE coords
+END MODULE SPECcoords

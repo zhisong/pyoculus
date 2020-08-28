@@ -101,7 +101,7 @@ class PerturbedSlab(BaseProblem):
         return np.array([dpdt, dqdt, dqp[0,0], dqp[1,0], dqp[0,1], dqp[1,1]], dtype=np.float64)
 
  
-    #return self.fortran_module.bfield.get_bfield_tangent(zeta, st)
+    #return self.fortran_module.specbfield.get_bfield_tangent(zeta, st)
 
     def convert_coords(self, incoords):
         '''We need to mod y and z coordinates by 2 * pi

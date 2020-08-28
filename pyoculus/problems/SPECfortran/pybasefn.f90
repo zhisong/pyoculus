@@ -1,32 +1,24 @@
-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!
-! Fortran module for SPEC problems
-! Computes the radial basis functions
-! adapted basefn.f90 in SPEC main code
-! written by Zhisong Qu (zhisong.qu@anu.edu.au)
-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!
+!> @file pybasefn.f90
+!> @brief Fortran module that computes the radial basis functions
+!> @author Zhisong Qu (zhisong.qu@anu.edu.au)
 
-MODULE basefn
+!> Fortran module that computes the radial basis functions, adapted basefn.f90 in SPEC main code
+MODULE SPECbasefn
 
 CONTAINS
 
+!> Get the Chebyshev polynomials with zeroth, first derivatives
   SUBROUTINE get_cheby(lss, lrad, cheby)
 !f2py threadsafe
-    ! Get the Chebyshev polynomials with zeroth, first derivatives
-    ! Inputs:
-    ! lss - REAL(KIND=REAL_KIND), coordinate input lss
-    ! lrad - INTEGER, radial resolution
-    !
-    ! Returns:
-    ! cheby - REAL(KIND=REAL_KIND)(0:Mrad,0:1), the value, first derivative of Chebyshev polynomial
 
-    USE constants, ONLY : zero, one, two
-    USE typedefns, ONLY : REAL_KIND
+    USE SPECconstants, ONLY : zero, one, two
+    USE SPECtypedefns, ONLY : REAL_KIND
 
     IMPLICIT NONE
 
-    REAL(KIND=REAL_KIND),INTENT(IN) :: lss
-    INTEGER, INTENT(IN) :: lrad
-    REAL(KIND=REAL_KIND), INTENT(INOUT) :: cheby(0:lrad,0:1)
+    REAL(KIND=REAL_KIND),INTENT(IN) :: lss !< coordinate input lss
+    INTEGER, INTENT(IN) :: lrad            !< radial resolution
+    REAL(KIND=REAL_KIND), INTENT(OUT) :: cheby(0:lrad,0:1) !< the value, first derivative of Chebyshev polynomial
 
     integer :: ll
 
@@ -49,24 +41,18 @@ CONTAINS
     return
   END SUBROUTINE get_cheby
 
+!> Get the Chebyshev polynomials with zeroth, first and second derivatives
   SUBROUTINE get_cheby_d2(lss, lrad, cheby)
 !f2py threadsafe
-    ! Get the Chebyshev polynomials with zeroth, first and second derivatives
-    ! Inputs:
-    ! lss - REAL(KIND=REAL_KIND), coordinate input lss
-    ! lrad - INTEGER, radial resolution
-    !
-    ! Returns:
-    ! cheby - REAL(KIND=REAL_KIND)(0:lrad,0:2), the value, first and second derivative of Chebyshev polynomial
 
-    USE constants, ONLY : zero, one, two
-    USE typedefns, ONLY : REAL_KIND
+    USE SPECconstants, ONLY : zero, one, two
+    USE SPECtypedefns, ONLY : REAL_KIND
 
     IMPLICIT NONE
 
-    REAL(KIND=REAL_KIND),INTENT(IN) :: lss
-    INTEGER, INTENT(IN) :: lrad
-    REAL(KIND=REAL_KIND), INTENT(INOUT) :: cheby(0:lrad,0:2)
+    REAL(KIND=REAL_KIND),INTENT(IN) :: lss !< coordinate input lss
+    INTEGER, INTENT(IN) :: lrad            !< radial resolution
+    REAL(KIND=REAL_KIND), INTENT(OUT) :: cheby(0:lrad,0:2) !< the value, first and second derivative of Chebyshev polynomial
 
     integer :: ll
 
@@ -91,26 +77,19 @@ CONTAINS
     return
   END SUBROUTINE get_cheby_d2
 
-
+!> Get the Zernike polynomials with zeroth, first derivatives
   SUBROUTINE get_zernike(r, lrad, mpol, zernike)
 !f2py threadsafe
-    ! Get the Zernike polynomials with zeroth, first derivatives
-    ! Inputs:
-    ! r - REAL(KIND=REAL_KIND), coordinate input r
-    ! lrad - INTEGER, radial resolution
-    ! mpol - INTEGER, poloidal resolution
-    !
-    ! Returns:
-    ! zernike - REAL(KIND=REAL_KIND)(0:lrad,0:mpol,0:1), the value, first derivative of Zernike polynomial
 
-    USE constants, ONLY : zero, one, two
-    USE typedefns, ONLY : REAL_KIND
+    USE SPECconstants, ONLY : zero, one, two
+    USE SPECtypedefns, ONLY : REAL_KIND
 
     IMPLICIT NONE
 
-    REAL(KIND=REAL_KIND),INTENT(IN) :: r
-    INTEGER, INTENT(IN) :: lrad, mpol
-    REAL(KIND=REAL_KIND), INTENT(INOUT) :: zernike(0:lrad,0:mpol,0:1)
+    REAL(KIND=REAL_KIND),INTENT(IN) :: r !< coordinate input r
+    INTEGER, INTENT(IN) :: lrad !< radial resolution
+    INTEGER, INTENT(IN) :: mpol !< poloidal resolution
+    REAL(KIND=REAL_KIND), INTENT(OUT) :: zernike(0:lrad,0:mpol,0:1) !< the value, first derivative of Zernike polynomial
 
     REAL(KIND=REAL_KIND) ::    rm, rm1  ! r to the power of m'th and m-1'th
     REAL(KIND=REAL_KIND) ::    factor1, factor2, factor3, factor4
@@ -162,25 +141,19 @@ CONTAINS
     END do
   END SUBROUTINE get_zernike
 
+!> Get the Zernike polynomials with zeroth, first, second derivatives
   SUBROUTINE get_zernike_d2(r, lrad, mpol, zernike)
 !f2py threadsafe
-    ! Get the Zernike polynomials with zeroth, first, second derivatives
-    ! Inputs:
-    ! r - REAL(KIND=REAL_KIND), coordinate input r
-    ! lrad - INTEGER, radial resolution
-    ! mpol - INTEGER, poloidal resolution
-    !
-    ! Returns:
-    ! zernike - REAL(KIND=REAL_KIND)(0:lrad,0:mpol,0:2), the value, first/second derivative of Zernike polynomial
-    
-    USE constants, ONLY : zero, one, two
-    USE typedefns, ONLY : REAL_KIND
+
+    USE SPECconstants, ONLY : zero, one, two
+    USE SPECtypedefns, ONLY : REAL_KIND
 
     IMPLICIT NONE
 
-    REAL(KIND=REAL_KIND),INTENT(IN) :: r
-    INTEGER, INTENT(IN) :: lrad, mpol
-    REAL(KIND=REAL_KIND), INTENT(INOUT) :: zernike(0:lrad,0:mpol,0:2)
+    REAL(KIND=REAL_KIND),INTENT(IN) :: r !< coordinate input r
+    INTEGER, INTENT(IN) :: lrad !< radial resolution
+    INTEGER, INTENT(IN) :: mpol !< poloidal resolution
+    REAL(KIND=REAL_KIND), INTENT(OUT) :: zernike(0:lrad,0:mpol,0:2) !< the value, first/second derivative of Zernike polynomial
 
     REAL(KIND=REAL_KIND) ::    rm, rm1, rm2  ! r to the power of m'th, m-1'th and m-2'th
     REAL(KIND=REAL_KIND) ::    factor1, factor2, factor3, factor4
@@ -238,25 +211,19 @@ CONTAINS
     END do
   END SUBROUTINE get_zernike_d2
 
+!> Get the Zernike polynomials Z(n,m,r)/r^m
   SUBROUTINE get_zernike_rm(r, lrad, mpol, zernike)
 !f2py threadsafe
-    ! Get the Zernike polynomials Z(n,m,r)/r^m
-    ! Inputs:
-    ! r - REAL(KIND=REAL_KIND), coordinate input r
-    ! lrad - INTEGER, radial resolution
-    ! mpol - INTEGER, poloidal resolution
-    !
-    ! Returns:
-    ! zernike - REAL(KIND=REAL_KIND)(0:lrad,0:mpol), the value
 
     USE constants, ONLY : zero, one, two
     USE typedefns, ONLY : REAL_KIND
 
     IMPLICIT NONE
 
-    REAL(KIND=REAL_KIND),INTENT(IN) :: r
-    INTEGER, INTENT(IN) :: lrad, mpol
-    REAL(KIND=REAL_KIND), INTENT(INOUT) :: zernike(0:lrad,0:mpol)
+    REAL(KIND=REAL_KIND),INTENT(IN) :: r !< coordinate input r
+    INTEGER, INTENT(IN) :: lrad !< radial resolution
+    INTEGER, INTENT(IN) :: mpol !< poloidal resolution
+    REAL(KIND=REAL_KIND), INTENT(OUT) :: zernike(0:lrad,0:mpol) !< the value
 
     REAL(KIND=REAL_KIND) ::    factor1, factor2, factor3, factor4
     INTEGER :: m, n  ! Zernike R^m_n

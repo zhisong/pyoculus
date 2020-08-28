@@ -1,19 +1,25 @@
+!> @file pyPJH.f90
+!> @brief Fortran module for SPEC Pressure Jump Hamiltonian problems
+!> @author Zhisong Qu (zhisong.qu@anu.edu.au)
+!> @author Stuart Hudson (shudson@pppl.gov)
+
 !> Fortran module for SPEC Pressure Jump Hamiltonian problems
 !>
-!> Interfaced to SPECPJH in Python
+!> Interfaced to Python, see \ref pyoculus.problems.SPECPJH.SPECPJH
 !>
-!> Author: Zhisong Qu (zhisong.qu@anu.edu.au)
 !>
 !> @todo non-stellarator symmetric cases
 !>
-
 !> ## Pressure Jump Hamiltonian (PJH) Fortran module
+!>
+!> Please note that in the Python module \ref pyoculus.problems.SPECPJH.SPECPJH, \f$\zeta\f$ is equivalent to \f$\varphi\f$
+!>
 !> ### Physics
 !> The pressure-jump Hamiltonian is derived from the force-balance condition at the ideal interfaces.
 !> Let \f$p_1\f$ and \f${\bf B}_1\f$ be the pressure and field immediately inside the interface, and \f$p_1\f$ and \f${\bf B}_1\f$ be the pressure and field immediately outside, 
 !> then the force balance condition requires that
 !> \f[ H \equiv 2 \, \delta p =  2 ( p_1 - p_2 ) = B_2^2 - B_1^2 \f]
-!late be a constant.
+!>
 !> For Beltrami fields, which satisfy \f$\nabla \times {\bf B}=\mu {\bf B}\f$, the magnitude of the field, \f$B\f$, on the interface (where we assume that \f$B^s=0\f$) may be written
 !> \f[
 !> B^2 = \frac{g_{\varphi\varphi} f_\theta f_\theta - 2 g_{\theta\varphi}f_\theta f_\varphi + g_{\theta\theta} f_\varphi f_\varphi}{g_{\theta\theta}g_{\varphi\varphi}-g_{\theta\varphi}g_{\theta\varphi}}
@@ -56,9 +62,9 @@
 !>
 !>     init_pjh(dp, inside_or_outside, plus_or_minus)
 !>
-!> @param dp - delta p, the pressure jump
-!> @param inside_or_outside - for the specified volume, we compute things on the inner interface or outer
-!> @param plus_or_minus - whether to take the plus or minus sign in computing p_zeta
+!> @param dp delta p, the pressure jump
+!> @param inside_or_outside for the specified volume, we compute things on the inner interface or outer
+!> @param plus_or_minus whether to take the plus or minus sign in computing \f$p_\varphi\f$
 !>
 !> After initialization, one can call
 !>
@@ -68,51 +74,55 @@
 !> 
 !>     rhs = get_pjhfield_tangent(phi, ptt)
 !>
-!> @param phi - the \f$\varphi\f$ angle
-!> @param ptt - the state vector (\f$p_\theta\f$, \f$\theta\f$), or (\f$p_\theta\f$, \f$\theta\f$, dp1, dt1, dp2, dt2)
-!> @returns rhs - array of size 2 (for get_pjhfield) or array of size 6 (for get_pjhfield_tangent)
+!> @param phi the \f$\varphi\f$ angle
+!> @param ptt the state vector (\f$p_\theta\f$, \f$\theta\f$), or (\f$p_\theta\f$, \f$\theta\f$, dp1, dt1, dp2, dt2)
+!> @returns array of size 2 (for get_pjhfield) or array of size 6 (for get_pjhfield_tangent)
 !>
-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!
+!> To estimate the initial value for \f$p_\theta\f$, sometimes we need \f$B_\theta\f$ on the known side of the interface.
+!> This can be obtained by calling
+!>
+!>     (Btheta, Bphi) = get_covariant_field(theta, phi)
+!>
+!> @param theta \f$\theta\f$
+!> @param phi \f$\varphi\f$
+!> @returns the covariant component on the known side of the interface, \f$(B_{1,\theta}, B_{1,\varphi})\f$
+!>
+MODULE SPECpjh
 
-!> The fortran module drives SPEC Pressure jump Hamiltonian calculations.
-MODULE pjh
-
-  USE typedefns, only : REAL_KIND
+  USE SPECtypedefns, only : REAL_KIND
 
   PRIVATE
 
-  INTEGER                          :: innout       ! specifying field on which side (-1) inner side, (+1) outer side
-  INTEGER                          :: ioi          ! specifying which interface
-  INTEGER                          :: plusminus    ! +1 or -1 sign taken for calculating p_zeta
-  REAL(KIND=REAL_KIND)             :: delta_p      ! the jump of pressure
+  INTEGER                          :: innout       !< specifying field on which side (-1) inner side, (+1) outer side
+  INTEGER                          :: ioi          !< specifying which interface
+  INTEGER                          :: plusminus    !< +1 or -1 sign taken for calculating \f$p_\varphi$\
+  REAL(KIND=REAL_KIND)             :: delta_p      !< the jump of pressure
 
-  REAL(KIND=REAL_KIND),ALLOCATABLE :: gBtmne(:), gBzmne(:)  ! the contravariant components of magnetic field on the interface
-  REAL(KIND=REAL_KIND),ALLOCATABLE :: gBtmno(:), gBzmno(:)  ! the contravariant components of magnetic field on the interface
+  REAL(KIND=REAL_KIND),ALLOCATABLE :: gBtmne(:)    !< the contravariant components of magnetic field on the interface
+  REAL(KIND=REAL_KIND),ALLOCATABLE :: gBzmne(:)    !< the contravariant components of magnetic field on the interface
+  REAL(KIND=REAL_KIND),ALLOCATABLE :: gBtmno(:)    !< the contravariant components of magnetic field on the interface
+  REAL(KIND=REAL_KIND),ALLOCATABLE :: gBzmno(:)    !< the contravariant components of magnetic field on the interface
 
-  PUBLIC :: get_pjhfield, init_PJH, destroy_PJH, get_b2_interface
+  PUBLIC :: get_pjhfield, init_PJH, destroy_PJH, get_b2_interface, get_covariant_field
 
   CONTAINS
 
 !-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!
 !> Compute the ODEs for PJH system, \f$dp_\theta/d\varphi\f$, \f$d\theta/d\varphi\f$
-!! @param phi - input, the \f$\varphi\f$ angle
-!! @param ptt - input, (\f$p_\theta\f$, \f$\theta\f$)
-!! @param dptt - output, (\f$dp_\theta/d\varphi\f$, \f$d\theta/d\varphi\f$)
   SUBROUTINE get_pjhfield( phi , ptt , dptt )
 !f2py threadsafe
 
 !-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!
 
-    USE constants
-    USE variables
-    USE coords, ONLY: get_metric_interface
+    USE SPECconstants
+    USE SPECvariables
+    USE SPECcoords, ONLY: get_metric_interface
 
     IMPLICIT NONE
 
-    REAL(KIND=REAL_KIND),INTENT(IN) :: phi,ptt(2)
-    REAL(KIND=REAL_KIND),INTENT(OUT) :: dptt(2)
-
-    REAL :: delta_p
+    REAL(KIND=REAL_KIND),INTENT(IN) :: phi      !< the \f$\varphi\f$ angle
+    REAL(KIND=REAL_KIND),INTENT(IN) :: ptt(2)   !< (\f$p_\theta\f$, \f$\theta\f$)
+    REAL(KIND=REAL_KIND),INTENT(OUT) :: dptt(2) !< (\f$dp_\theta/d\varphi\f$, \f$d\theta/d\varphi\f$)
 
     INTEGER :: imn 
 
@@ -143,6 +153,7 @@ MODULE pjh
 
 !> - Compute the squared magnetic field strength \f$B_1^2\f$ on the other side of the interface by calling the subroutine pjh::get_b2_interface
     call get_b2_interface(dBB1, ioi, theta, phi, gl, sg, 1)
+    write(*,*) 'BB', dBB1(0)
 
 !> - Construct \f$a, b, c\f$ for the quadratic equation for solving \f$p_\varphi\f$, then solve it by applying plus_or_minus sign we specified earlier (stored in dP)
     ! this is a, b, c for computing p_phi
@@ -163,6 +174,7 @@ MODULE pjh
     if( discrim.lt.zero ) stop "ph00aa :          : WF=? ; discrim.lt.zero ;"
  
     dP(0)  = ( -dabc(2,0) + plusminus *                                                                                   sqrt (discrim)                       ) / (two*dabc(1,0))
+    write(*,*) 'pp', dP(0)
 !    dP(1)  = ( -dabc(2,1) + plusminus * half * (two*dabc(2,0)*dabc(2,1)-four*(dabc(1,1)*dabc(3,0)+dabc(1,0)*dabc(3,1))) / sqrt (discrim) - dP(0)*two*dabc(1,1) ) / (two*dabc(1,0))
 !    dP(2)  = ( -dabc(2,2) + plusminus * half * (two*dabc(2,0)*dabc(2,2)-four*(                    dabc(1,0)*dabc(3,2))) / sqrt (discrim)                       ) / (two*dabc(1,0))
   
@@ -223,21 +235,59 @@ MODULE pjh
   END SUBROUTINE get_pjhfield
 
 !-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!
-!> An internal subroutine that computes the squared magnetic field strength on the interface \f$B_1^2\f$ and its first and second \f$\theta\f$ derivatives.
-!> This is a private subroutine that is not interfaced with Python.
-!>
-  SUBROUTINE get_b2_interface(db2, ioi, theta, zeta, guvij, sg, ideriv)
+!> Get the covariant component of known side of magnetic field \f$\bf B_1\f$, i.e. \f$B_{1,\theta}, B_{1,\varphi}\f$.
+!> Can be used to estimate the initial condition for \f$p_\theta\f$. 
+  SUBROUTINE get_covariant_field(theta, phi, Bco)
 
 !-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!
 
-    USE typedefns, ONLY : REAL_KIND
-    USE constants
-    USE variables
+    USE SPECconstants
+    USE SPECvariables
+    USE SPECcoords, ONLY: get_metric_interface
 
 !-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!
 
     IMPLICIT NONE
-    REAL(KIND=REAL_KIND),    INTENT(IN) :: theta, zeta ! the three coordinates (s,theta,zeta)
+
+    REAL(KIND=REAL_KIND), INTENT(IN) :: theta  !< the \f$\theta\f$ angle
+    REAL(KIND=REAL_KIND), INTENT(IN) :: phi    !< the \f$\phi\f$ angle
+    REAL(KIND=REAL_KIND), INTENT(OUT):: Bco(2) !< the covariant components (\f$B_{1,\theta}, B_{1,\varphi}\f$)
+
+    REAL(KIND=REAL_KIND) :: cosarg(mn), sinarg(mn),pt,pp
+    REAL(KIND=REAL_KIND) :: dR(0:3,0:3,0:3),dZ(0:3,0:3,0:3),gl(3,3,0:2),sg(0:2),gB(2:3,0:2)
+
+    call get_metric_interface(ioi, theta, phi, dR, dZ, gl, sg, 1)
+
+    cosarg = COS(im*theta-in1*phi)
+    sinarg = SIN(im*theta-in1*phi)
+
+    gB(2,0) = SUM(gBtmne * cosarg)
+    gB(3,0) = SUM(gBzmne * cosarg)
+
+    Bco(1) = gB(2,0) * gl(2,2,0) + gB(3,0) * gl(2,3,0)
+    Bco(2) = gB(2,0) * gl(2,3,0) + gB(3,0) * gl(3,3,0)
+
+    Bco = Bco / sg(0)
+
+!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!
+
+  END SUBROUTINE get_covariant_field
+
+!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!
+!> An internal subroutine that computes the squared magnetic field strength on the interface \f$B_1^2\f$ and its first and second \f$\theta\f$ derivatives.
+!> This is a private subroutine that is not interfaced with Python.
+  SUBROUTINE get_b2_interface(db2, ioi, theta, phi, guvij, sg, ideriv)
+
+!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!
+
+    USE SPECtypedefns, ONLY : REAL_KIND
+    USE SPECconstants
+    USE SPECvariables
+
+!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!
+
+    IMPLICIT NONE
+    REAL(KIND=REAL_KIND),    INTENT(IN) :: theta, phi ! the three coordinates (s,theta,varphi)
     INTEGER             ,    INTENT(IN) :: ioi ! on which interface
     INTEGER             ,    INTENT(IN) :: ideriv ! the level of derivatives. 0 for none, 1 for first, 2 for second
 
@@ -252,8 +302,8 @@ MODULE pjh
 
     db2 = zero
 
-    cosarg = COS(im*theta-in1*zeta)
-    sinarg = SIN(im*theta-in1*zeta)
+    cosarg = COS(im*theta-in1*phi)
+    sinarg = SIN(im*theta-in1*phi)
 
     gB(2,0) = SUM(gBtmne * cosarg)
     gB(3,0) = SUM(gBzmne * cosarg)
@@ -284,24 +334,21 @@ MODULE pjh
 !-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!
 !> Initialize the PJH system.
 !> Whenever \f$\delta p\f$ is modified, you will need to call this subroutine (in Python interface) again.
-!! @param dp - input, the pressure jump \f$\delta p\f$
-!! @param inside_or_outside - input, 0 for inside interface of the selected volume ivol (set in variables::ivol), +1 for outside
-!! @param plus_or_minus - input, set the sign (-1 or +1) for computing \f$p_\varphi\f$ using the quadratic root equation.
   SUBROUTINE init_pjh(dp, inside_or_outside, plus_or_minus)
 
 !-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!
   
-    USE constants
-    USE variables
-    USE basefn
+    USE SPECconstants
+    USE SPECvariables
+    USE SPECbasefn
 
 !-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!
 
     IMPLICIT NONE
 
-    INTEGER, INTENT(IN) :: inside_or_outside ! take the inner surface or outer surface of a volume
-    INTEGER, INTENT(IN) :: plus_or_minus     ! choose plus sign or minus sign for computing p_zeta
-    REAL(KIND=REAL_KIND), INTENT(IN) :: dp   ! delta_p, the pressure jump
+    REAL(KIND=REAL_KIND), INTENT(IN) :: dp   !< the pressure jump \f$\delta p\f$
+    INTEGER, INTENT(IN) :: inside_or_outside !< 0 for inside interface of the selected volume ivol (set in SPECvariables::ivol), +1 for outside
+    INTEGER, INTENT(IN) :: plus_or_minus     !< set the sign (-1 or +1) for computing \f$p_\varphi\f$ using the quadratic root equation.
 
     INTEGER :: ii, jj, ll, mi, ni
 
@@ -314,7 +361,7 @@ MODULE pjh
 
     plusminus = plus_or_minus
     delta_p = dp
-    ioi = ivol + inside_or_outside - 1       ! the index of the interface
+    ioi = ivol + inside_or_outside       ! the index of the interface
 
     IF (ALLOCATED(gBtmne)) THEN
       DEALLOCATE(gBtmne)
@@ -384,7 +431,7 @@ MODULE pjh
 
 !-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!
 
-    USE variables
+    USE SPECvariables
 
     IMPLICIT NONE
 
@@ -410,7 +457,7 @@ MODULE pjh
 
 !-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!
 
-END MODULE pjh
+END MODULE SPECpjh
 
 !-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!
 ! Original ph00aa.h subroutine
@@ -459,7 +506,7 @@ END MODULE pjh
 
 ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! !
   
-!   use constants
+!   use SPECconstants
 !   use fileunits, only : ounit
 !   use inputlist, only : Wph00aa, pressure, pscale
 !   use allglobal, only : myid, ncpu, ivol, cpus, mn, im, in, iRbc, iZbs
