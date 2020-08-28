@@ -8,7 +8,7 @@ To use the package, simply import it in Python:
 import pyoculus
 ```
 
-Examples can be found in the `example` subfolder.
+Examples can be found in the `examples` subfolder.
 
 ## Documentation
 

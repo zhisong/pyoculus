@@ -11,4 +11,4 @@ clean:
 	cd pyoculus/problems/SPECfortran && rm -r fortran_module*
 
 doxygen:
-	doxygen Doxyfile
+	doxygen doc/Doxyfile

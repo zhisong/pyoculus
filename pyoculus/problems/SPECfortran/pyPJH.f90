@@ -1,29 +1,80 @@
-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!
-! Fortran module for SPEC problems
-! outputs ODEs for PJH
-! written by Zhisong Qu (zhisong.qu@anu.edu.au)
+!> Fortran module for SPEC Pressure Jump Hamiltonian problems
+!>
+!> Interfaced to SPECPJH in Python
+!>
+!> Author: Zhisong Qu (zhisong.qu@anu.edu.au)
+!>
+!> @todo non-stellarator symmetric cases
+!>
+
+!> ## Pressure Jump Hamiltonian (PJH) Fortran module
+!> ### Physics
+!> The pressure-jump Hamiltonian is derived from the force-balance condition at the ideal interfaces.
+!> Let \f$p_1\f$ and \f${\bf B}_1\f$ be the pressure and field immediately inside the interface, and \f$p_1\f$ and \f${\bf B}_1\f$ be the pressure and field immediately outside, 
+!> then the force balance condition requires that
+!> \f[ H \equiv 2 \, \delta p =  2 ( p_1 - p_2 ) = B_2^2 - B_1^2 \f]
+!late be a constant.
+!> For Beltrami fields, which satisfy \f$\nabla \times {\bf B}=\mu {\bf B}\f$, the magnitude of the field, \f$B\f$, on the interface (where we assume that \f$B^s=0\f$) may be written
+!> \f[
+!> B^2 = \frac{g_{\varphi\varphi} f_\theta f_\theta - 2 g_{\theta\varphi}f_\theta f_\varphi + g_{\theta\theta} f_\varphi f_\varphi}{g_{\theta\theta}g_{\varphi\varphi}-g_{\theta\varphi}g_{\theta\varphi}}
+!> \f]
+!> where \f$f\f$ is a surface potential and \f$g_{\theta\theta}\f$, \f$g_{\theta\varphi}\f$ and \f$g_{\varphi\varphi}\f$ are metric elements local to the interface.
+!> \item Assuming that the field \f$B_1\f$ is known on the `inside' of the interface, ie. \f$B_{1\theta}=f_\theta\f$, \f$B_{1\varphi}=f_\varphi\f$ and \f$f\f$ is known, 
+!> it is required to determine the tangential field, \f$p_\theta = B_\theta\f$ and \f$p_\varphi = B_\varphi\f$, on the `outside' of the interface.
+!> \item The o.d.e.'s are given by Hamilton's equations 
+!> \f[
+!> \dot \theta   =  \frac{\partial H}{\partial p_\theta}\Big|_{\theta,\varphi,p_\varphi}, \;\;
+!> \dot p_\theta = -\frac{\partial H}{\partial \theta}\Big|_{p_\theta,\varphi,p_\varphi}, \;\;
+!> \dot \varphi     =  \frac{\partial H}{\partial p_\varphi}\Big|_{\theta,p_\theta,\varphi}, \;\;
+!> \dot p_\varphi   = -\frac{\partial H}{\partial \varphi}\Big|_{\theta,p_\theta,p_\varphi},
+!> \f]
+!> where the `dot' denotes derivative with respect to `time'.
+!>
+!> This is reduced to a \f$1\frac{1}{2}\f$ dimensional system by using \f$\varphi\f$ as the time-like integration parameter, and replacing the equation for \f$\dot p_\varphi\f$ with 
+!> \f[ p_\varphi= P(\theta,p_\theta,\varphi; \delta p) = \frac{-b\pm\sqrt{b^2-4ac}}{2a} \f]
+!> where \f$a=g_{\theta\theta}\f$, \f$b=-2 g_{\theta\varphi}p_\theta\f$ 
+!> and \f$c=g_{\varphi\varphi} p_{\theta}^2 - (B_1^2 + 2 \, \delta p \,) G\f$ (see below for definition of \f$G\f$).
+!> The o.d.e.'s that then need to be followed are (see below for definition of \f$A\f$ and \f$b_2\f$)
+!> \f[
+!> \frac{d   \theta}{d\varphi}= \frac{g_{\varphi\varphi} p_{\theta} - g_{\theta\varphi} p_{\varphi}}{-g_{\theta\varphi}p_{\theta}+g_{\theta\theta}p_{\varphi}}
+!> \f]
+!> \f[
+!> \frac{d p_\theta}{d\varphi}= \frac{g_{\varphi\varphi,\theta} (-p_{\theta}^2)-2g_{\theta\varphi,\theta}(-p_{\theta}p_{\varphi})
+!> +g_{\theta\theta,\theta}(-p_{\varphi}^2) + (B_1^2)_{\theta} G+ b_2 G_{\theta} / G }
+!> {-2g_{\theta\varphi}p_\theta+g_{\theta\theta}2p_{\varphi}}.
+!> \f]
+!>
+!> \f[ G = g_{\theta\theta} g_{\varphi\varphi} - g_{\theta\varphi} g_{\theta\varphi} \f]
+!> \f[ b_2 = g_{\varphi\varphi} p_{\theta}^2 - 2 g_{\theta\varphi} p_{\theta} p_{\varphi} + g_{\theta\theta} p_{\varphi}^2 \f]
+!>
+!> Note that \f$d\theta / d \varphi = B^\theta / B^\varphi \f$; there is a fundamental relation between the pressure-jump Hamiltonian and the field-line Hamiltonian. 
+!> (Furthermore, in many cases the surface will be given in straight field line coordinates, so \f$d \theta / d\varphi = const.\f$.)
+!>
+!> ### Usage in Python:
+!> To use the pjh module, one needs to initialize the fortran module first in Python (using class pyoculus.problems.SPECProblem or classes derived from it), 
+!> then initialize pjh in Python by calling its Python wrap in pyoculus.problems.SPECfortran.fortran_module
+!>
+!>     init_pjh(dp, inside_or_outside, plus_or_minus)
+!>
+!> @param dp - delta p, the pressure jump
+!> @param inside_or_outside - for the specified volume, we compute things on the inner interface or outer
+!> @param plus_or_minus - whether to take the plus or minus sign in computing p_zeta
+!>
+!> After initialization, one can call
+!>
+!>     rhs = get_pjhfield(phi, ptt)
+!>
+!> or for rhs and tangent,
+!> 
+!>     rhs = get_pjhfield_tangent(phi, ptt)
+!>
+!> @param phi - the \f$\varphi\f$ angle
+!> @param ptt - the state vector (\f$p_\theta\f$, \f$\theta\f$), or (\f$p_\theta\f$, \f$\theta\f$, dp1, dt1, dp2, dt2)
+!> @returns rhs - array of size 2 (for get_pjhfield) or array of size 6 (for get_pjhfield_tangent)
+!>
 !-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!
 
-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!
-! Usage:
-!     To use the pjh module, one needs to initialize the fortran module first in Python, then initialize pjh in Python by
-!       init_pjh(dp, inside_or_outside, plus_or_minus)
-!     Parameters:
-!       dp - delta p, the pressure jump
-!       inside_or_outside - for the specified volume, we compute things on the inner interface or outer
-!       plus_or_minus - whether to take the plus or minus sign in computing p_zeta
-!
-!     After initialization, one can call
-!       rhs = get_pjhfield(phi , ptt)
-!     or for rhs and tangent, 
-!       rhs = get_pjhfield_tangent(phi , ptt)
-!     Parameters:
-!       phi - the zeta angle
-!       ptt - the initial condition (theta, p_theta)
-!     Returns:
-!       rhs - array of size 2 (for get_pjhfield) or array of size 6 (for get_pjhfield_tangent)
-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!
-
+!> The fortran module drives SPEC Pressure jump Hamiltonian calculations.
 MODULE pjh
 
   USE typedefns, only : REAL_KIND
@@ -43,7 +94,10 @@ MODULE pjh
   CONTAINS
 
 !-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!
-
+!> Compute the ODEs for PJH system, \f$dp_\theta/d\varphi\f$, \f$d\theta/d\varphi\f$
+!! @param phi - input, the \f$\varphi\f$ angle
+!! @param ptt - input, (\f$p_\theta\f$, \f$\theta\f$)
+!! @param dptt - output, (\f$dp_\theta/d\varphi\f$, \f$d\theta/d\varphi\f$)
   SUBROUTINE get_pjhfield( phi , ptt , dptt )
 !f2py threadsafe
 
@@ -60,10 +114,10 @@ MODULE pjh
 
     REAL :: delta_p
 
-    INTEGER :: imn
+    INTEGER :: imn 
 
     REAL(KIND=REAL_KIND) :: cosarg(mn), sinarg(mn),arg,pt,pp,theta
-    REAL(KIND=REAL_KIND) :: dBB1(0:2),dBB2(0:3),a,b,c,discrim
+    REAL(KIND=REAL_KIND) :: dBB1(0:2),dBB2(0:3),a,b,c,discrim !< test variable
 
     REAL(KIND=REAL_KIND) :: dR(0:3,0:3,0:3),dZ(0:3,0:3,0:3),df(0:3,0:3,0:3),gl(3,3,0:2),sg(0:2),dG(0:2),dA(0:1),db1(0:2),dabc(3,0:2),dP(0:2),db2(0:2)
     REAL(KIND=REAL_KIND) :: ftftptpt,ftfpptpp,fpfppppp
@@ -76,21 +130,21 @@ MODULE pjh
     theta = ptt(2) ! theta
   
 ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! !
-  
+
+!> - We need the metrics \f$g_{\theta \theta}, g_{\theta \varphi}, g_{\varphi \varphi}\f$ and the Jacobian \f$J\f$, as well as their first \f$\theta\f$ derivatives
+!! by calling the subroutine coords::get_metric_interface
     dR=zero ; dZ=zero; gl=zero; sg=zero
     call get_metric_interface(ioi, theta, phi, dR, dZ, gl, sg, 1)
   
-! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! !
-
-! !latex \item Some description of the internal notation follows :
-! !latex \be G = g_{\theta\theta} g_{\phi\phi} - g_{\theta\phi} g_{\theta\phi}, \ee
-
+!> - Compute \f$ G \f$ and its derivatives.
     dG(0)= gl(2,2,0)*gl(3,3,0)                                                                           -         gl(2,3,0)**2
     dG(1)= gl(2,2,1)*gl(3,3,0)                           + gl(2,2,0)*gl(3,3,1)                           - two *   gl(2,3,0)*gl(2,3,1)
 !    dG(2)= gl(2,2,2,2)*gl(3,3,0,0) + gl(2,2,2,0)*gl(3,3,2,0) + gl(2,2,2,0)*gl(3,3,2,0) + gl(2,2,0,0)*gl(3,3,2,2) - two * ( gl(2,3,2,0)*gl(2,3,2,0) + gl(2,3,0,0)*gl(2,3,2,2) )
 
+!> - Compute the squared magnetic field strength \f$B_1^2\f$ on the other side of the interface by calling the subroutine pjh::get_b2_interface
     call get_b2_interface(dBB1, ioi, theta, phi, gl, sg, 1)
 
+!> - Construct \f$a, b, c\f$ for the quadratic equation for solving \f$p_\varphi\f$, then solve it by applying plus_or_minus sign we specified earlier (stored in dP)
     ! this is a, b, c for computing p_phi
 
     dabc(1,0) = gl(2,2,0)
@@ -114,14 +168,13 @@ MODULE pjh
   
 ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! !
 
-! !latex \be b_2 = g_{\phi\phi} p_{\theta}^2 - 2 g_{\theta\phi} p_{\theta} p_{\phi} + g_{\theta\theta} p_{\phi}^2, \ee
-
+!> - Computes \f$b_2\f$
     db2(0)  = gl(3,3,0)*   pt**2 - two*gl(2,3,0)* pt*dP(0)            + gl(2,2,0)*    dP(0)**2
 !    db2(1) = gl(3,3,2,0)*   pt**2 - two*gl(2,3,2,0)* pt*dP(0)            + gl(2,2,2,0)*    dP(0)**2 & 
 !                                  - two*gl(2,3,0,0)* pt*dP(1)            + gl(2,2,0,0)*two*dP(0)*dP(1)
 !    db2(2) = gl(3,3,0,0)*two*pt   - two*gl(2,3,0,0)*(   dP(0)+pt*dP(2) ) + gl(2,2,0,0)*two*dP(0)*dP(2)
 
-! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! !
+!> - Construct the denominator of \f$d\theta/d\varphi\f$
 
     dtdot(0) = gl(3,3,0)*two*pt - two*gl(2,3,0)*dP(0)
 !    dtdot(1) = gl(3,3,2,0)*two*pt - two*gl(2,3,2,0)*dP(0) - two*gl(2,3,0,0)*dP(1)
@@ -132,13 +185,15 @@ MODULE pjh
 !    dpdot(2) = -two*gl(2,3,0,0)                            + gl(2,2,0,0)*two*dP(2)
 
 ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! !
- 
+
+!> - Construct the numerators
+
     ftftptpt= -pt**2 ; ftfpptpp= -pt*dP(0) ; fpfppppp=-dP(0)**2
 
 ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! !
 
     dsdot(0) = gl(3,3,1)* ftftptpt                 - two*gl(2,3,1)* ftfpptpp                                          + gl(2,2,1)*fpfppppp                              &
-             + dBB1(1)*G(0) + db2(0)*dG(1)/dG(0)
+             + dBB1(1)*dG(0) + db2(0)*dG(1)/dG(0)
  
 !    dsdot(1) = gl(3,3,2,2)* ftftptpt                 - two*gl(2,3,2,2)* ftfpptpp                                          + gl(2,2,2,2)*fpfppppp                              &
 !             + gl(3,3,2,0)*(two*df(2,0,0)*df(2,2,0)) - two*gl(2,3,2,0)*(df(2,2,0)*df(3,0,0)+df(2,0,0)*df(3,2,0)-pt*dP(1)) + gl(2,2,2,0)*two*(df(3,0,0)*df(3,2,0)-dP(0)*dP(1)) & 
@@ -148,6 +203,8 @@ MODULE pjh
 !                     +  db2(2)        *dG(1)/dG(0) 
 
 ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! !
+
+!> - Get right hand side
 
     dptt(1:2) = (/ dsdot(0) , dtdot(0) /) / dpdot(0)
  
@@ -160,13 +217,15 @@ MODULE pjh
 !    dptt(4)=TM(1,1)*ptt(4) + TM(1,2)*ptt(6)
 !    dptt(5)=TM(2,1)*ptt(3) + TM(2,2)*ptt(5)
 !    dptt(6)=TM(2,1)*ptt(4) + TM(2,2)*ptt(6)
-
+!> .
 !-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!
 
   END SUBROUTINE get_pjhfield
 
 !-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!
-
+!> An internal subroutine that computes the squared magnetic field strength on the interface \f$B_1^2\f$ and its first and second \f$\theta\f$ derivatives.
+!> This is a private subroutine that is not interfaced with Python.
+!>
   SUBROUTINE get_b2_interface(db2, ioi, theta, zeta, guvij, sg, ideriv)
 
 !-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!
@@ -223,7 +282,11 @@ MODULE pjh
   END SUBROUTINE get_b2_interface
 
 !-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!
-
+!> Initialize the PJH system.
+!> Whenever \f$\delta p\f$ is modified, you will need to call this subroutine (in Python interface) again.
+!! @param dp - input, the pressure jump \f$\delta p\f$
+!! @param inside_or_outside - input, 0 for inside interface of the selected volume ivol (set in variables::ivol), +1 for outside
+!! @param plus_or_minus - input, set the sign (-1 or +1) for computing \f$p_\varphi\f$ using the quadratic root equation.
   SUBROUTINE init_pjh(dp, inside_or_outside, plus_or_minus)
 
 !-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!
@@ -275,6 +338,9 @@ MODULE pjh
 
 !-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!
 
+!> The contravariant component of \f$\bf B_1\f$ is computed on the interface.
+!> The Fourier components of \f$ J B^{\theta}_1\f$ and \f$ J B^{\varphi}_1\f$ are stored for further use.
+
     IF (Lcoordinatesingularity) THEN
       sbar = FLOAT(inside_or_outside)
       CALL get_zernike(sbar, Lrad, Mpol, zernike(:,:,0:1))
@@ -313,6 +379,7 @@ MODULE pjh
 
 !-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!
 
+!> This subroutine frees the memory space allocated by pjh::init_pjh.
   SUBROUTINE destroy_pjh()
 
 !-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!
@@ -360,29 +427,29 @@ END MODULE pjh
 !late be a constant.
 !latex For Beltrami fields, which satisfy $\nabla \times {\bf B}=\mu {\bf B}$, the magnitude of the field, $B$, on the interface (where we assume that $B^s=0$) may be written
 !latex \be 
-!latex B^2 = \frac{g_{\phi\phi} f_\theta f_\theta - 2 g_{\theta\phi}f_\theta f_\phi + g_{\theta\theta} f_\phi f_\phi}{g_{\theta\theta}g_{\phi\phi}-g_{\theta\phi}g_{\theta\phi}}
+!latex B^2 = \frac{g_{\varphi\varphi} f_\theta f_\theta - 2 g_{\theta\varphi}f_\theta f_\varphi + g_{\theta\theta} f_\varphi f_\varphi}{g_{\theta\theta}g_{\varphi\varphi}-g_{\theta\varphi}g_{\theta\varphi}}
 !latex \ee
-!latex where $f$ is a surface potential and $g_{\theta\theta}$, $g_{\theta\phi}$ and $g_{\phi\phi}$ are metric elements local to the interface.
-!latex \item Assuming that the field $B_1$ is known on the `inside' of the interface, ie. $B_{1\theta}=f_\theta$, $B_{1\phi}=f_\phi$ and $f$ is known, 
-!latex it is required to determine the tangential field, $p_\theta = B_\theta$ and $p_\phi = B_\phi$, on the `outside' of the interface.
+!latex where $f$ is a surface potential and $g_{\theta\theta}$, $g_{\theta\varphi}$ and $g_{\varphi\varphi}$ are metric elements local to the interface.
+!latex \item Assuming that the field $B_1$ is known on the `inside' of the interface, ie. $B_{1\theta}=f_\theta$, $B_{1\varphi}=f_\varphi$ and $f$ is known, 
+!latex it is required to determine the tangential field, $p_\theta = B_\theta$ and $p_\varphi = B_\varphi$, on the `outside' of the interface.
 !latex \item The o.d.e.'s are given by Hamilton's equations \be
-!latex \dot \theta   =  \frac{\partial H}{\partial p_\theta}\Big|_{\theta,\phi,p_\phi}, \;\;
-!latex \dot p_\theta = -\frac{\partial H}{\partial \theta}\Big|_{p_\theta,\phi,p_\phi}, \;\;
-!latex \dot \phi     =  \frac{\partial H}{\partial p_\phi}\Big|_{\theta,p_\theta,\phi}, \;\;
-!latex \dot p_\phi   = -\frac{\partial H}{\partial \phi}\Big|_{\theta,p_\theta,p_\phi}, \ee
+!latex \dot \theta   =  \frac{\partial H}{\partial p_\theta}\Big|_{\theta,\varphi,p_\varphi}, \;\;
+!latex \dot p_\theta = -\frac{\partial H}{\partial \theta}\Big|_{p_\theta,\varphi,p_\varphi}, \;\;
+!latex \dot \varphi     =  \frac{\partial H}{\partial p_\varphi}\Big|_{\theta,p_\theta,\varphi}, \;\;
+!latex \dot p_\varphi   = -\frac{\partial H}{\partial \varphi}\Big|_{\theta,p_\theta,p_\varphi}, \ee
 !latex where the `dot' denotes derivative with respect to `time'.
-!latex \item This is reduced to a $1\frac{1}{2}$ dimensional system by using $\phi$ as the time-like integration parameter, and replacing the equation for $\dot p_\phi$ with 
-!latex \be p_\phi= P(\theta,p_\theta,\phi; \delta p) = \frac{-b\pm\sqrt{b^2-4ac}}{2a} \label{eq:pphi} \ee
-!latex where \mbox{$a=g_{\theta\theta}$}, \mbox{$b=-2 g_{\theta\phi}p_\theta$} 
-!latex and \mbox{$c=g_{\phi\phi} p_{\theta}^2 - b_1 - 2 \, \delta p \, G$} (see below for definition of $b_1$ and $G$).
+!latex \item This is reduced to a $1\frac{1}{2}$ dimensional system by using $\varphi$ as the time-like integration parameter, and replacing the equation for $\dot p_\varphi$ with 
+!latex \be p_\varphi= P(\theta,p_\theta,\varphi; \delta p) = \frac{-b\pm\sqrt{b^2-4ac}}{2a} \label{eq:pphi} \ee
+!latex where \mbox{$a=g_{\theta\theta}$}, \mbox{$b=-2 g_{\theta\varphi}p_\theta$} 
+!latex and \mbox{$c=g_{\varphi\varphi} p_{\theta}^2 - b_1 - 2 \, \delta p \, G$} (see below for definition of $b_1$ and $G$).
 !latex \item The o.d.e.'s that then need to be followed are (see below for definition of $A$ and $b_2$) \be
-!latex \frac{d   \theta}{d\phi}&=& \frac{g_{\phi\phi} p_{\theta} - g_{\theta\phi} p_{\phi}}{-g_{\theta\phi}p_{\theta}+g_{\theta\theta}p_{\phi}},\\
-!latex \frac{d p_\theta}{d\phi}&=& \frac{g_{\phi\phi,\theta} (f_{\theta}^2-p_{\theta}^2)-2g_{\theta\phi,\theta}(f_{\theta}f_{\phi}-p_{\theta}p_{\phi})
-!latex +g_{\theta\theta,\theta}(f_{\phi}^2-p_{\phi}^2)+A+(b_2-b_1)G_{,\theta} / G }
-!latex {-2g_{\theta\phi}p_\theta+g_{\theta\theta}2p_{\phi}}. \ee
+!latex \frac{d   \theta}{d\varphi}&=& \frac{g_{\varphi\varphi} p_{\theta} - g_{\theta\varphi} p_{\varphi}}{-g_{\theta\varphi}p_{\theta}+g_{\theta\theta}p_{\varphi}},\\
+!latex \frac{d p_\theta}{d\varphi}&=& \frac{g_{\varphi\varphi,\theta} (f_{\theta}^2-p_{\theta}^2)-2g_{\theta\varphi,\theta}(f_{\theta}f_{\varphi}-p_{\theta}p_{\varphi})
+!latex +g_{\theta\theta,\theta}(f_{\varphi}^2-p_{\varphi}^2)+A+(b_2-b_1)G_{,\theta} / G }
+!latex {-2g_{\theta\varphi}p_\theta+g_{\theta\theta}2p_{\varphi}}. \ee
 
-!latex \item Note that $d\theta / d \phi = B^\theta / B^\phi $; there is a fundamental relation between the pressure-jump Hamiltonian and the field-line Hamiltonian. 
-!latex (Furthermore, in many cases the surface will be given in straight field line coordinates, so $d \theta / d\phi = const.$.)
+!latex \item Note that $d\theta / d \varphi = B^\theta / B^\varphi $; there is a fundamental relation between the pressure-jump Hamiltonian and the field-line Hamiltonian. 
+!latex (Furthermore, in many cases the surface will be given in straight field line coordinates, so $d \theta / d\varphi = const.$.)
 
 ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! !
 
@@ -493,7 +560,7 @@ END MODULE pjh
 ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! !
 
 ! !latex \item Some description of the internal notation follows :
-! !latex \be G = g_{\theta\theta} g_{\phi\phi} - g_{\theta\phi} g_{\theta\phi}, \ee
+! !latex \be G = g_{\theta\theta} g_{\varphi\varphi} - g_{\theta\varphi} g_{\theta\varphi}, \ee
 
 !    dG(0)= gl(2,2,0,0)*gl(3,3,0,0)                                                                               -         gl(2,3,0,0)**2
 !    dG(1)= gl(2,2,2,0)*gl(3,3,0,0)                           + gl(2,2,0,0)*gl(3,3,2,0)                           - two *   gl(2,3,0,0)*gl(2,3,2,0)
@@ -501,8 +568,8 @@ END MODULE pjh
 
 ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! !
 
-! !latex \be A = g_{\phi\phi} 2 f_{\theta} f_{\theta\theta} - 2 g_{\theta\phi} ( f_{\theta\theta} f_{\phi} + f_{\theta} f_{\phi\theta} ) 
-! !latex + g_{\theta\theta} 2 f_{\phi} f_{\phi\theta}, \ee
+! !latex \be A = g_{\varphi\varphi} 2 f_{\theta} f_{\theta\theta} - 2 g_{\theta\varphi} ( f_{\theta\theta} f_{\varphi} + f_{\theta} f_{\varphi\theta} ) 
+! !latex + g_{\theta\theta} 2 f_{\varphi} f_{\varphi\theta}, \ee
 
 !    dA(0) = gl(3,3,0,0)*two*df(2,0,0)*df(2,2,0)&
 !          - two*gl(2,3,0,0)*( df(2,2,0)*df(3,0,0)+df(2,0,0)*df(3,2,0) ) &
@@ -514,7 +581,7 @@ END MODULE pjh
 
 ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! !
 
-! !latex \be b_1 = g_{\phi\phi} f_{\theta}^2 - 2 g_{\theta\phi} f_{\theta} f_{\phi} + g_{\theta\theta} f_{\phi}^2, \ee
+! !latex \be b_1 = g_{\varphi\varphi} f_{\theta}^2 - 2 g_{\theta\varphi} f_{\theta} f_{\varphi} + g_{\theta\theta} f_{\varphi}^2, \ee
 
 !    db1(0) = gl(3,3,0,0)*df(2,0,0)**2 - two*gl(2,3,0,0)*df(2,0,0)*df(3,0,0) + gl(2,2,0,0)*df(3,0,0)**2
 !    db1(1) = gl(3,3,2,0)*df(2,0,0)**2 - two*gl(2,3,2,0)*df(2,0,0)*df(3,0,0) + gl(2,2,2,0)*df(3,0,0)**2 + dA(0)
@@ -546,7 +613,7 @@ END MODULE pjh
 
 ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! !
 
-! !latex \be b_2 = g_{\phi\phi} p_{\theta}^2 - 2 g_{\theta\phi} p_{\theta} p_{\phi} + g_{\theta\theta} p_{\phi}^2, \ee
+! !latex \be b_2 = g_{\varphi\varphi} p_{\theta}^2 - 2 g_{\theta\varphi} p_{\theta} p_{\varphi} + g_{\theta\theta} p_{\varphi}^2, \ee
 
 !    db2(0) = gl(3,3,0,0)*   pt**2 - two*gl(2,3,0,0)* pt*dP(0)            + gl(2,2,0,0)*    dP(0)**2
 !    db2(1) = gl(3,3,2,0)*   pt**2 - two*gl(2,3,2,0)* pt*dP(0)            + gl(2,2,2,0)*    dP(0)**2 & 
