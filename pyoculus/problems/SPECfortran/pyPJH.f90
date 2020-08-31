@@ -14,55 +14,13 @@
 !>
 !> Please note that in the Python module \ref pyoculus.problems.SPECPJH.SPECPJH, \f$\zeta\f$ is equivalent to \f$\varphi\f$
 !>
-!> ### Physics
-!> The pressure-jump Hamiltonian is derived from the force-balance condition at the ideal interfaces.
-!> Let \f$p_1\f$ and \f${\bf B}_1\f$ be the pressure and field immediately inside the interface, and \f$p_1\f$ and \f${\bf B}_1\f$ be the pressure and field immediately outside, 
-!> then the force balance condition requires that
-!> \f[ H \equiv 2 \, \delta p =  2 ( p_1 - p_2 ) = B_2^2 - B_1^2 \f]
-!>
-!> For Beltrami fields, which satisfy \f$\nabla \times {\bf B}=\mu {\bf B}\f$, the magnitude of the field, \f$B\f$, on the interface (where we assume that \f$B^s=0\f$) may be written
-!> \f[
-!> B^2 = \frac{g_{\varphi\varphi} f_\theta f_\theta - 2 g_{\theta\varphi}f_\theta f_\varphi + g_{\theta\theta} f_\varphi f_\varphi}{g_{\theta\theta}g_{\varphi\varphi}-g_{\theta\varphi}g_{\theta\varphi}}
-!> \f]
-!> where \f$f\f$ is a surface potential and \f$g_{\theta\theta}\f$, \f$g_{\theta\varphi}\f$ and \f$g_{\varphi\varphi}\f$ are metric elements local to the interface.
-!> \item Assuming that the field \f$B_1\f$ is known on the `inside' of the interface, ie. \f$B_{1\theta}=f_\theta\f$, \f$B_{1\varphi}=f_\varphi\f$ and \f$f\f$ is known, 
-!> it is required to determine the tangential field, \f$p_\theta = B_\theta\f$ and \f$p_\varphi = B_\varphi\f$, on the `outside' of the interface.
-!> \item The o.d.e.'s are given by Hamilton's equations 
-!> \f[
-!> \dot \theta   =  \frac{\partial H}{\partial p_\theta}\Big|_{\theta,\varphi,p_\varphi}, \;\;
-!> \dot p_\theta = -\frac{\partial H}{\partial \theta}\Big|_{p_\theta,\varphi,p_\varphi}, \;\;
-!> \dot \varphi     =  \frac{\partial H}{\partial p_\varphi}\Big|_{\theta,p_\theta,\varphi}, \;\;
-!> \dot p_\varphi   = -\frac{\partial H}{\partial \varphi}\Big|_{\theta,p_\theta,p_\varphi},
-!> \f]
-!> where the `dot' denotes derivative with respect to `time'.
-!>
-!> This is reduced to a \f$1\frac{1}{2}\f$ dimensional system by using \f$\varphi\f$ as the time-like integration parameter, and replacing the equation for \f$\dot p_\varphi\f$ with 
-!> \f[ p_\varphi= P(\theta,p_\theta,\varphi; \delta p) = \frac{-b\pm\sqrt{b^2-4ac}}{2a} \f]
-!> where \f$a=g_{\theta\theta}\f$, \f$b=-2 g_{\theta\varphi}p_\theta\f$ 
-!> and \f$c=g_{\varphi\varphi} p_{\theta}^2 - (B_1^2 + 2 \, \delta p \,) G\f$ (see below for definition of \f$G\f$).
-!> The o.d.e.'s that then need to be followed are (see below for definition of \f$A\f$ and \f$b_2\f$)
-!> \f[
-!> \frac{d   \theta}{d\varphi}= \frac{g_{\varphi\varphi} p_{\theta} - g_{\theta\varphi} p_{\varphi}}{-g_{\theta\varphi}p_{\theta}+g_{\theta\theta}p_{\varphi}}
-!> \f]
-!> \f[
-!> \frac{d p_\theta}{d\varphi}= \frac{g_{\varphi\varphi,\theta} (-p_{\theta}^2)-2g_{\theta\varphi,\theta}(-p_{\theta}p_{\varphi})
-!> +g_{\theta\theta,\theta}(-p_{\varphi}^2) + (B_1^2)_{\theta} G+ b_2 G_{\theta} / G }
-!> {-2g_{\theta\varphi}p_\theta+g_{\theta\theta}2p_{\varphi}}.
-!> \f]
-!>
-!> \f[ G = g_{\theta\theta} g_{\varphi\varphi} - g_{\theta\varphi} g_{\theta\varphi} \f]
-!> \f[ b_2 = g_{\varphi\varphi} p_{\theta}^2 - 2 g_{\theta\varphi} p_{\theta} p_{\varphi} + g_{\theta\theta} p_{\varphi}^2 \f]
-!>
-!> Note that \f$d\theta / d \varphi = B^\theta / B^\varphi \f$; there is a fundamental relation between the pressure-jump Hamiltonian and the field-line Hamiltonian. 
-!> (Furthermore, in many cases the surface will be given in straight field line coordinates, so \f$d \theta / d\varphi = const.\f$.)
-!>
 !> ### Usage in Python:
 !> To use the pjh module, one needs to initialize the fortran module first in Python (using class pyoculus.problems.SPECProblem or classes derived from it), 
-!> then initialize pjh in Python by calling its Python wrap in pyoculus.problems.SPECfortran.fortran_module
+!> then initialize pjh in Python by calling its Python wrap in `pyoculus.problems.SPECfortran.fortran_module`
 !>
 !>     init_pjh(dp, inside_or_outside, plus_or_minus)
 !>
-!> @param dp delta p, the pressure jump
+!> @param dp \f$\delta p\f$, the pressure jump
 !> @param inside_or_outside for the specified volume, we compute things on the inner interface or outer
 !> @param plus_or_minus whether to take the plus or minus sign in computing \f$p_\varphi\f$
 !>
@@ -103,7 +61,7 @@ MODULE SPECpjh
   REAL(KIND=REAL_KIND),ALLOCATABLE :: gBtmno(:)    !< the contravariant components of magnetic field on the interface
   REAL(KIND=REAL_KIND),ALLOCATABLE :: gBzmno(:)    !< the contravariant components of magnetic field on the interface
 
-  PUBLIC :: get_pjhfield, init_PJH, destroy_PJH, get_b2_interface, get_covariant_field
+  PUBLIC :: get_pjhfield, get_pjhfield_tangent, init_PJH, destroy_PJH, get_b2_interface, get_covariant_field
 
   CONTAINS
 
@@ -129,7 +87,88 @@ MODULE SPECpjh
     REAL(KIND=REAL_KIND) :: cosarg(mn), sinarg(mn),arg,pt,pp,theta
     REAL(KIND=REAL_KIND) :: dBB1(0:2),dBB2(0:3),a,b,c,discrim !< test variable
 
-    REAL(KIND=REAL_KIND) :: dR(0:3,0:3,0:3),dZ(0:3,0:3,0:3),df(0:3,0:3,0:3),gl(3,3,0:2),sg(0:2),dG(0:2),dA(0:1),db1(0:2),dabc(3,0:2),dP(0:2),db2(0:2)
+    REAL(KIND=REAL_KIND) :: dR(0:3,0:3,0:3),dZ(0:3,0:3,0:3),gl(3,3,0:2),sg(0:2),dG(0:2),dA(0:1),db1(0:2),dabc(3,0:2),dP(0:2),db2(0:2)
+    REAL(KIND=REAL_KIND) :: ftftptpt,ftfpptpp,fpfppppp
+    REAL(KIND=REAL_KIND) :: dtdot(0:2),dpdot(0:2),dsdot(0:2)
+  
+    pt = ptt(1) ! shorthand; "momentum" coordinate;
+
+    theta = ptt(2) ! theta
+  
+!> - We need the metrics \f$g_{\theta \theta}, g_{\theta \varphi}, g_{\varphi \varphi}\f$ and the Jacobian \f$J\f$, as well as their first \f$\theta\f$ derivatives
+!! by calling the subroutine coords::get_metric_interface
+    dR=zero ; dZ=zero; gl=zero; sg=zero
+    call get_metric_interface(ioi, theta, phi, dR, dZ, gl, sg, 1)
+  
+!> - Compute \f$ G \f$ and its derivatives.
+    dG(0)= gl(2,2,0)*gl(3,3,0)                                                                           -         gl(2,3,0)**2
+    dG(1)= gl(2,2,1)*gl(3,3,0)                           + gl(2,2,0)*gl(3,3,1)                           - two *   gl(2,3,0)*gl(2,3,1)
+!    dG(2)= gl(2,2,2,2)*gl(3,3,0,0) + gl(2,2,2,0)*gl(3,3,2,0) + gl(2,2,2,0)*gl(3,3,2,0) + gl(2,2,0,0)*gl(3,3,2,2) - two * ( gl(2,3,2,0)*gl(2,3,2,0) + gl(2,3,0,0)*gl(2,3,2,2) )
+
+!> - Compute the squared magnetic field strength \f$B_1^2\f$ on the other side of the interface by calling the subroutine specpjh::get_b2_interface
+    call get_b2_interface(dBB1, ioi, theta, phi, gl, sg, 1)
+
+!> - Construct \f$a, b, c\f$ for the quadratic equation for solving \f$p_\varphi\f$, then solve it by applying plus_or_minus sign we specified earlier (stored in dP)
+    ! this is a, b, c for computing p_phi
+
+    dabc(1,0) = gl(2,2,0)
+    dabc(2,0) = -two * gl(2,3,0) * pt
+    dabc(3,0) = gl(3,3,0) * pt**2 - (dBB1(0) + two * delta_p) * dG(0)
+
+    discrim=dabc(2,0)**2-four*dabc(1,0)*dabc(3,0)
+   
+    if( discrim.lt.zero ) stop "ph00aa :          : WF=? ; discrim.lt.zero ;"
+ 
+    dP(0)  = ( -dabc(2,0) + plusminus *                                                                                   sqrt (discrim)                       ) / (two*dabc(1,0))
+
+!> - Computes \f$b_2\f$
+    db2(0)  = gl(3,3,0)*   pt**2 - two*gl(2,3,0)* pt*dP(0)            + gl(2,2,0)*    dP(0)**2
+
+!> - Construct the denominator of \f$d\theta/d\varphi\f$
+
+    dtdot(0) = gl(3,3,0)*two*pt - two*gl(2,3,0)*dP(0)
+    dpdot(0) = -two*gl(2,3,0)*pt + gl(2,2,0)*two*dP(0)
+
+!> - Construct the numerators
+
+    ftftptpt= -pt**2 ; ftfpptpp= -pt*dP(0) ; fpfppppp=-dP(0)**2
+
+    dsdot(0) = gl(3,3,1)* ftftptpt                 - two*gl(2,3,1)* ftfpptpp                                          + gl(2,2,1)*fpfppppp                              &
+             + dBB1(1)*dG(0) + db2(0)*dG(1)/dG(0)
+ 
+!> - Get right hand side
+
+    dptt(1:2) = (/ dsdot(0) , dtdot(0) /) / dpdot(0)
+ 
+!> .
+!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!
+
+  END SUBROUTINE get_pjhfield
+
+
+!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!
+!> Compute the ODEs for PJH system, \f$dp_\theta/d\varphi\f$, \f$d\theta/d\varphi\f$, with tangent
+  SUBROUTINE get_pjhfield_tangent( phi , ptt , dptt )
+!f2py threadsafe
+
+!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!
+
+    USE SPECconstants
+    USE SPECvariables
+    USE SPECcoords, ONLY: get_metric_interface
+
+    IMPLICIT NONE
+
+    REAL(KIND=REAL_KIND),INTENT(IN) :: phi      !< the \f$\varphi\f$ angle
+    REAL(KIND=REAL_KIND),INTENT(IN) :: ptt(6)   !< (\f$p_\theta\f$, \f$\theta\f$, \f$\Delta p_{\theta,1}\f$, \f$\Delta \theta_1\f$, \f$\Delta p_{\theta,2}\f$, \f$\Delta \theta_2\f$)
+    REAL(KIND=REAL_KIND),INTENT(OUT) :: dptt(6) !< (\f$dp_\theta/d\varphi\f$, \f$d\theta/d\varphi\f$)
+
+    INTEGER :: imn 
+
+    REAL(KIND=REAL_KIND) :: cosarg(mn), sinarg(mn),arg,pt,pp,theta
+    REAL(KIND=REAL_KIND) :: dBB1(0:2),dBB2(0:3),a,b,c,discrim !< test variable
+
+    REAL(KIND=REAL_KIND) :: dR(0:3,0:3,0:3),dZ(0:3,0:3,0:3),gl(3,3,0:2),sg(0:2),dG(0:2),dA(0:1),db1(0:2),dabc(3,0:2),dP(0:2),db2(0:2)
     REAL(KIND=REAL_KIND) :: ftftptpt,ftfpptpp,fpfppppp
     REAL(KIND=REAL_KIND) :: dtdot(0:2),dpdot(0:2),dsdot(0:2),TM(2,2)
   
@@ -144,57 +183,55 @@ MODULE SPECpjh
 !> - We need the metrics \f$g_{\theta \theta}, g_{\theta \varphi}, g_{\varphi \varphi}\f$ and the Jacobian \f$J\f$, as well as their first \f$\theta\f$ derivatives
 !! by calling the subroutine coords::get_metric_interface
     dR=zero ; dZ=zero; gl=zero; sg=zero
-    call get_metric_interface(ioi, theta, phi, dR, dZ, gl, sg, 1)
+    call get_metric_interface(ioi, theta, phi, dR, dZ, gl, sg, 2)
   
 !> - Compute \f$ G \f$ and its derivatives.
     dG(0)= gl(2,2,0)*gl(3,3,0)                                                                           -         gl(2,3,0)**2
     dG(1)= gl(2,2,1)*gl(3,3,0)                           + gl(2,2,0)*gl(3,3,1)                           - two *   gl(2,3,0)*gl(2,3,1)
-!    dG(2)= gl(2,2,2,2)*gl(3,3,0,0) + gl(2,2,2,0)*gl(3,3,2,0) + gl(2,2,2,0)*gl(3,3,2,0) + gl(2,2,0,0)*gl(3,3,2,2) - two * ( gl(2,3,2,0)*gl(2,3,2,0) + gl(2,3,0,0)*gl(2,3,2,2) )
+    dG(2)= gl(2,2,2)*gl(3,3,0) + gl(2,2,1)*gl(3,3,1)     + gl(2,2,1)*gl(3,3,1) + gl(2,2,0)*gl(3,3,2)     - two * ( gl(2,3,1)*gl(2,3,1) + gl(2,3,0)*gl(2,3,2) )
 
-!> - Compute the squared magnetic field strength \f$B_1^2\f$ on the other side of the interface by calling the subroutine pjh::get_b2_interface
-    call get_b2_interface(dBB1, ioi, theta, phi, gl, sg, 1)
-    write(*,*) 'BB', dBB1(0)
+!> - Compute the squared magnetic field strength \f$B_1^2\f$ on the other side of the interface by calling the subroutine specpjh::get_b2_interface
+    call get_b2_interface(dBB1, ioi, theta, phi, gl, sg, 2)
 
 !> - Construct \f$a, b, c\f$ for the quadratic equation for solving \f$p_\varphi\f$, then solve it by applying plus_or_minus sign we specified earlier (stored in dP)
     ! this is a, b, c for computing p_phi
 
     dabc(1,0) = gl(2,2,0)
-    !dabc(1,1) = gl(2,2,1)
+    dabc(1,1) = gl(2,2,1)
  
     dabc(2,0) = -two * gl(2,3,0) * pt
-    !dabc(2,1) = -two * gl(2,3,1) * pt
-    !dabc(2,2) = -two * gl(2,3,0)
+    dabc(2,1) = -two * gl(2,3,1) * pt
+    dabc(2,2) = -two * gl(2,3,0)
  
     dabc(3,0) = gl(3,3,0) * pt**2 - (dBB1(0) + two * delta_p) * dG(0)
-    !dabc(3,1) = gl(3,3,1) * pt**2 - (db1(0) + two * delta_p) * dG(1) - db1(1) * dG(0)
-    !dabc(3,2) = gl(3,3,2) * pt*two
+    dabc(3,1) = gl(3,3,1) * pt**2 - (dBB1(0) + two * delta_p) * dG(1) - dBB1(1) * dG(0)
+    dabc(3,2) = gl(3,3,2) * pt*two
    
     discrim=dabc(2,0)**2-four*dabc(1,0)*dabc(3,0)
    
     if( discrim.lt.zero ) stop "ph00aa :          : WF=? ; discrim.lt.zero ;"
  
     dP(0)  = ( -dabc(2,0) + plusminus *                                                                                   sqrt (discrim)                       ) / (two*dabc(1,0))
-    write(*,*) 'pp', dP(0)
-!    dP(1)  = ( -dabc(2,1) + plusminus * half * (two*dabc(2,0)*dabc(2,1)-four*(dabc(1,1)*dabc(3,0)+dabc(1,0)*dabc(3,1))) / sqrt (discrim) - dP(0)*two*dabc(1,1) ) / (two*dabc(1,0))
-!    dP(2)  = ( -dabc(2,2) + plusminus * half * (two*dabc(2,0)*dabc(2,2)-four*(                    dabc(1,0)*dabc(3,2))) / sqrt (discrim)                       ) / (two*dabc(1,0))
+    dP(1)  = ( -dabc(2,1) + plusminus * half * (two*dabc(2,0)*dabc(2,1)-four*(dabc(1,1)*dabc(3,0)+dabc(1,0)*dabc(3,1))) / sqrt (discrim) - dP(0)*two*dabc(1,1) ) / (two*dabc(1,0))
+    dP(2)  = ( -dabc(2,2) + plusminus * half * (two*dabc(2,0)*dabc(2,2)-four*(                    dabc(1,0)*dabc(3,2))) / sqrt (discrim)                       ) / (two*dabc(1,0))
   
 ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! !
 
 !> - Computes \f$b_2\f$
     db2(0)  = gl(3,3,0)*   pt**2 - two*gl(2,3,0)* pt*dP(0)            + gl(2,2,0)*    dP(0)**2
-!    db2(1) = gl(3,3,2,0)*   pt**2 - two*gl(2,3,2,0)* pt*dP(0)            + gl(2,2,2,0)*    dP(0)**2 & 
-!                                  - two*gl(2,3,0,0)* pt*dP(1)            + gl(2,2,0,0)*two*dP(0)*dP(1)
-!    db2(2) = gl(3,3,0,0)*two*pt   - two*gl(2,3,0,0)*(   dP(0)+pt*dP(2) ) + gl(2,2,0,0)*two*dP(0)*dP(2)
+    db2(1)  = gl(3,3,1)*   pt**2 - two*gl(2,3,1)* pt*dP(0)            + gl(2,2,1)*    dP(0)**2 & 
+                                 - two*gl(2,3,0)* pt*dP(1)            + gl(2,2,0)*two*dP(0)*dP(1)
+    db2(2)  = gl(3,3,0)*two*pt   - two*gl(2,3,0)*(   dP(0)+pt*dP(2) ) + gl(2,2,0)*two*dP(0)*dP(2)
 
 !> - Construct the denominator of \f$d\theta/d\varphi\f$
 
     dtdot(0) = gl(3,3,0)*two*pt - two*gl(2,3,0)*dP(0)
-!    dtdot(1) = gl(3,3,2,0)*two*pt - two*gl(2,3,2,0)*dP(0) - two*gl(2,3,0,0)*dP(1)
-!    dtdot(2) = gl(3,3,0,0)*two                            - two*gl(2,3,0,0)*dP(2)
+    dtdot(1) = gl(3,3,1)*two*pt - two*gl(2,3,1)*dP(0) - two*gl(2,3,0)*dP(1)
+    dtdot(2) = gl(3,3,0)*two                          - two*gl(2,3,0)*dP(2)
  
     dpdot(0) = -two*gl(2,3,0)*pt + gl(2,2,0)*two*dP(0)
-!    dpdot(1) = -two*gl(2,3,2,0)*pt + gl(2,2,2,0)*two*dP(0) + gl(2,2,0,0)*two*dP(1)
-!    dpdot(2) = -two*gl(2,3,0,0)                            + gl(2,2,0,0)*two*dP(2)
+    dpdot(1) = -two*gl(2,3,1)*pt + gl(2,2,1)*two*dP(0) + gl(2,2,0)*two*dP(1)
+    dpdot(2) = -two*gl(2,3,0)                          + gl(2,2,0)*two*dP(2)
 
 ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! !
 
@@ -220,19 +257,19 @@ MODULE SPECpjh
 
     dptt(1:2) = (/ dsdot(0) , dtdot(0) /) / dpdot(0)
  
-!    TM(1,1) = ( dsdot(2) - dptt(1)*dpdot(2) ) / dpdot(0) ! d radial / d radial ;
-!    TM(1,2) = ( dsdot(1) - dptt(1)*dpdot(1) ) / dpdot(0) ! d radial / d angle  ;
-!    TM(2,1) = ( dtdot(2) - dptt(2)*dpdot(2) ) / dpdot(0) ! d angle  / d radial ;
-!    TM(2,2) = ( dtdot(1) - dptt(2)*dpdot(1) ) / dpdot(0) ! d angle  / d angle  ;
+    TM(1,1) = ( dsdot(2) - dptt(1)*dpdot(2) ) / dpdot(0) ! d radial / d radial ;
+    TM(1,2) = ( dsdot(1) - dptt(1)*dpdot(1) ) / dpdot(0) ! d radial / d angle  ;
+    TM(2,1) = ( dtdot(2) - dptt(2)*dpdot(2) ) / dpdot(0) ! d angle  / d radial ;
+    TM(2,2) = ( dtdot(1) - dptt(2)*dpdot(1) ) / dpdot(0) ! d angle  / d angle  ;
  
-!    dptt(3)=TM(1,1)*ptt(3) + TM(1,2)*ptt(5) ! standard format;
-!    dptt(4)=TM(1,1)*ptt(4) + TM(1,2)*ptt(6)
-!    dptt(5)=TM(2,1)*ptt(3) + TM(2,2)*ptt(5)
-!    dptt(6)=TM(2,1)*ptt(4) + TM(2,2)*ptt(6)
+    dptt(3)=TM(1,1)*ptt(3) + TM(1,2)*ptt(5) ! standard format;
+    dptt(4)=TM(1,1)*ptt(4) + TM(1,2)*ptt(6)
+    dptt(5)=TM(2,1)*ptt(3) + TM(2,2)*ptt(5)
+    dptt(6)=TM(2,1)*ptt(4) + TM(2,2)*ptt(6)
 !> .
 !-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!
 
-  END SUBROUTINE get_pjhfield
+  END SUBROUTINE get_pjhfield_tangent
 
 !-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!
 !> Get the covariant component of known side of magnetic field \f$\bf B_1\f$, i.e. \f$B_{1,\theta}, B_{1,\varphi}\f$.
@@ -315,7 +352,7 @@ MODULE SPECpjh
     ENDDO
     db2(0) = db2(0) / sg(0)**2
 
-    IF (ideriv .ge. 1) THEN
+    IF (ideriv .GE. 1) THEN
       gB(2,1) = SUM(gBtmne * (-im) * sinarg)
       gB(3,1) = SUM(gBzmne * (-im) * sinarg)
 
@@ -326,6 +363,22 @@ MODULE SPECpjh
       ENDDO
       db2(1) = db2(1) / sg(0)**2 - 2 * db2(0) * sg(1) / sg(0)
     ENDIF
+
+    IF (ideriv .GE. 2) THEN
+
+      gB(2,2) = SUM(gBtmne * (-im) * (im) * cosarg)
+      gB(3,2) = SUM(gBzmne * (-im) * (im) * cosarg)
+
+      DO ii = 2, 3
+        DO jj = 2, 3
+          db2(2) = db2(2) + guvij(ii,jj,2) * gB(ii,0) * gB(jj,0) + guvij(ii,jj,0) * (gB(ii,2) * gB(jj,0) + gB(ii,0) * gB(jj,2) + two * gB(ii,1) * gB(jj,1)) &
+                      +two* guvij(ii,jj,1) * (gB(ii,1) * gB(jj,0) + gB(ii,0) * gB(jj,1)) 
+        ENDDO
+      ENDDO
+      db2(2) = db2(2) / sg(0)**2 - 2 * db2(0) * sg(1) / sg(0)
+
+    ENDIF
+
 
 !-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!
 
@@ -426,7 +479,7 @@ MODULE SPECpjh
 
 !-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!
 
-!> This subroutine frees the memory space allocated by pjh::init_pjh.
+!> This subroutine frees the memory space allocated by specpjh::init_pjh.
   SUBROUTINE destroy_pjh()
 
 !-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!

@@ -1,16 +1,30 @@
-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!
-! Fortran module for SPEC problems
-! outputs the Cartesian coordinates given (s, theta zeta) coordinates
-! output metrics
-! written by Zhisong Qu (zhisong.qu@anu.edu.au)
+!> @file pycoords.f90
+!> @brief Fortran module for SPEC problems, computing geometry relevant quantities
+!> @author Zhisong Qu (zhisong.qu@anu.edu.au)
 !-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!
 
+
+!> Fortran module for SPEC problems, computing geometry relevant quantities
+!>
+!> ### SPEC coordinates
+!> - `Igeometry=1`, slab geometry
+!>   \f$ \mathbf{x} = R(\theta, \zeta) \mathbf{i} + \mbox{rpol} \times \theta \mathbf{j} + \mbox{rtor} \times \zeta \mathbf{j} \f$
+!>
+!>   `get_xyz` returns \f$(R, \mbox{dummy}, \mbox{dummy}) \f$
+!>
+!> - `Igeometry=2`, cylindrical geometry
+!>
+!>   Something
+!>
+!> - `Igeometry=3`, toroidal geometry
+!>
 MODULE SPECcoords
 
   CONTAINS
 
 !-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!
 
+!> Compute Cartisian coordinates based on toroidal coordinates \f$(s,\theta,\zeta)\f$.
   SUBROUTINE get_xyz(stz , RpZ )
 !f2py threadsafe  
 !-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!
@@ -28,8 +42,8 @@ MODULE SPECcoords
     IMPLICIT NONE  
   
     
-    REAL(KIND=REAL_KIND),    INTENT(IN)  :: stz(1:3)
-    REAL(KIND=REAL_KIND),    INTENT(OUT) :: RpZ(1:3)
+    REAL(KIND=REAL_KIND),    INTENT(IN)  :: stz(1:3) !< \f$(s,\theta,\zeta)\f$
+    REAL(KIND=REAL_KIND),    INTENT(OUT) :: RpZ(1:3) !< the Cartesian coordinates, depending on `Igeometry`
   
     INTEGER              :: ii, mi, ni, lvol
     REAL(KIND=REAL_KIND) :: Remn, Zomn, Romn, Zemn, RR, phi, ZZ, arg, carg, sarg, lss, alss, blss, sbar, sbarhim, fj
@@ -148,11 +162,11 @@ MODULE SPECcoords
     IF (ivol .EQ. ioi) THEN
       ! inner interface, the other interface is the outer interface
       iother = ivol + 1
-      rsign = -one
+      rsign = -half
     ELSE
       ! outer interface, the other interface is the inner interface
       iother = ivol
-      rsign = one
+      rsign = half
     ENDIF
 
     cosarg = COS(im*theta-in1*zeta)

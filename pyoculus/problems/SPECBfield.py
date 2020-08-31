@@ -1,5 +1,5 @@
 ## @file SPECBfield.py
-#  @brief Setup the SPEC magnetic field system for oculus ODE solver
+#  @brief Setup the SPEC magnetic field system for ODE solver
 #  @author Zhisong Qu (zhisong.qu@anu.edu.au)
 #
 from .SPECProblem import SPECProblem

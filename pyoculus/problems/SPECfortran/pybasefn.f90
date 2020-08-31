@@ -215,8 +215,8 @@ CONTAINS
   SUBROUTINE get_zernike_rm(r, lrad, mpol, zernike)
 !f2py threadsafe
 
-    USE constants, ONLY : zero, one, two
-    USE typedefns, ONLY : REAL_KIND
+    USE SPECconstants, ONLY : zero, one, two
+    USE SPECtypedefns, ONLY : REAL_KIND
 
     IMPLICIT NONE
 
@@ -264,4 +264,4 @@ CONTAINS
     END do
   END SUBROUTINE get_zernike_rm
 
-END MODULE basefn
+END MODULE SPECbasefn

@@ -1,11 +1,11 @@
 ## @file SPECProblem.py
-#  @brief Setup the SPEC system for oculus ODE solver
+#  @brief Setup the Abstract SPEC class for ODE solver
 #  @author Zhisong Qu (zhisong.qu@anu.edu.au)
 #
 from .BaseProblem import BaseProblem
 import numpy as np
 
-## Abstract class that used to setup the SPEC system for interfacing Fortran, used in ODE solver.
+## Abstract class to setup the SPEC system for interfacing Fortran, used in ODE solver.
 class SPECProblem(BaseProblem):
 
     ## Set up the equilibrium for use of the fortran module 
