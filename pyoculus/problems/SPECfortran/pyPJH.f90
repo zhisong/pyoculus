@@ -270,11 +270,6 @@ MODULE SPECpjh
     dptt(5)=TM(1,1)*ptt(5) + TM(1,2)*ptt(6)
     dptt(6)=TM(2,1)*ptt(5) + TM(2,2)*ptt(6)
 
-    dptt(1) = dBB1(1)
-    dptt(2) = dBB1(1)
-    dptt(3) = dBB1(2)
-    dptt(4) = dBB1(2)
-
 !> .
 !-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!
 
@@ -341,7 +336,7 @@ MODULE SPECpjh
 
     REAL(KIND=REAL_KIND),    INTENT(OUT):: db2(0:2)
 
-    REAL(KIND=REAL_KIND) :: lss, rsign
+    REAL(KIND=REAL_KIND) :: lss, rsign, tmpdb2, tmpdb21
     REAL(KIND=REAL_KIND) :: cosarg(mn), sinarg(mn), gB(2:3,0:2)
 
     INTEGER :: ii, jj
@@ -359,6 +354,7 @@ MODULE SPECpjh
         db2(0) = db2(0) + guvij(ii,jj,0) * gB(ii,0) * gB(jj,0)
       ENDDO
     ENDDO
+    tmpdb2 = db2(0)
     db2(0) = db2(0) / sg(0)**2
 
     IF (ideriv .GE. 1) THEN
@@ -370,6 +366,7 @@ MODULE SPECpjh
           db2(1) = db2(1) + guvij(ii,jj,1) * gB(ii,0) * gB(jj,0) + guvij(ii,jj,0) * (gB(ii,1) * gB(jj,0) + gB(ii,0) * gB(jj,1))
         ENDDO
       ENDDO
+      tmpdb21 = db2(1)
       db2(1) = db2(1) / sg(0)**2 - 2 * db2(0) * sg(1) / sg(0)
     ENDIF
 
@@ -384,7 +381,7 @@ MODULE SPECpjh
                       +two* guvij(ii,jj,1) * (gB(ii,1) * gB(jj,0) + gB(ii,0) * gB(jj,1)) 
         ENDDO
       ENDDO
-      db2(2) = db2(2) / sg(0)**2 - 2 * db2(0) * sg(1) / sg(0)
+      db2(2) = (db2(2) * sg(0) - tmpdb21 * sg(1) - two * tmpdb2 * sg(2)) / sg(0)**3 - three * db2(1) * sg(1) / sg(0)
 
     ENDIF
 
