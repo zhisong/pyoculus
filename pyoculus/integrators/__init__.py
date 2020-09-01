@@ -1,2 +1,2 @@
-from .BaseIntegrator import BaseIntegrator
-from .RKIntegrator import RKIntegrator
+from .base_integrator import BaseIntegrator
+from .rk_integrator import RKIntegrator
