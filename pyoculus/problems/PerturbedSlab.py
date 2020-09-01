@@ -24,9 +24,13 @@ import numpy as np
 #
 class PerturbedSlab(BaseProblem):
 
+    ## the problem size, 2 for 1.5D/2D Hamiltonian system
     problem_size = 2
+    ## by default plotting the yx plane
     poincare_plot_type = 'yx'
+    ## by default x axis has label q
     poincare_plot_xlabel = 'q'
+    ## by default y axis has label p
     poincare_plot_ylabel = 'p'
 
     ## Set up the problem
