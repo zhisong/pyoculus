@@ -1,68 +1,53 @@
-########################################
-# PerturbedSlab.py: the perturbed slab problem
+## @file PerturbedSlab.py
+#  @brief the perturbed slab problem
+#  @author Zhisong Qu (zhisong.qu@anu.edu.au)
+
+from .BaseProblem import BaseProblem
+import numpy as np
+
+##
 # A very simple (but still hard) problem for testing the tools and methods
 #
 # Details in
 # S.R. Hudson, Phys. Plasmas 11, 677 (2004).
 #
 # The Hamiltonian of the system is given by
-# H(q,p,t) = p^2/2 - k[1/2 cos (2q - t) + 1/3 cos(3q - 2t)]
+# \f[ H(q,p,t) = \frac{p^2}{2} - k \left[ \frac{1}{2} \cos (2q - t) + \frac{1}{3} \cos(3q - 2t) \right] \f]
 #
-# written by @zhisong (zhisong.qu@anu.edu.au)
+# The ODEs are given by
 #
-
-from .BaseProblem import BaseProblem
-import numpy as np
-
+#  \f[ \frac{dq}{dt} = p, \quad \frac{dp}{dt} = - k \left[ \sin (2q - t) + \sin(3q - 2t) \right] \f]
+#
+# To use the class:
+#
+#     ps = PerturbedSlab(k=0.002)
+#
 class PerturbedSlab(BaseProblem):
-    """
-    Class that used to setup the perturbed slab problem used in ODE solver.
-    A very simple (but still hard) problem for testing the tools and methods
-    Details in
-    S.R. Hudson, Phys. Plasmas 11, 677 (2004).
-    The Hamiltonian of the system is given by
-    H(q,p,t) = p^2/2 - k[1/2 cos (2q - t) + 1/3 cos(3q - 2t)]
-
-    Call signature:
-        ps = PerturbedSlab(k=0.002) 
-
-    Contains:
-        f - function to compute the RHS of the ODE
-        f_tangent - function to compute the RHS of the ODE, with tangent
-        coords_convert - function that converts curvilinear coordinates to real coordinates
-    """
 
     problem_size = 2
     poincare_plot_type = 'yx'
     poincare_plot_xlabel = 'q'
     poincare_plot_ylabel = 'p'
 
+    ## Set up the problem
+    # @param k the value used in the Hamiltonian
     def __init__(self, k=0.002):
-        '''Set up the problem
-        parameters:
-            k -- the value used in the Hamiltonian
-        '''
         self.k = k
 
         super().__init__()
 
+    ## Set the value of k
+    # @param k the value used in the Hamiltonian
     def set_k (self, k):
-        '''Set the value of k
-        parameters:
-            k -- the value used in the Hamiltonian
-        '''
+
         self.k = k
 
+    ## The RHS of the Hamilton's equations
+    # @param t the zeta coordinate
+    # @param qp array size 2, the \f$(p,q)\f$ coordinate
+    # @param arg1 parameter for the ODE, not used here, can be set to anything
+    # @returns array size 2, the RHS of the ODE
     def f(self, t, qp, arg1=None):
-        '''The RHS of the Hamilton's equations 
-        parameters:
-            t -- the zeta coordinate
-            qp -- array size 2, the (q,p) coordinate
-            arg1 -- parameter for the ODE, not used here
-
-        return:
-            array size 2, the RHS of the ODE
-        '''
 
         q = qp[1]
         p = qp[0]
@@ -72,16 +57,13 @@ class PerturbedSlab(BaseProblem):
 
         return np.array([dpdt, dqdt], dtype=np.float64)
 
+    ## The RHS of the Hamilton's equations, with tangent
+    # @param t the zeta coordinate
+    # @param qp array size 6, the \f$(p,q,\Delta p_1, \Delta q_1, \Delta p_2, \Delta q_2 )\f$ coordinate
+    # @param arg1 parameter for the ODE, not used here, can be set to anything
+    # @returns array size 6, the RHS of the ODE, with tangent
     def f_tangent(self, t, qp, arg1=None):
-        '''The RHS of the Hamilton's equations, with tangent
-        parameters:
-            t -- the zeta coordinate
-            qp -- array size 2, the (q,p) coordinate
-            arg1 -- parameter for the ODE, not used here
 
-        return:
-            array size 6, the RHS of the ODE, with tangent
-        '''
         q = qp[1]
         p = qp[0]
 
@@ -100,12 +82,10 @@ class PerturbedSlab(BaseProblem):
 
         return np.array([dpdt, dqdt, dqp[0,0], dqp[1,0], dqp[0,1], dqp[1,1]], dtype=np.float64)
 
- 
-    #return self.fortran_module.specbfield.get_bfield_tangent(zeta, st)
-
+    ## Convert coordinates for Poincare plots
+    ## @param incoords \f$(p,q,t)\f$
+    ## @returns \f$(p,q \ \mbox{mod} \ 2\pi,t \ \mbox{mod} \ 2\pi)\f$
     def convert_coords(self, incoords):
-        '''We need to mod y and z coordinates by 2 * pi
-        '''
         return np.array([incoords[0], np.mod(incoords[1], 2.0*np.pi), np.mod(incoords[2], 2.0*np.pi)], dtype=np.float64)
 
     
