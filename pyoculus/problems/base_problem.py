@@ -31,14 +31,41 @@
 #
 # If further \f$q_2 \f$ is monotonically increasing with \f$t\f$, one can replace \f$t\f$ by \f$q_2\f$ and get
 #
-# \f[ \frac{dq_1}{dq_2} = \frac{\partial H}{\partial p_1}/\frac{\partial H}{\partial p_2}, \f]
-# \f[ \frac{dp_1}{dq_2} = -\frac{\partial H}{\partial q_1}/\frac{\partial H}{\partial p_2}, \f]
+# \f[ \frac{dq_1}{dq_2} = \left.\frac{\frac{\partial H}{\partial p_1}}{\frac{\partial H}{\partial p_2}} \right|_{p_2(p_1, q_1, q_2)}, \f]
+# \f[ \frac{dp_1}{dq_2} = \left.\frac{-\frac{\partial H}{\partial q_1} }{\frac{\partial H}{\partial p_2}}\right|_{p_2(p_1, q_1, q_2)}, \f]
 # after computing which the value of \f$p_2\f$ is substituted into these equations.
 #
-# ## General ODEs with
-# The Hami equations, after converted can be combined and written as
+# ## General ODEs with two variables
+# The Hamilton's equations, after converted can be combined and written as
 #
-# \f[ \frac{d y_i}{dt} = F_1(t, y_1, y_2).\f]
+# \f[ \frac{d y_1}{dt} = F_1(t, y_1, y_2),\f]
+# \f[ \frac{d y_2}{dt} = F_2(t, y_1, y_2).\f]
+#
+# The tangent of the above ODEs are given by
+# \f[ \frac{d}{dt} \begin{bmatrix}\Delta y_1\\ \Delta y_2 \end{bmatrix} = 
+#     \begin{bmatrix}   
+#         \partial_{y_1}F_1 & \partial_{y_2}F_1  \\
+#         \partial_{y_1}F_2 & \partial_{y_2}F_2
+#     \end{bmatrix}
+#     \cdot
+#     \begin{bmatrix}\Delta y_1\\ \Delta y_2 \end{bmatrix},
+# \f]
+# where the partial derivatives are evaluated at \f$y_1(t), y_2(t)\f$ as the solution of the original ODEs. 
+#
+# ## Implementing a Problem class
+# All problem classes should inherit the BaseProblem class.
+#
+#     class SomeProblem(BaseProblem):
+#         def __init__(self, params):
+#             """some codes to initialize the problem"""
+#         def f(self, t, y, args=None):
+#             """some codes compute the RHS (F) of the ODEs given t and y"""
+#         def f_tangent(self, t, y, args=None):
+#             """some codes compute the ODEs and the tangent the ODEs given t and y, y contains two tangent vectors"""
+#         def convert_coords(self, coord1):
+#             """some codes compute the coordinate transformation"""
+#
+# The member function `f` should be implemented in any case. The `tangent` and `convert_coords` functions are optional for some solvers.
 #
 class BaseProblem:
 
@@ -60,7 +87,7 @@ class BaseProblem:
         @param arg1 parameter for the ODE
         @returns the RHS of the ODE
         """
-        raise NotImplementedError("A system class should implement member function f")
+        raise NotImplementedError("A problem class should implement member function f")
 
     def f_tangent(self, t, y, args=None):
         """! Returns ODE RHS, with tangent
@@ -70,7 +97,7 @@ class BaseProblem:
         @returns the RHS of the ODE, with tangent
         """
         raise NotImplementedError(
-            "A system class should implement member function f_tangent"
+            "A problem class should implement member function f_tangent"
         )
 
     def convert_coords(self, coord1):
@@ -78,6 +105,5 @@ class BaseProblem:
         @param coords1 the coordinates to convert
         @returns the converted coordinates
         """
-        raise NotImplementedError(
-            "A system class should implement member function convert_coords"
-        )
+        # by default there is no conversion
+        return coord1
