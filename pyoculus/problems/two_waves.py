@@ -38,6 +38,7 @@ class TwoWaves(BaseProblem):
         @param k the value used in the Hamiltonian
         """
         self.k = k
+        self.Nfp = 1
 
         super().__init__()
 
