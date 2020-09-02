@@ -191,7 +191,7 @@ class FixedPoint(BaseSolver):
 
             # Greene's Residue
             rdata.GreenesResidue = 0.25 * (2.0 - np.trace(rdata.jacobian))
-            rdata.MeanResidue = (rdata.GreenesResidue / 0.25)**(1/float(qq))
+            rdata.MeanResidue = np.power(rdata.GreenesResidue / 0.25, 1/float(qq))
             self.GreenesResidue = rdata.GreenesResidue
             self.MeanResidue = rdata.MeanResidue
 

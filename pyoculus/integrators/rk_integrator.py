@@ -14,19 +14,18 @@ import numpy as np
 #
 # See __init__ for how to set up the integrator
 class RKIntegrator(BaseIntegrator):
-
-    ## Set up the ODE solver
-    # @param params dict, the parameters used in the ODE solver
-    #
-    # <code>params['ode']</code> -- callable f: rhs=f(t,x,arg1), must provide
-    #
-    # <code>params['args']=None</code> -- the argment that will be used to call f
-    #
-    # <code>params['rtol']=1e-7</code> -- relative tolerance
-    #
-    # <code>params['type']='dopri5'</code> -- the type of integrator, 'dopri5' for RK45, 'dop853' for RK853
-    #
     def __init__(self, params):
+        """! Sets up the ODE solver
+        @param params dict, the parameters used in the ODE solver
+
+        <code>params['ode']</code> -- callable f: rhs=f(t,x,arg1), must provide
+
+        <code>params['args']=None</code> -- the argment that will be used to call f
+
+        <code>params['rtol']=1e-7</code> -- relative tolerance
+
+        <code>params['type']='dopri5'</code> -- the type of integrator, 'dopri5' for RK45, 'dop853' for RK853
+        """
 
         # check if the ode is provided. If not, raise an error
 
@@ -58,10 +57,11 @@ class RKIntegrator(BaseIntegrator):
 
         super().__init__(params)
 
-    ## Set up the initial value for the ODE solver
-    # @param t the start of time
-    # @param x the start of coordinates
     def set_initial_value(self, t, x):
+        """! Sets up the initial value for the ODE solver
+        @param t the start of time
+        @param x the start of coordinates
+        """
 
         self.integrator.set_initial_value(x, t).set_f_params(self._params["args"])
         try:
@@ -72,11 +72,11 @@ class RKIntegrator(BaseIntegrator):
 
         super().set_initial_value(t, x)
 
-    ## Integrate the ODE until `tend`
-    # @param tend the target end time
-    # @returns the new value of x
     def integrate(self, tend):
-
+        """! Integrates the ODE until `tend`
+        @param tend the target end time
+        @returns the new value of x
+        """
         x_new = self.integrator.integrate(tend)
 
         if not self.integrator.successful():
@@ -86,9 +86,10 @@ class RKIntegrator(BaseIntegrator):
         self.t = tend
         return x_new
 
-    ## Return a copy of self, to use if want to compute in parallel
-    # @returns a copy of self
     def copy(self):
+        """! Returns a copy of self, to use if want to compute in parallel
+        @returns a copy of self
+        """
 
         # set up a new integrator
         return RKIntegrator(self._params)

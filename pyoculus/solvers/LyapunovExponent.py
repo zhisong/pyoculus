@@ -2,7 +2,7 @@
 # LyapunovExponent: class for computing the LyapunovExponent
 # written by @zhisong (zhisong.qu@anu.edu.au)
 #
-from pyoculus.problems.BaseProblem import BaseProblem
+from pyoculus.problems import BaseProblem
 from .BaseSolver import BaseSolver
 import numpy as np
 

@@ -3,9 +3,9 @@
 # written by @zhisong (zhisong.qu@anu.edu.au)
 #
 
-from pyoculus.integrators.BaseIntegrator import BaseIntegrator
-from pyoculus.integrators.RKIntegrator import RKIntegrator
-from pyoculus.problems.BaseProblem import BaseProblem
+from pyoculus.integrators import BaseIntegrator
+from pyoculus.integrators import RKIntegrator
+from pyoculus.problems import BaseProblem
 
 class BaseSolver:
     """
