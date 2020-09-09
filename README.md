@@ -42,6 +42,11 @@ One may need to change `F90` and `F90FLAGS` in `Makefile` to your local Fortran 
 The Makefile uses `f2py` from the `numpy` package to create an interface with Python.
 Documentation for `f2py` can be found [here](https://numpy.org/doc/stable/f2py/).
 
+## Developers
+ - Zhisong Qu (zhisong.qu@anu.edu.au)
+ - Arunav Kumar (arunav.kumar@anu.edu.au)
+ - Stuart Hudson (shudson@pppl.gov)
+
 ## Link to the original Oculus package:
 
 Github: https://github.com/SRHudson/Oculus
