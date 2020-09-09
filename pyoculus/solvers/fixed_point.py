@@ -9,9 +9,6 @@ import numpy as np
 ## Class that used to setup the fixed point finder.
 class FixedPoint(BaseSolver):
 
-    successful = False
-    is_theta_fixed = True
-
     def __init__(
         self, problem, params=dict(), integrator=None, integrator_params=dict()
     ):
@@ -59,7 +56,7 @@ class FixedPoint(BaseSolver):
         if params["theta"] is None:
             self.is_theta_fixed = False
         else:
-            self.is_fixed_theta = True
+            self.is_theta_fixed = True
 
     def compute(self, guess, pp, qq, sbegin=-1.0, send=1.0, tol=None):
         """! Looks for the fixed point with rotation number pp/qq

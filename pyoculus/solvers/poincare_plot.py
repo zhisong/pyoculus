@@ -10,11 +10,6 @@ from .base_solver import BaseSolver
 ## Class that used to setup the Poincare plot.
 class PoincarePlot(BaseSolver):
 
-    # flagging if the computation is done and successful
-    successful = False
-    # flagging if the computation of iota is done and successful
-    iota_successful = False
-
     def __init__(
         self, problem, params=dict(), integrator=None, integrator_params=dict()
     ):
@@ -68,6 +63,8 @@ class PoincarePlot(BaseSolver):
             integrator=integrator,
             integrator_params=integrator_params,
         )
+
+        self.iota_successful = False
 
         # set up the result array
         self.x = np.zeros(

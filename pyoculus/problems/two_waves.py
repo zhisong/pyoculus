@@ -24,23 +24,23 @@ import numpy as np
 #
 class TwoWaves(BaseProblem):
 
-    ## the problem size, 2 for 1.5D/2D Hamiltonian system
-    problem_size = 2
-    ## by default plotting the yx plane
-    poincare_plot_type = "yx"
-    ## by default x axis has label q
-    poincare_plot_xlabel = "q"
-    ## by default y axis has label p
-    poincare_plot_ylabel = "p"
 
     def __init__(self, k=0.002):
         """! Set up the problem
         @param k the value used in the Hamiltonian
         """
+        super().__init__()
         self.k = k
         self.Nfp = 1
 
-        super().__init__()
+        ## the problem size, 2 for 1.5D/2D Hamiltonian system
+        self.problem_size = 2
+        ## by default plotting the yx plane
+        self.poincare_plot_type = "yx"
+        ## by default x axis has label q
+        self.poincare_plot_xlabel = "q"
+        ## by default y axis has label p
+        self.poincare_plot_ylabel = "p"
 
     def set_k(self, k):
         """! Set the value of k

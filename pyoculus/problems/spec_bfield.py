@@ -14,14 +14,6 @@ import numpy as np
 class SPECBfield(SPECProblem):
 
     ## the problem size, 2 for 1.5D/2D Hamiltonian system
-    problem_size = 2
-
-    ## by default plotting the RZ plane
-    poincare_plot_type = "RZ"
-    ## by default x axis has label R
-    poincare_plot_xlabel = "R(m)"
-    ## by default y axis has label Z
-    poincare_plot_ylabel = "Z(m)"
 
     def __init__(self, spec_data, lvol):
         """! Set up the equilibrium for use of the fortran module
@@ -29,14 +21,19 @@ class SPECBfield(SPECProblem):
         @param lvol which volume we are interested in, from 1 to spec_data.input.Mvol
         """
         super().__init__(spec_data, lvol)
+        self.problem_size = 2
         if self.Igeometry == 1:
             self.poincare_plot_type = "yx"
             self.poincare_plot_xlabel = "theta"
             self.poincare_plot_ylabel = "R"
         elif self.Igeometry == 2:
-            pass
+            self.poincare_plot_type = "RZ"
+            self.poincare_plot_xlabel = "X(m)"
+            self.poincare_plot_ylabel = "Y(m)"
         elif self.Igeometry == 3:
-            pass
+            self.poincare_plot_type = "RZ"
+            self.poincare_plot_xlabel = "R(m)"
+            self.poincare_plot_ylabel = "Z(m)"
         else:
             raise ValueError("Unknown Igeometry!")
 

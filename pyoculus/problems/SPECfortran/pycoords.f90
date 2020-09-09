@@ -285,6 +285,44 @@ MODULE SPECcoords
 
     ELSEIF (Igeometry .eq. 3) THEN
 
+      sg(0) = (dR(2,0,0)*dZ(1,0,0) - dR(1,0,0)*dZ(2,0,0)) * dR(0,0,0)
+
+      DO ii = 2, 3
+        DO jj = 2, 3
+          guvij(ii,jj,0) = dR(ii,0,0) * dR(jj,0,0) + dZ(ii,0,0) * dZ(jj,0,0)
+        ENDDO
+      ENDDO
+
+      guvij(3,3,0) = guvij(3,3,0) + dR(0,0,0)**2
+
+      IF (ideriv .ge. 1) THEN
+        sg(1) = (dR(2,2,0)*dZ(1,0,0) + dR(2,0,0)*dZ(1,2,0) &
+              -  dR(1,2,0)*dZ(2,0,0) - dR(1,0,0)*dZ(2,2,0)) * dR(0,0,0) &
+              + (dR(2,0,0)*dZ(1,0,0) - dR(1,0,0)*dZ(2,0,0)) * dR(2,0,0)
+        DO ii = 2, 3
+          DO jj = 2, 3
+            guvij(ii,jj,1) = dR(ii,2,0) * dR(jj,0,0) + dR(ii,0,0) * dR(jj,2,0) &
+                           + dZ(ii,2,0) * dZ(jj,0,0) + dZ(ii,0,0) * dZ(jj,2,0)
+          ENDDO
+        ENDDO
+
+        guvij(3,3,1) = guvij(3,3,0) + two * dR(2,0,0) * dR(0,0,0)
+      ENDIF
+
+      IF (ideriv .ge. 2) THEN
+        sg(2) = (dR(2,2,2)*dZ(1,0,0) + two * dR(2,2,0)*dZ(1,2,0) + dR(2,0,0)*dZ(1,2,2) &
+              -  dR(1,2,0)*dZ(2,0,0) - two * dR(1,2,0)*dZ(2,0,0) - dR(1,0,0)*dZ(2,2,0)) * dR(0,0,0) &
+              + (dR(2,0,0)*dZ(1,0,0) - dR(1,0,0)*dZ(2,0,0)) * dR(2,2,0) &
+              + two * (dR(2,2,0)*dZ(1,0,0) + dR(2,0,0)*dZ(1,2,0) &
+              -  dR(1,2,0)*dZ(2,0,0) - dR(1,0,0)*dZ(2,2,0)) * dR(2,0,0)
+        DO ii = 2, 3
+          DO jj = 2, 3
+            guvij(ii,jj,2) = dR(ii,2,2) * dR(jj,0,0) + dR(ii,0,0) * dR(jj,2,2) + two * dR(ii,2,0) * dR(jj,2,0) &
+                           + dZ(ii,2,2) * dZ(jj,0,0) + dZ(ii,0,0) * dZ(jj,2,2) + two * dZ(ii,2,0) * dZ(jj,2,0)
+          ENDDO
+        ENDDO
+      ENDIF
+
     ENDIF
 
   END SUBROUTINE get_metric_interface

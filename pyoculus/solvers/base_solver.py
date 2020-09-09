@@ -10,9 +10,6 @@ from pyoculus.problems import BaseProblem
 ## Abstract class that used to setup all other solvers.
 class BaseSolver:
 
-    ## flagging if the computation is done and successful
-    successful = False
-
     ## Used to return the output data
     class OutputData:
         def __init__(self):
@@ -27,6 +24,8 @@ class BaseSolver:
         @param integrator the integrator to use, must inherit \pyoculus.integrators.BaseIntegrator, if set to None by default using RKIntegrator
         @param integrator_params dict, the parmaters passed to the integrator
         """
+        ## flagging if the computation is done and successful
+        self.successful = False
 
         # check the integrator
         if integrator is None:
