@@ -190,56 +190,7 @@ class FluxSurfaceGR(BaseSolver):
         if not self.successful:
             raise Exception("A successful call of compute() is needed")
 
-        # default setting
-        if plottype is None:
-            plottype = self._problem.poincare_plot_type
-        if xlabel is None:
-            xlabel = self._problem.poincare_plot_xlabel
-        if ylabel is None:
-            ylabel = self._problem.poincare_plot_ylabel
-
-        if plottype == "RZ":
-            xdata = self.fixedpoints[-1].x
-            ydata = self.fixedpoints[-1].z
-        elif plottype == "yx":
-            xdata = self.fixedpoints[-1].y
-            ydata = self.fixedpoints[-1].x
-        else:
-            raise ValueError("Choose the correct type for plottype")
-
-        if plt.get_fignums():
-            fig = plt.gcf()
-            ax = plt.gca()
-            newfig = False
-        else:
-            fig, ax = plt.subplots()
-            newfig = True
-
-        # set default plotting parameters
-        # use x
-        if kwargs.get("marker") is None:
-            kwargs.update({"marker": "x"})
-        # use gray color
-        if kwargs.get("c") is None:
-            kwargs.update({"c": "black"})
-
-        xs = ax.plot(xdata, ydata, linestyle="None", **kwargs)
-
-        if not newfig:
-            if plottype == "RZ":
-                plt.axis("equal")
-            if plottype == "yx":
-                pass
-
-            plt.xlabel(xlabel, fontsize=20)
-            plt.ylabel(ylabel, fontsize=20)
-            plt.xticks(fontsize=16)
-            plt.yticks(fontsize=16)
-
-            if xlim is not None:
-                plt.xlim(xlim)
-            if ylim is not None:
-                plt.ylim(ylim)
+        self.fixedpoints[-1].plot(plottype, xlabel, ylabel, xlim, ylim, **kwargs)
 
     def plot_residue(self):
         """! Generate the plot for residue"""

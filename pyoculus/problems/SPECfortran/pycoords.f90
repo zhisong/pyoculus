@@ -178,7 +178,7 @@ MODULE SPECcoords
 
     ! compute dR/ds, dZ/ds
     IF (Lcoordinatesingularity) THEN
-      dR(1,0,0) = SUM(iRbc(:,ioi) * im * cosarg) + two * SUM((iRbc(ioi,1:Ntor+1)-iRbc(1,1:Ntor+1))*cosarg(1:Ntor+1))
+      dR(1,0,0) = (SUM(iRbc(:,ioi) * im * cosarg) + two * SUM((iRbc(1:Ntor+1,ioi)-iRbc(1:Ntor+1,ioi))*cosarg(1:Ntor+1))) * half
     ELSE
       dR(1,0,0) = (dR(0,0,0) - SUM(iRbc(:,iother)*cosarg)) * rsign
     ENDIF
@@ -189,7 +189,7 @@ MODULE SPECcoords
       dR(3,2,0) = SUM(iRbc(:,ioi)*cosarg * (+in1) * (+im )) !dR(3,2,0) + iRbc(ioi,imn)*cs(1)*(+in(imn))*(+im(imn))
 
       IF (Lcoordinatesingularity) THEN
-        dR(1,2,0) = SUM(iRbc(:,ioi) * im * (-im) * sinarg)
+        dR(1,2,0) = (SUM(iRbc(:,ioi) * im * (-im) * sinarg)) * half
       ELSE
         dR(1,2,0) = (dR(2,0,0) - SUM(iRbc(:,iother) * (-im) *sinarg)) * rsign
       ENDIF
@@ -202,7 +202,7 @@ MODULE SPECcoords
       dR(3,2,2) = SUM(iRbc(:,ioi) * sinarg * (in1) * (+im) * (-im)) !dR(3,2,2) + iRbc(ioi,imn)*cs(2)*(+in(imn))*(+im(imn))*(-im(imn))
 
       IF (Lcoordinatesingularity) THEN
-        dR(1,2,2) = SUM(iRbc(:,ioi) * im * (-im) * (+im) * cosarg)
+        dR(1,2,2) = (SUM(iRbc(:,ioi) * im * (-im) * (+im) * cosarg)) * half
       ELSE
         dR(1,2,2) = (dR(2,2,0) - SUM(iRbc(:,iother) * (-im) * (+im) * cosarg)) * rsign
       ENDIF
@@ -210,39 +210,39 @@ MODULE SPECcoords
     END IF
 
     IF (Igeometry .eq. 3) THEN
-      dZ(0,0,0) = SUM(iZbs(ioi,:)*sinarg)             !dZ(0,0,0) + iZbs(ioi,imn)*cs(2)
-      dZ(2,0,0) = SUM(iZbs(ioi,:)*cosarg * (+im ))    !dZ(2,0,0) + iZbs(ioi,imn)*cs(1)*(+im(imn))
-      dZ(3,0,0) = SUM(iZbs(ioi,:)*cosarg * (-in1))    !dZ(3,0,0) + iZbs(ioi,imn)*cs(1)*(-in(imn))
+      dZ(0,0,0) = SUM(iZbs(:,ioi)*sinarg)             !dZ(0,0,0) + iZbs(ioi,imn)*cs(2)
+      dZ(2,0,0) = SUM(iZbs(:,ioi)*cosarg * (+im ))    !dZ(2,0,0) + iZbs(ioi,imn)*cs(1)*(+im(imn))
+      dZ(3,0,0) = SUM(iZbs(:,ioi)*cosarg * (-in1))    !dZ(3,0,0) + iZbs(ioi,imn)*cs(1)*(-in(imn))
 
       ! compute dR/ds, dZ/ds
       IF (Lcoordinatesingularity) THEN
-        dZ(1,0,0) = SUM(iZbs(ioi,:) * im * sinarg) + two * SUM((iZbs(ioi,1:Ntor+1)-iZbs(1,1:Ntor+1))*sinarg(1:Ntor+1))
+        dZ(1,0,0) = (SUM(iZbs(:,ioi) * im * sinarg) + two * SUM((iZbs(1:Ntor+1,ioi)-iZbs(1,1:Ntor+1))*sinarg(1:Ntor+1)))*half
       ELSE
-        dZ(1,0,0) = (dZ(0,0,0) - SUM(iZbs(iother,:)*sinarg)) * rsign
+        dZ(1,0,0) = (dZ(0,0,0) - SUM(iZbs(:,iother)*sinarg)) * rsign
       ENDIF
 
       IF (ideriv .ge. 1) THEN ! need 1st derivative w.r.t. theta
 
-        dZ(2,2,0) = SUM(iZbs(ioi,:)*sinarg * (+im ) * (-im )) !dZ(2,2,0) + iZbs(ioi,imn)*cs(2)*(+im(imn))*(-im(imn))
-        dZ(3,2,0) = SUM(iZbs(ioi,:)*sinarg * (-in1) * (-im )) !dZ(3,2,0) + iZbs(ioi,imn)*cs(2)*(-in(imn))*(-im(imn))
+        dZ(2,2,0) = SUM(iZbs(:,ioi)*sinarg * (+im ) * (-im )) !dZ(2,2,0) + iZbs(ioi,imn)*cs(2)*(+im(imn))*(-im(imn))
+        dZ(3,2,0) = SUM(iZbs(:,ioi)*sinarg * (-in1) * (-im )) !dZ(3,2,0) + iZbs(ioi,imn)*cs(2)*(-in(imn))*(-im(imn))
 
         IF (Lcoordinatesingularity) THEN
-          dZ(1,2,0) = SUM(iZbs(ioi,:) * im * (+im) * cosarg)
+          dZ(1,2,0) = (SUM(iZbs(:,ioi) * im * (+im) * cosarg)) * half
         ELSE
-          dZ(1,2,0) = (dZ(2,0,0) - SUM(iZbs(iother,:) * (+im) *sinarg)) * rsign
+          dZ(1,2,0) = (dZ(2,0,0) - SUM(iZbs(:,iother) * (im) *cosarg)) * rsign
         END IF
 
       END IF
 
       IF (ideriv .ge. 2) THEN ! need 2nd derivative w.r.t. theta
       
-        dZ(2,2,2) = SUM(iZbs(ioi,:) * cosarg * (+im) * (-im) * (+im)) !dZ(2,2,2) + iZbs(ioi,imn)*cs(1)*(+im(imn))*(-im(imn))*(+im(imn))
-        dZ(3,2,2) = SUM(iZbs(ioi,:) * cosarg * (-in1)* (-im) * (+im)) !dZ(3,2,2) + iZbs(ioi,imn)*cs(1)*(-in(imn))*(-im(imn))*(+im(imn))
+        dZ(2,2,2) = SUM(iZbs(:,ioi) * cosarg * (+im) * (-im) * (+im)) !dZ(2,2,2) + iZbs(ioi,imn)*cs(1)*(+im(imn))*(-im(imn))*(+im(imn))
+        dZ(3,2,2) = SUM(iZbs(:,ioi) * cosarg * (-in1)* (-im) * (+im)) !dZ(3,2,2) + iZbs(ioi,imn)*cs(1)*(-in(imn))*(-im(imn))*(+im(imn))
 
         IF (Lcoordinatesingularity) THEN
-          dZ(1,2,2) = SUM(iZbs(ioi,:) * im * (+im) * (-im) * sinarg)
+          dZ(1,2,2) = (SUM(iZbs(:,ioi) * im * (+im) * (-im) * sinarg)) * half
         ELSE
-          dZ(1,2,2) = (dZ(2,2,0) - SUM(iZbs(iother,:) * (+im) * (-im) * sinarg)) * rsign
+          dZ(1,2,2) = (dZ(2,2,0) - SUM(iZbs(:,iother) * (+im) * (-im) * sinarg)) * rsign
         END IF
         
       END IF ! ideriv >= 2
@@ -306,12 +306,12 @@ MODULE SPECcoords
           ENDDO
         ENDDO
 
-        guvij(3,3,1) = guvij(3,3,0) + two * dR(2,0,0) * dR(0,0,0)
+        guvij(3,3,1) = guvij(3,3,1) + two * dR(2,0,0) * dR(0,0,0)
       ENDIF
 
       IF (ideriv .ge. 2) THEN
         sg(2) = (dR(2,2,2)*dZ(1,0,0) + two * dR(2,2,0)*dZ(1,2,0) + dR(2,0,0)*dZ(1,2,2) &
-              -  dR(1,2,0)*dZ(2,0,0) - two * dR(1,2,0)*dZ(2,0,0) - dR(1,0,0)*dZ(2,2,0)) * dR(0,0,0) &
+              -  dR(1,2,2)*dZ(2,0,0) - two * dR(1,2,0)*dZ(2,2,0) - dR(1,0,0)*dZ(2,2,2)) * dR(0,0,0) &
               + (dR(2,0,0)*dZ(1,0,0) - dR(1,0,0)*dZ(2,0,0)) * dR(2,2,0) &
               + two * (dR(2,2,0)*dZ(1,0,0) + dR(2,0,0)*dZ(1,2,0) &
               -  dR(1,2,0)*dZ(2,0,0) - dR(1,0,0)*dZ(2,2,0)) * dR(2,0,0)
@@ -321,6 +321,8 @@ MODULE SPECcoords
                            + dZ(ii,2,2) * dZ(jj,0,0) + dZ(ii,0,0) * dZ(jj,2,2) + two * dZ(ii,2,0) * dZ(jj,2,0)
           ENDDO
         ENDDO
+
+        guvij(3,3,2) = guvij(3,3,2) + two * (dR(2,0,0) * dR(2,0,0) + dR(2,2,0) * dR(0,0,0))
       ENDIF
 
     ENDIF

@@ -251,6 +251,9 @@ class FixedPoint(BaseSolver):
         elif plottype == "yx":
             xdata = self.y
             ydata = self.x
+        elif plottype == "st":
+            xdata = np.mod(self.theta,2*np.pi)
+            ydata = self.s
         else:
             raise ValueError("Choose the correct type for plottype")
 

@@ -87,7 +87,7 @@ class PoincarePlot(BaseSolver):
         self.successful = False
 
         # the zeta interval for each integration
-        self.dt = 2 * np.pi / float(self._params["Nfp"])
+        self.dt = 2 * np.pi / float(self.Nfp)
 
         for ii in range(self._params["nPtrj"] + 1):
             # find which s to start with
@@ -204,7 +204,7 @@ class PoincarePlot(BaseSolver):
         self.iota = np.zeros_like(self.siota)
         for ii in range(self._params["nPtrj"] + 1):
             nlist = np.arange(self._params["nPpts"] + 1, dtype=np.float64)
-            dzeta = 2.0 * np.pi / self._params["Nfp"]
+            dzeta = 2.0 * np.pi / self.Nfp
             leastfit = np.zeros(6, dtype=np.float64)
             leastfit[1] = np.sum((nlist * dzeta) ** 2)
             leastfit[2] = np.sum((nlist * dzeta))
@@ -249,6 +249,9 @@ class PoincarePlot(BaseSolver):
         elif plottype == "yx":
             xdata = self.y
             ydata = self.x
+        elif plottype == "st":
+            xdata = np.mod(self.theta,2*np.pi)
+            ydata = self.s
         else:
             raise ValueError("Choose the correct type for plottype")
 
@@ -288,8 +291,9 @@ class PoincarePlot(BaseSolver):
 
         # plt.tight_layout()
 
-    def plot_iota(self, **kwargs):
+    def plot_iota(self, xlim=None, ylim=None, **kwargs):
         """! Generates the iota plot
+        @param xlim, ylim the range of plotting, by default plotting the range of all data
         @param **kwargs passed to the plotting routine "plot"
         """
         if not self.iota_successful:
@@ -304,6 +308,10 @@ class PoincarePlot(BaseSolver):
         plt.ylabel("iotabar", fontsize=20)
         plt.xticks(fontsize=16)
         plt.yticks(fontsize=16)
+        if xlim is not None:
+            plt.xlim(xlim)
+        if ylim is not None:
+            plt.ylim(ylim)
 
         # plt.tight_layout()
 
