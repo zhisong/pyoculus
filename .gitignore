@@ -4,9 +4,12 @@
 # vscode
 .vscode*
 
+# documents
+doc/html
+
 # Fortran module files
-fortran_module*/
-fortran_module*
+pyoculus_spec_fortran_module*/
+pyoculus_spec_fortran_module*
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

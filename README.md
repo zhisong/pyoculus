@@ -35,11 +35,8 @@ The `py_spec` package that handles SPEC output.
 ### Compilation
 To use the pyoculus on SPEC magnetic field and PJH, please compile the Fortran modules for SPEC by
 ```
-make
+pip3 install -e .
 ```
-One may need to change `F90` and `F90FLAGS` in `Makefile` to your local Fortran compiler.
-
-The Makefile uses `f2py` from the `numpy` package to create an interface with Python.
 Documentation for `f2py` can be found [here](https://numpy.org/doc/stable/f2py/).
 
 ## Developers

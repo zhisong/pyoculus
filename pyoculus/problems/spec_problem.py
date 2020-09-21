@@ -14,7 +14,7 @@ class SPECProblem(BaseProblem):
         """
         super().__init__()
         
-        from .SPECfortran import fortran_module
+        import pyoculus_spec_fortran_module as fortran_module
 
         self.fortran_module = fortran_module
 
@@ -33,7 +33,7 @@ class SPECProblem(BaseProblem):
         )
         fortran_module.specvariables.nfp = spec_data.input.physics.Nfp
         fortran_module.specvariables.im = spec_data.output.im
-        fortran_module.specvariables.in1 = spec_data.output.in1
+        fortran_module.specvariables.in1 = spec_data.output.in_
 
         fortran_module.specvariables.irbc = spec_data.output.Rbc.T
         fortran_module.specvariables.izbc = spec_data.output.Zbc.T

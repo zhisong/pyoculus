@@ -1,6 +1,6 @@
-########################################
-# PoincarePlot.py: class for generating the Poincare Plot
-# written by @zhisong (zhisong.qu@anu.edu.au)
+## @file poincare_plot.py: class for generating the Poincare Plot
+#  @brief class for generating the Poincare Plot 
+#  @author Zhisong Qu (zhisong.qu@anu.edu.au)
 #
 
 import numpy as np
