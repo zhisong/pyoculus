@@ -1,6 +1,6 @@
+import setuptools
 import numpy.distutils.core
 from numpy.distutils.fcompiler import get_default_fcompiler
-import setuptools
 from pyoculus import __version__
 
 # setup fortran 90 extension
@@ -49,4 +49,5 @@ numpy.distutils.core.setup(
     package_data={"": ["pyoculus/problems/SPECfortran/*.f90"]},
     include_package_data=True,
     ext_modules=[ext1],
+    setup_requires=["wheel"],
 )
