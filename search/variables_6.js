@@ -1,0 +1,19 @@
+var searchData=
+[
+  ['ic_305',['ic',['../classpyoculus_1_1solvers_1_1lyapunov__exponent_1_1_lyapunov_exponent.html#a819d0eb5a0e40349148cb24643bd31b3',1,'pyoculus::solvers::lyapunov_exponent::LyapunovExponent']]],
+  ['igeometry_306',['Igeometry',['../classpyoculus_1_1problems_1_1spec__bfield_1_1_s_p_e_c_bfield.html#aff9fde124230f4e80d4a837aa243206a',1,'pyoculus.problems.spec_bfield.SPECBfield.Igeometry()'],['../classpyoculus_1_1problems_1_1spec__problem_1_1_s_p_e_c_problem.html#a44d55781ac3f5eaf95a58d34bdaf927c',1,'pyoculus.problems.spec_problem.SPECProblem.Igeometry()'],['../namespacespecvariables.html#a3d75c18bd50625e4c6d2fc909f03daf3',1,'specvariables::igeometry()']]],
+  ['ile_307',['ile',['../classpyoculus_1_1solvers_1_1lyapunov__exponent_1_1_lyapunov_exponent.html#a70e3e3c69e51d322a5276aa9d37a8a09',1,'pyoculus::solvers::lyapunov_exponent::LyapunovExponent']]],
+  ['im_308',['im',['../namespacespecvariables.html#a272ea0f9d6d9d89c69a944669a0f8bec',1,'specvariables']]],
+  ['in1_309',['in1',['../namespacespecvariables.html#a7e9eef020bbbb683d41e3816a7e1a794',1,'specvariables']]],
+  ['initialized_310',['initialized',['../classpyoculus_1_1problems_1_1spec__pjh_1_1_s_p_e_c_p_j_h.html#aa4aa984dc21698fbb547f2fa086ebd5b',1,'pyoculus::problems::spec_pjh::SPECPJH']]],
+  ['innout_311',['innout',['../classpyoculus_1_1problems_1_1spec__pjh_1_1_s_p_e_c_p_j_h.html#a6f7bafc2633a884949e694a1f489a6aa',1,'pyoculus::problems::spec_pjh::SPECPJH']]],
+  ['integrator_312',['integrator',['../classpyoculus_1_1integrators_1_1rk__integrator_1_1_r_k_integrator.html#a8544f550b98047c11a09e7e81057257e',1,'pyoculus::integrators::rk_integrator::RKIntegrator']]],
+  ['iota_313',['iota',['../classpyoculus_1_1solvers_1_1poincare__plot_1_1_poincare_plot.html#aa6c04c246cf118a1e2b64c23d40a35bc',1,'pyoculus::solvers::poincare_plot::PoincarePlot']]],
+  ['iota_5fsuccessful_314',['iota_successful',['../classpyoculus_1_1solvers_1_1poincare__plot_1_1_poincare_plot.html#a1853ac641ba97bc2fdb0bdde541e9f65',1,'pyoculus::solvers::poincare_plot::PoincarePlot']]],
+  ['irbc_315',['irbc',['../namespacespecvariables.html#a397c74bd208ec25ed0e4ba965393e874',1,'specvariables']]],
+  ['irbs_316',['irbs',['../namespacespecvariables.html#ac7a36e4dfc2876a050ba08208d60be2a',1,'specvariables']]],
+  ['is_5ftheta_5ffixed_317',['is_theta_fixed',['../classpyoculus_1_1solvers_1_1fixed__point_1_1_fixed_point.html#ad9575765c0d051dcf8b92fb28407b3fd',1,'pyoculus::solvers::fixed_point::FixedPoint']]],
+  ['ivol_318',['ivol',['../classpyoculus_1_1problems_1_1spec__problem_1_1_s_p_e_c_problem.html#a0066d8c95192eb444cbf4ef733ba0caa',1,'pyoculus.problems.spec_problem.SPECProblem.ivol()'],['../namespacespecvariables.html#a9ed1a162938b818c1f1ea89fcb7c2e74',1,'specvariables::ivol()']]],
+  ['izbc_319',['izbc',['../namespacespecvariables.html#a604d68bd6b13859d249f120c1973bfed',1,'specvariables']]],
+  ['izbs_320',['izbs',['../namespacespecvariables.html#aa220bdc033244a77592ccf4ccec7160a',1,'specvariables']]]
+];

@@ -1,0 +1,23 @@
+var searchData=
+[
+  ['base_5fintegrator_201',['base_integrator',['../namespacepyoculus_1_1integrators_1_1base__integrator.html',1,'pyoculus::integrators']]],
+  ['base_5fproblem_202',['base_problem',['../namespacepyoculus_1_1problems_1_1base__problem.html',1,'pyoculus::problems']]],
+  ['base_5fsolver_203',['base_solver',['../namespacepyoculus_1_1solvers_1_1base__solver.html',1,'pyoculus::solvers']]],
+  ['continued_5ffraction_204',['continued_fraction',['../namespacepyoculus_1_1irrationals_1_1continued__fraction.html',1,'pyoculus::irrationals']]],
+  ['fixed_5fpoint_205',['fixed_point',['../namespacepyoculus_1_1solvers_1_1fixed__point.html',1,'pyoculus::solvers']]],
+  ['flux_5fsurface_5fgr_206',['flux_surface_gr',['../namespacepyoculus_1_1solvers_1_1flux__surface__gr.html',1,'pyoculus::solvers']]],
+  ['integrators_207',['integrators',['../namespacepyoculus_1_1integrators.html',1,'pyoculus']]],
+  ['irrationals_208',['irrationals',['../namespacepyoculus_1_1irrationals.html',1,'pyoculus']]],
+  ['lyapunov_5fexponent_209',['lyapunov_exponent',['../namespacepyoculus_1_1solvers_1_1lyapunov__exponent.html',1,'pyoculus::solvers']]],
+  ['manifolds_210',['manifolds',['../namespacepyoculus_1_1solvers_1_1manifolds.html',1,'pyoculus::solvers']]],
+  ['poincare_5fplot_211',['poincare_plot',['../namespacepyoculus_1_1solvers_1_1poincare__plot.html',1,'pyoculus::solvers']]],
+  ['problems_212',['problems',['../namespacepyoculus_1_1problems.html',1,'pyoculus']]],
+  ['pyoculus_213',['pyoculus',['../namespacepyoculus.html',1,'']]],
+  ['rk_5fintegrator_214',['rk_integrator',['../namespacepyoculus_1_1integrators_1_1rk__integrator.html',1,'pyoculus::integrators']]],
+  ['sdc_5fintegrator_215',['sdc_integrator',['../namespacepyoculus_1_1integrators_1_1sdc__integrator.html',1,'pyoculus::integrators']]],
+  ['solvers_216',['solvers',['../namespacepyoculus_1_1solvers.html',1,'pyoculus']]],
+  ['spec_5fbfield_217',['spec_bfield',['../namespacepyoculus_1_1problems_1_1spec__bfield.html',1,'pyoculus::problems']]],
+  ['spec_5fpjh_218',['spec_pjh',['../namespacepyoculus_1_1problems_1_1spec__pjh.html',1,'pyoculus::problems']]],
+  ['spec_5fproblem_219',['spec_problem',['../namespacepyoculus_1_1problems_1_1spec__problem.html',1,'pyoculus::problems']]],
+  ['two_5fwaves_220',['two_waves',['../namespacepyoculus_1_1problems_1_1two__waves.html',1,'pyoculus::problems']]]
+];
