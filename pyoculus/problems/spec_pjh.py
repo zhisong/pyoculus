@@ -85,6 +85,7 @@ class SPECPJH(SPECProblem):
         @param dp the \f$\delta p\f$ for PJH
         @param innout 0 for inner surface, 1 for outer surface of the volume specified by `lvol`
         @param plusminus -- the sign for computing \f$p_\zeta\f$, +1 or -1
+        Only support SPEC version >=3.0
         """
         super().__init__(spec_data, lvol)
 

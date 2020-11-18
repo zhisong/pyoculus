@@ -43,7 +43,7 @@ MODULE SPECconstants
   REAL(KIND=REAL_KIND), PARAMETER :: mu0        =   2.0E-07 * pi2
   REAL(KIND=REAL_KIND), PARAMETER :: goldenmean =   1.618033988749895 ! golden mean = ( one + sqrt(five) ) / two ;
 
-  REAL(KIND=REAL_KIND), PARAMETER :: version    =   2.20
+  REAL(KIND=REAL_KIND), PARAMETER :: version    =   3.0
 
 END MODULE SPECconstants
 

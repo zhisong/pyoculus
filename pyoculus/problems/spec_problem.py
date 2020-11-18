@@ -18,9 +18,9 @@ class SPECProblem(BaseProblem):
 
         self.fortran_module = fortran_module
 
-        # check the version of SPEC output file. Only >=2.2 is accepted
-        if spec_data.version < 2.2:
-            raise Exception("SPEC version >=2.2 is needed")
+        # check the version of SPEC output file. Only >=3.0 is accepted
+        if spec_data.version < 3.0:
+            raise Exception("SPEC version >=3.0 is needed")
 
         # setting up the fortran module
         fortran_module.specvariables.mvol = spec_data.output.Mvol

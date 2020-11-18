@@ -8,7 +8,6 @@ import numpy as np
 
 ## Class that used to setup the fixed point finder.
 class FixedPoint(BaseSolver):
-
     def __init__(
         self, problem, params=dict(), integrator=None, integrator_params=dict()
     ):
@@ -210,7 +209,9 @@ class FixedPoint(BaseSolver):
 
             # Greene's Residue
             rdata.GreenesResidue = 0.25 * (2.0 - np.trace(rdata.jacobian))
-            rdata.MeanResidue = np.power(rdata.GreenesResidue / 0.25, 1 / float(qq))
+            rdata.MeanResidue = np.power(
+                np.abs(rdata.GreenesResidue) / 0.25, 1 / float(qq)
+            )
             self.GreenesResidue = rdata.GreenesResidue
             self.MeanResidue = rdata.MeanResidue
 
@@ -252,7 +253,7 @@ class FixedPoint(BaseSolver):
             xdata = self.y
             ydata = self.x
         elif plottype == "st":
-            xdata = np.mod(self.theta,2*np.pi)
+            xdata = np.mod(self.theta, 2 * np.pi)
             ydata = self.s
         else:
             raise ValueError("Choose the correct type for plottype")
