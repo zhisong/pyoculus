@@ -33,7 +33,7 @@
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">pyoculus
-   &#160;<span id="projectnumber">0.1</span>
+   &#160;<span id="projectnumber">0.1.1</span>
    </div>
   </td>
  </tr>
@@ -200,9 +200,9 @@ Public Attributes</h2></td></tr>
 <div class="textblock"><p>Class that used to setup the SPEC Pressure Jump Hamiltonian system for interfacing Fortran. </p>
 <p>For more detail, see the SPEC fortran module <a class="el" href="namespacespecpjh.html">specpjh</a></p>
 <p>Please note that in the Fortran module, \(\zeta\) is equivalent to \(\varphi\). </p>
-<h2><a class="anchor" id="autotoc_md5"></a>
+<h2><a class="anchor" id="autotoc_md14"></a>
 Pressure Jump Hamiltonian (PJH) Python module</h2>
-<h3><a class="anchor" id="autotoc_md6"></a>
+<h3><a class="anchor" id="autotoc_md15"></a>
 Usage</h3>
 <pre class="fragment">pjh_problem = pyoculus.problems.SPECPJH(spec_output, lvol, dp, innout, plusminus)
 </pre><dl class="params"><dt>Parameters</dt><dd>
@@ -220,11 +220,11 @@ Usage</h3>
 <li>On the other hand, if the field on the outer side of this <b>interface</b> is known, we choose <code>lvol=3</code> and <code>innout=0</code> (inner side of 3rd <b>volume</b> known)</li>
 <li>The pressure jump \(\delta p\) should be choosen based on \(\delta p = 2 ( p_1 - p_2 ) = B_2^2 - B_1^2\), where \(B_1^2\) is the known field</li>
 </ul>
-<h3><a class="anchor" id="autotoc_md7"></a>
+<h3><a class="anchor" id="autotoc_md16"></a>
 Hint for choosing the initial p_theta and plusminus</h3>
 <p>Knowing the covariant components of the magnetic field on the known side of the interface could help. To do so, run </p><pre class="fragment">Bco = get_covariant_field(theta, zeta)
 </pre><dl class="section return"><dt>Returns</dt><dd>a numpy array contains ( \( B_\theta, B_\zeta \)).</dd></dl>
-<h3><a class="anchor" id="autotoc_md8"></a>
+<h3><a class="anchor" id="autotoc_md17"></a>
 Physics</h3>
 <p>The pressure-jump Hamiltonian is derived from the force-balance condition at the ideal interfaces. Let \(p_1\) and \({\bf B}_1\) be the pressure and field immediately inside the interface, and \(p_1\) and \({\bf B}_1\) be the pressure and field immediately outside, then the force balance condition requires that </p><p class="formulaDsp">
 \[ H \equiv 2 \, \delta p = 2 ( p_1 - p_2 ) = B_2^2 - B_1^2 \]
@@ -310,7 +310,7 @@ Physics</h3>
     <tr><td class="paramname">lvol</td><td>which volume we are interested in, from 1 to <code>spec_data.input.Mvol</code> </td></tr>
     <tr><td class="paramname">dp</td><td>the \(\delta p\) for PJH </td></tr>
     <tr><td class="paramname">innout</td><td>0 for inner surface, 1 for outer surface of the volume specified by <code>lvol</code> </td></tr>
-    <tr><td class="paramname">plusminus</td><td>&ndash; the sign for computing \(p_\zeta\), +1 or -1 </td></tr>
+    <tr><td class="paramname">plusminus</td><td>&ndash; the sign for computing \(p_\zeta\), +1 or -1 Only support SPEC version &gt;=3.0 </td></tr>
   </table>
   </dd>
 </dl>

@@ -26,13 +26,17 @@ var NAVTREE =
 [
   [ "pyoculus", "index.html", [
     [ "pyoculus Manual", "index.html", [
-      [ "Usage", "index.html#sec_usage", null ],
-      [ "Documentation", "index.html#sec_doc", null ],
-      [ "SPEC magnetic field and Pressure Jump Hamiltonian (PJH)", "index.html#sec_SPEC", [
-        [ "Pre-requisite", "index.html#sec_SPEC_pre", null ],
-        [ "Compilation", "index.html#sec_SPEC_compilation", null ]
-      ] ],
-      [ "Link to the original Oculus package:", "index.html#sec_link_oculus", null ]
+      [ "pyoculus", "index.html#autotoc_md0", [
+        [ "Installation", "index.html#autotoc_md1", null ],
+        [ "Usage", "index.html#autotoc_md2", null ],
+        [ "Documentation", "index.html#autotoc_md3", null ],
+        [ "SPEC magnetic field and Pressure Jump Hamiltonian (PJH)", "index.html#autotoc_md4", [
+          [ "Pre-requisite", "index.html#autotoc_md5", null ],
+          [ "Compilation", "index.html#autotoc_md6", null ]
+        ] ],
+        [ "Developers", "index.html#autotoc_md7", null ],
+        [ "Link to the original Oculus package:", "index.html#autotoc_md8", null ]
+      ] ]
     ] ],
     [ "Todo List", "todo.html", null ],
     [ "Modules", "namespaces.html", [
@@ -62,7 +66,7 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "____init_____8py.html",
-"pybasefn_8f90.html"
+"py_p_j_h_8f90.html#a840c91ec0ff54a51a67838e4c5d5e673"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

@@ -33,7 +33,7 @@
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">pyoculus
-   &#160;<span id="projectnumber">0.1</span>
+   &#160;<span id="projectnumber">0.1.1</span>
    </div>
   </td>
  </tr>
@@ -142,15 +142,15 @@ Public Attributes</h2></td></tr>
 <div class="textblock"><p>Abstract class that used to drive calculation. </p>
 <p>This is an abstract class, should never be used as an instance.</p>
 <p>All problems should be a derived type of <a class="el" href="classpyoculus_1_1problems_1_1base__problem_1_1_base_problem.html" title="Abstract class that used to drive calculation.">BaseProblem</a>. They should contain the ODEs to solve, as specified by the Hamiltonian system of that problem.</p>
-<h2><a class="anchor" id="autotoc_md0"></a>
+<h2><a class="anchor" id="autotoc_md9"></a>
 Hamilton's equation</h2>
-<h3><a class="anchor" id="autotoc_md1"></a>
+<h3><a class="anchor" id="autotoc_md10"></a>
 1.5D</h3>
 <p>If the Hamiltonian system is 1.5 dimensional, the Hamiltonian takes the form \(H=H(p,q,t)\). The Hamilton's equations are given by</p>
 <p class="formulaDsp">
 \[ \frac{dq}{dt} = \frac{\partial H}{\partial p}, \quad \frac{dp}{dt} = -\frac{\partial H}{\partial q}. \quad\]
 </p>
-<h3><a class="anchor" id="autotoc_md2"></a>
+<h3><a class="anchor" id="autotoc_md11"></a>
 2D</h3>
 <p>If the Hamiltonian system is two-dimensional, the Hamiltonian takes the form \(H=H(p_1,q_1,p_2,q_2)\). The Hamilton's equations are given by</p>
 <p class="formulaDsp">
@@ -167,7 +167,7 @@ Hamilton's equation</h2>
 \[ \frac{dp_1}{dq_2} = \left.\frac{-\frac{\partial H}{\partial q_1} }{\frac{\partial H}{\partial p_2}}\right|_{p_2(p_1, q_1, q_2)}, \]
 </p>
 <p> after computing which the value of \(p_2\) is substituted into these equations.</p>
-<h2><a class="anchor" id="autotoc_md3"></a>
+<h2><a class="anchor" id="autotoc_md12"></a>
 General ODEs with two variables</h2>
 <p>The Hamilton's equations, after converted can be combined and written as</p>
 <p class="formulaDsp">
@@ -180,7 +180,7 @@ General ODEs with two variables</h2>
 \[ \frac{d}{dt} \begin{bmatrix}\Delta y_1\\ \Delta y_2 \end{bmatrix} = \begin{bmatrix} \partial_{y_1}F_1 &amp; \partial_{y_2}F_1 \\ \partial_{y_1}F_2 &amp; \partial_{y_2}F_2 \end{bmatrix} \cdot \begin{bmatrix}\Delta y_1\\ \Delta y_2 \end{bmatrix}, \]
 </p>
 <p> where the partial derivatives are evaluated at \(y_1(t), y_2(t)\) as the solution of the original ODEs.</p>
-<h2><a class="anchor" id="autotoc_md4"></a>
+<h2><a class="anchor" id="autotoc_md13"></a>
 Implementing a Problem class</h2>
 <p>All problem classes should inherit the <a class="el" href="classpyoculus_1_1problems_1_1base__problem_1_1_base_problem.html" title="Abstract class that used to drive calculation.">BaseProblem</a> class. </p><pre class="fragment">class SomeProblem(BaseProblem):
     def __init__(self, params):
