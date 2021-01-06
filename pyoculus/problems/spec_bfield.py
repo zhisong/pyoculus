@@ -25,8 +25,8 @@ class SPECBfield(SPECProblem):
         self.problem_size = 2
         if self.Igeometry == 1:
             self.poincare_plot_type = "yx"
-            self.poincare_plot_xlabel = "theta"
-            self.poincare_plot_ylabel = "R"
+            self.poincare_plot_xlabel = r"$\theta$"
+            self.poincare_plot_ylabel = r"R"
         elif self.Igeometry == 2:
             self.poincare_plot_type = "RZ"
             self.poincare_plot_xlabel = "X(m)"

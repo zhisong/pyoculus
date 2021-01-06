@@ -326,7 +326,7 @@ class FixedPoint(BaseSolver):
                 output = self._integrator.integrate(t + dt)
                 t = t + dt
 
-            dtheta = output[1] - theta - 2 * np.pi * pp
+            dtheta = output[1] - theta - dzeta * pp
             jacobian = output[3]
 
             # if the resolution is good enough
@@ -385,7 +385,7 @@ class FixedPoint(BaseSolver):
                 output = self._integrator.integrate(t + dt)
                 t = t + dt
 
-            dtheta = output[1] - theta - 2 * np.pi * pp
+            dtheta = output[1] - theta - dzeta * pp
             ds = output[0] - s
             dst = np.array([ds, dtheta], dtype=np.float64)
             jacobian = np.array(

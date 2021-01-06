@@ -217,8 +217,8 @@ class FluxSurfaceGR(BaseSolver):
 
         fig, ax = plt.subplots()
 
-        geplot = ax.plot(xlist_greene, greenes_list, label="Greene")
-        mcplot = ax.plot(xlist_Mackay, Mackay_list, label="Mackay")
+        geplot = ax.plot(xlist_greene, greenes_list, '-x', label="Greene")
+        #mcplot = ax.plot(xlist_Mackay, Mackay_list, '-o', label="Mackay")
         mcplot = ax.plot(
             xlist_greene, 0.25 * np.ones_like(greenes_list), label="Stable bound"
         )

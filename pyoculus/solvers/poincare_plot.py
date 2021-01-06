@@ -305,7 +305,7 @@ class PoincarePlot(BaseSolver):
         ax.plot(self.siota, self.iota, **kwargs)
 
         plt.xlabel("s", fontsize=20)
-        plt.ylabel("iotabar", fontsize=20)
+        plt.ylabel(r"$\iota\!\!$-", fontsize=20)
         plt.xticks(fontsize=16)
         plt.yticks(fontsize=16)
         if xlim is not None:
