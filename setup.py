@@ -1,7 +1,6 @@
 import setuptools
-import numpy.distutils.core
+from numpy.distutils.core import Extension, setup
 from numpy.distutils.fcompiler import get_default_fcompiler
-from pyoculus import __version__
 
 # setup fortran 90 extension
 # ---------------------------------------------------------------------------
@@ -15,7 +14,7 @@ elif compiler == 'intel' or compiler == 'intelem':
     pass
 f90flags.append('-O3')
 
-ext1 = numpy.distutils.core.Extension(
+ext1 = Extension(
     name="pyoculus_spec_fortran_module",
     sources=[
         "pyoculus/problems/SPECfortran/pyvariables.f90",
@@ -27,12 +26,19 @@ ext1 = numpy.distutils.core.Extension(
     extra_f90_compile_args=f90flags
 )
 
+install_requires = [
+    "numpy",
+    "scipy",
+    "importlib-metadata ; python_version<'3.8'"
+]
+    
+
 with open("README.md", "r") as fh:
     long_description = fh.read()
 
-numpy.distutils.core.setup(
+setup(
     name="pyoculus",
-    version=__version__,
+    version='0.1.2',
     description="A Python version of Oculus - The eye into the chaos: a comprehensive magnetic field diagnostic package for non-integrable, toroidal magnetic fields",
     long_description=long_description,
     long_description_content_type="text/markdown",
@@ -48,6 +54,7 @@ numpy.distutils.core.setup(
     packages=setuptools.find_packages(),
     package_data={"": ["pyoculus/problems/SPECfortran/*.f90"]},
     include_package_data=True,
+    install_requires=install_requires,
     ext_modules=[ext1],
     setup_requires=["wheel"],
 )
