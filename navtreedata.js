@@ -66,7 +66,7 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "____init_____8py.html",
-"py_p_j_h_8f90.html#a840c91ec0ff54a51a67838e4c5d5e673"
+"namespacespeccoords.html#a80b745a42dc8d6b3f78eef5fcb4b65e9"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';
