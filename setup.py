@@ -38,7 +38,7 @@ with open("README.md", "r") as fh:
 
 setup(
     name="pyoculus",
-    version='0.1.2',
+    version='0.1.3',
     description="A Python version of Oculus - The eye into the chaos: a comprehensive magnetic field diagnostic package for non-integrable, toroidal magnetic fields",
     long_description=long_description,
     long_description_content_type="text/markdown",
