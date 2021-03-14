@@ -525,7 +525,6 @@ class FixedPoint(BaseSolver):
                 t = t + dt
 
             dtheta = output[4] - theta - dzeta * pp
-            print(R, dtheta)
             dR = output[5]
             dZ = output[6]
             
