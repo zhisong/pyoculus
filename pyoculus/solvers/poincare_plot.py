@@ -276,6 +276,10 @@ class PoincarePlot(BaseSolver):
 
         return self.iota.copy()
 
+    def compute_q(self):
+        """! Compute the q profile"""
+        return 1/self.compute_iota()
+
     def plot(
         self, plottype=None, xlabel=None, ylabel=None, xlim=None, ylim=None, **kwargs
     ):
@@ -373,6 +377,31 @@ class PoincarePlot(BaseSolver):
             plt.ylim(ylim)
 
         # plt.tight_layout()
+
+    def plot_q(self, xlim=None, ylim=None, **kwargs):
+        """! Generates the q plot
+        @param xlim, ylim the range of plotting, by default plotting the range of all data
+        @param **kwargs passed to the plotting routine "plot"
+        """
+        if not self.iota_successful:
+            raise Exception("A successful call of compute_q or compute_iota is needed")
+
+        import matplotlib.pyplot as plt
+
+        fig, ax = plt.subplots()
+        ax.plot(self.siota, 1/self.iota, **kwargs)
+
+        if self._is_cylindrical_problem:
+            plt.xlabel("R", fontsize=20)
+        else:
+            plt.xlabel("s", fontsize=20)
+        plt.ylabel("q", fontsize=20)
+        plt.xticks(fontsize=16)
+        plt.yticks(fontsize=16)
+        if xlim is not None:
+            plt.xlim(xlim)
+        if ylim is not None:
+            plt.ylim(ylim)
 
     @staticmethod
     def _run_poincare(params):
