@@ -101,15 +101,16 @@ Inheritance diagram for pyoculus.problems.cartesian_bfield.CartesianBfield:</div
  <div class="center">
   <img src="classpyoculus_1_1problems_1_1cartesian__bfield_1_1_cartesian_bfield.png" usemap="#pyoculus.problems.cartesian_5Fbfield.CartesianBfield_map" alt=""/>
   <map id="pyoculus.problems.cartesian_5Fbfield.CartesianBfield_map" name="pyoculus.problems.cartesian_5Fbfield.CartesianBfield_map">
-<area href="classpyoculus_1_1problems_1_1cylindrical__problem_1_1_cylindrical_problem.html" alt="pyoculus.problems.cylindrical_problem.CylindricalProblem" shape="rect" coords="0,56,344,80"/>
-<area href="classpyoculus_1_1problems_1_1base__problem_1_1_base_problem.html" title="Abstract class that used to drive calculation." alt="pyoculus.problems.base_problem.BaseProblem" shape="rect" coords="0,0,344,24"/>
+<area href="classpyoculus_1_1problems_1_1cylindrical__problem_1_1_cylindrical_problem.html" alt="pyoculus.problems.cylindrical_problem.CylindricalProblem" shape="rect" coords="0,56,345,80"/>
+<area href="classpyoculus_1_1problems_1_1base__problem_1_1_base_problem.html" title="Abstract class that used to drive calculation." alt="pyoculus.problems.base_problem.BaseProblem" shape="rect" coords="0,0,345,24"/>
+<area href="classpyoculus_1_1problems_1_1simsgeo__biot__savart_1_1_simsgeo_biot_savart.html" alt="pyoculus.problems.simsgeo_biot_savart.SimsgeoBiotSavart" shape="rect" coords="0,168,345,192"/>
   </map>
 </div></div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:a637ec2972f674bee031d96a49e28bf89"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classpyoculus_1_1problems_1_1cartesian__bfield_1_1_cartesian_bfield.html#a637ec2972f674bee031d96a49e28bf89">__init__</a> (self, R0, Z0, <a class="el" href="classpyoculus_1_1problems_1_1cylindrical__problem_1_1_cylindrical_problem.html#a87557d3198e83b93daa37cda035eb3e1">Nfp</a>=1)</td></tr>
-<tr class="memdesc:a637ec2972f674bee031d96a49e28bf89"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set up the problem for a simsopt.geo.BiotSavart.  <a href="classpyoculus_1_1problems_1_1cartesian__bfield_1_1_cartesian_bfield.html#a637ec2972f674bee031d96a49e28bf89">More...</a><br /></td></tr>
+<tr class="memdesc:a637ec2972f674bee031d96a49e28bf89"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set up the problem.  <a href="classpyoculus_1_1problems_1_1cartesian__bfield_1_1_cartesian_bfield.html#a637ec2972f674bee031d96a49e28bf89">More...</a><br /></td></tr>
 <tr class="separator:a637ec2972f674bee031d96a49e28bf89"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a423b1296f44169c68c1d7baf23eed6a4"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classpyoculus_1_1problems_1_1cartesian__bfield_1_1_cartesian_bfield.html#a423b1296f44169c68c1d7baf23eed6a4">B</a> (self, xyz, args=None)</td></tr>
 <tr class="separator:a423b1296f44169c68c1d7baf23eed6a4"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -215,9 +216,18 @@ Additional Inherited Members</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Set up the problem for a simsopt.geo.BiotSavart. </p>
+<p>Set up the problem. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">R0</td><td>the R coordinate of the magnetic axis </td></tr>
+    <tr><td class="paramname">Z0</td><td>the Z coordinate of the magnetic axis </td></tr>
+  </table>
+  </dd>
+</dl>
 
 <p>Reimplemented from <a class="el" href="classpyoculus_1_1problems_1_1cylindrical__problem_1_1_cylindrical_problem.html#ad6234342ef1f327f9602989e8cd041cb">pyoculus.problems.cylindrical_problem.CylindricalProblem</a>.</p>
+
+<p>Reimplemented in <a class="el" href="classpyoculus_1_1problems_1_1simsgeo__biot__savart_1_1_simsgeo_biot_savart.html#abefd4dd157efbd420b073155f284fc5c">pyoculus.problems.simsgeo_biot_savart.SimsgeoBiotSavart</a>.</p>
 
 </div>
 </div>
@@ -254,6 +264,8 @@ Additional Inherited Members</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
+<p>Reimplemented in <a class="el" href="classpyoculus_1_1problems_1_1simsgeo__biot__savart_1_1_simsgeo_biot_savart.html#ae010dec9e81fa23be20f60435ea72a33">pyoculus.problems.simsgeo_biot_savart.SimsgeoBiotSavart</a>.</p>
+
 </div>
 </div>
 <a id="a1027314f3d7c6c3bba6fa76ada6b285d" name="a1027314f3d7c6c3bba6fa76ada6b285d"></a>
@@ -287,6 +299,8 @@ Additional Inherited Members</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Reimplemented in <a class="el" href="classpyoculus_1_1problems_1_1simsgeo__biot__savart_1_1_simsgeo_biot_savart.html#ad66b840315e669cae22c093e11240a97">pyoculus.problems.simsgeo_biot_savart.SimsgeoBiotSavart</a>.</p>
 
 </div>
 </div>

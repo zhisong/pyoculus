@@ -16,8 +16,17 @@ var annotated_dup =
         [ "cartesian_bfield", "namespacepyoculus_1_1problems_1_1cartesian__bfield.html", [
           [ "CartesianBfield", "classpyoculus_1_1problems_1_1cartesian__bfield_1_1_cartesian_bfield.html", "classpyoculus_1_1problems_1_1cartesian__bfield_1_1_cartesian_bfield" ]
         ] ],
+        [ "cylindrical_bfield", "namespacepyoculus_1_1problems_1_1cylindrical__bfield.html", [
+          [ "CylindricalBfield", "classpyoculus_1_1problems_1_1cylindrical__bfield_1_1_cylindrical_bfield.html", "classpyoculus_1_1problems_1_1cylindrical__bfield_1_1_cylindrical_bfield" ]
+        ] ],
         [ "cylindrical_problem", "namespacepyoculus_1_1problems_1_1cylindrical__problem.html", [
           [ "CylindricalProblem", "classpyoculus_1_1problems_1_1cylindrical__problem_1_1_cylindrical_problem.html", "classpyoculus_1_1problems_1_1cylindrical__problem_1_1_cylindrical_problem" ]
+        ] ],
+        [ "m3dc1_bfield", "namespacepyoculus_1_1problems_1_1m3dc1__bfield.html", [
+          [ "M3DC1Bfield", "classpyoculus_1_1problems_1_1m3dc1__bfield_1_1_m3_d_c1_bfield.html", "classpyoculus_1_1problems_1_1m3dc1__bfield_1_1_m3_d_c1_bfield" ]
+        ] ],
+        [ "simsgeo_biot_savart", "namespacepyoculus_1_1problems_1_1simsgeo__biot__savart.html", [
+          [ "SimsgeoBiotSavart", "classpyoculus_1_1problems_1_1simsgeo__biot__savart_1_1_simsgeo_biot_savart.html", "classpyoculus_1_1problems_1_1simsgeo__biot__savart_1_1_simsgeo_biot_savart" ]
         ] ],
         [ "spec_bfield", "namespacepyoculus_1_1problems_1_1spec__bfield.html", [
           [ "SPECBfield", "classpyoculus_1_1problems_1_1spec__bfield_1_1_s_p_e_c_bfield.html", "classpyoculus_1_1problems_1_1spec__bfield_1_1_s_p_e_c_bfield" ]
