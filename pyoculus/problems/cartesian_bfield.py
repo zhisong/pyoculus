@@ -9,7 +9,9 @@ import numpy as np
 class CartesianBfield(CylindricalProblem):
 
     def __init__(self, R0, Z0, Nfp=1):
-        """! Set up the problem for a simsopt.geo.BiotSavart
+        """! Set up the problem
+        @param R0 the R coordinate of the magnetic axis
+        @param Z0 the Z coordinate of the magnetic axis
         """
 
         super().__init__(R0, Z0, Nfp)
