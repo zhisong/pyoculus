@@ -16,11 +16,11 @@ class M3DC1Bfield(CylindricalBfield):
         @param Z0 the Z coordinate of the magnetic axis
         """
         self._B = B_sim
-        super.__init__(R0, Z0, 1)
+        super().__init__(R0, Z0, 1)
 
     def B(self, RphiZ, args=None):
         """! The magnetic field, being used by parent class CylindricalBfield
         @param RphiZ array with coordinates \f$(R, \phi, Z)\f$
         @returns \f$(B_R, B_\phi, B_Z)\f$
         """
-        return np.array(self._B.evaluate((RphiZ[0], RphiZ[1] / np.pi * 180, RphiZ[2])))
+        return np.array(self._B.evaluate((RphiZ[0], RphiZ[1], RphiZ[2])))
