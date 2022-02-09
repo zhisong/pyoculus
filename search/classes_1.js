@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['fixedpoint_201',['FixedPoint',['../classpyoculus_1_1solvers_1_1fixed__point_1_1_fixed_point.html',1,'pyoculus::solvers::fixed_point']]],
-  ['fluxsurfacegr_202',['FluxSurfaceGR',['../classpyoculus_1_1solvers_1_1flux__surface__gr_1_1_flux_surface_g_r.html',1,'pyoculus::solvers::flux_surface_gr']]]
+  ['cartesianbfield_0',['CartesianBfield',['../classpyoculus_1_1problems_1_1cartesian__bfield_1_1_cartesian_bfield.html',1,'pyoculus::problems::cartesian_bfield']]],
+  ['cylindricalproblem_1',['CylindricalProblem',['../classpyoculus_1_1problems_1_1cylindrical__problem_1_1_cylindrical_problem.html',1,'pyoculus::problems::cylindrical_problem']]]
 ];

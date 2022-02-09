@@ -13,6 +13,12 @@ var annotated_dup =
         [ "base_problem", "namespacepyoculus_1_1problems_1_1base__problem.html", [
           [ "BaseProblem", "classpyoculus_1_1problems_1_1base__problem_1_1_base_problem.html", "classpyoculus_1_1problems_1_1base__problem_1_1_base_problem" ]
         ] ],
+        [ "cartesian_bfield", "namespacepyoculus_1_1problems_1_1cartesian__bfield.html", [
+          [ "CartesianBfield", "classpyoculus_1_1problems_1_1cartesian__bfield_1_1_cartesian_bfield.html", "classpyoculus_1_1problems_1_1cartesian__bfield_1_1_cartesian_bfield" ]
+        ] ],
+        [ "cylindrical_problem", "namespacepyoculus_1_1problems_1_1cylindrical__problem.html", [
+          [ "CylindricalProblem", "classpyoculus_1_1problems_1_1cylindrical__problem_1_1_cylindrical_problem.html", "classpyoculus_1_1problems_1_1cylindrical__problem_1_1_cylindrical_problem" ]
+        ] ],
         [ "spec_bfield", "namespacepyoculus_1_1problems_1_1spec__bfield.html", [
           [ "SPECBfield", "classpyoculus_1_1problems_1_1spec__bfield_1_1_s_p_e_c_bfield.html", "classpyoculus_1_1problems_1_1spec__bfield_1_1_s_p_e_c_bfield" ]
         ] ],
@@ -21,6 +27,9 @@ var annotated_dup =
         ] ],
         [ "spec_problem", "namespacepyoculus_1_1problems_1_1spec__problem.html", [
           [ "SPECProblem", "classpyoculus_1_1problems_1_1spec__problem_1_1_s_p_e_c_problem.html", "classpyoculus_1_1problems_1_1spec__problem_1_1_s_p_e_c_problem" ]
+        ] ],
+        [ "toroidal_problem", "namespacepyoculus_1_1problems_1_1toroidal__problem.html", [
+          [ "ToroidalProblem", "classpyoculus_1_1problems_1_1toroidal__problem_1_1_toroidal_problem.html", "classpyoculus_1_1problems_1_1toroidal__problem_1_1_toroidal_problem" ]
         ] ],
         [ "two_waves", "namespacepyoculus_1_1problems_1_1two__waves.html", [
           [ "TwoWaves", "classpyoculus_1_1problems_1_1two__waves_1_1_two_waves.html", "classpyoculus_1_1problems_1_1two__waves_1_1_two_waves" ]

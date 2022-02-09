@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['expandcf_266',['expandcf',['../namespacepyoculus_1_1irrationals_1_1continued__fraction.html#a4093bb9fa403964fc172b53c59fb9080',1,'pyoculus::irrationals::continued_fraction']]]
+  ['dbdx_0',['dBdX',['../classpyoculus_1_1problems_1_1cartesian__bfield_1_1_cartesian_bfield.html#a1027314f3d7c6c3bba6fa76ada6b285d',1,'pyoculus::problems::cartesian_bfield::CartesianBfield']]],
+  ['destroy_5fpjh_1',['destroy_pjh',['../namespacespecpjh.html#a6e69307ec6a4e755796b1746edbb8e88',1,'specpjh']]]
 ];

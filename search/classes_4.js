@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['poincareplot_205',['PoincarePlot',['../classpyoculus_1_1solvers_1_1poincare__plot_1_1_poincare_plot.html',1,'pyoculus::solvers::poincare_plot']]]
+  ['outputdata_0',['OutputData',['../classpyoculus_1_1solvers_1_1base__solver_1_1_base_solver_1_1_output_data.html',1,'pyoculus::solvers::base_solver::BaseSolver']]]
 ];

@@ -7,6 +7,7 @@ var classpyoculus_1_1solvers_1_1fixed__point_1_1_fixed_point =
     [ "GreenesResidue", "classpyoculus_1_1solvers_1_1fixed__point_1_1_fixed_point.html#a2a538eacf697cdf19fb05d26f8e94f46", null ],
     [ "history", "classpyoculus_1_1solvers_1_1fixed__point_1_1_fixed_point.html#a65e6514c1af95ec78cccccbca74b1a50", null ],
     [ "is_theta_fixed", "classpyoculus_1_1solvers_1_1fixed__point_1_1_fixed_point.html#ad9575765c0d051dcf8b92fb28407b3fd", null ],
+    [ "is_Z_fixed", "classpyoculus_1_1solvers_1_1fixed__point_1_1_fixed_point.html#a915a498e96c5adf325e89d12e048586b", null ],
     [ "MeanResidue", "classpyoculus_1_1solvers_1_1fixed__point_1_1_fixed_point.html#a3dba01c1b05c630866cd455a2f9e07f5", null ],
     [ "Nfp", "classpyoculus_1_1solvers_1_1fixed__point_1_1_fixed_point.html#ad2749f389ae4aba35301788bee524676", null ],
     [ "niter", "classpyoculus_1_1solvers_1_1fixed__point_1_1_fixed_point.html#aca414847879c1e0525d82ff3b1df0509", null ],

@@ -49,15 +49,7 @@ var namespaces_dup =
       [ "get_covariant_field", "namespacespecpjh.html#a2287c2bbc52124aa207cf08f5c465307", null ],
       [ "get_pjhfield", "namespacespecpjh.html#a1aa07329218a9bfc3d5c6dda9e15583e", null ],
       [ "get_pjhfield_tangent", "namespacespecpjh.html#aa721f885bb3eef78de7dcf0e3194cd77", null ],
-      [ "init_pjh", "namespacespecpjh.html#aa11c5ee3a60b1fa911ead2e05a89ff59", null ],
-      [ "delta_p", "namespacespecpjh.html#a6de4402aae07c85d30c171d8254ee094", null ],
-      [ "gbtmne", "namespacespecpjh.html#a378d9a70c1c69834c2fa7c75218e7e89", null ],
-      [ "gbtmno", "namespacespecpjh.html#a1440c88e8e3076ebaa8fc363abe672e9", null ],
-      [ "gbzmne", "namespacespecpjh.html#a840c91ec0ff54a51a67838e4c5d5e673", null ],
-      [ "gbzmno", "namespacespecpjh.html#a317e598f1180b80eaf848fc7795af811", null ],
-      [ "innout", "namespacespecpjh.html#a78d6fd2b4037a1a1390afbe57e7bd328", null ],
-      [ "ioi", "namespacespecpjh.html#a43f5ad98292aa9fe818b56396ecd459b", null ],
-      [ "plusminus", "namespacespecpjh.html#a581fcd75277fc71f904ea79a8cb23ca0", null ]
+      [ "init_pjh", "namespacespecpjh.html#aa11c5ee3a60b1fa911ead2e05a89ff59", null ]
     ] ],
     [ "spectypedefns", "namespacespectypedefns.html", [
       [ "real_kind", "namespacespectypedefns.html#aba639c200879f49e971f81ff54ea9fe3", null ]

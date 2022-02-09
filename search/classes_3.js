@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['outputdata_204',['OutputData',['../classpyoculus_1_1solvers_1_1base__solver_1_1_base_solver_1_1_output_data.html',1,'pyoculus::solvers::base_solver::BaseSolver']]]
+  ['lyapunovexponent_0',['LyapunovExponent',['../classpyoculus_1_1solvers_1_1lyapunov__exponent_1_1_lyapunov_exponent.html',1,'pyoculus::solvers::lyapunov_exponent']]]
 ];
