@@ -1,5 +1,9 @@
 var NAVTREEINDEX2 =
 {
+"namespacespecvariables.html":[2,0,7],
+"namespacespecvariables.html#a09c861affd4d01def391e0ed06e9587d":[2,0,7,2],
+"namespacespecvariables.html#a272ea0f9d6d9d89c69a944669a0f8bec":[2,0,7,5],
+"namespacespecvariables.html#a2ce1e9222d7a9f7571760c966d8ef48e":[2,0,7,21],
 "namespacespecvariables.html#a397c74bd208ec25ed0e4ba965393e874":[2,0,7,7],
 "namespacespecvariables.html#a3d75c18bd50625e4c6d2fc909f03daf3":[2,0,7,4],
 "namespacespecvariables.html#a42e4ab06616e11fda699af219cc155d2":[2,0,7,20],
