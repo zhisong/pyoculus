@@ -3,3 +3,5 @@ from .spec_problem import *
 from .spec_bfield import *
 from .spec_pjh import *
 from .two_waves import *
+from .cartesian_bfield import *
+from .cylindrical_problem import *

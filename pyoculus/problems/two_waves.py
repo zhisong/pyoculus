@@ -2,7 +2,7 @@
 #  @brief the perturbed slab problem
 #  @author Zhisong Qu (zhisong.qu@anu.edu.au)
 
-from .base_problem import BaseProblem
+from .toroidal_problem import ToroidalProblem
 import numpy as np
 
 ##
@@ -22,7 +22,7 @@ import numpy as np
 #
 #     ps = TwoWaves(k=0.002)
 #
-class TwoWaves(BaseProblem):
+class TwoWaves(ToroidalProblem):
 
 
     def __init__(self, k=0.002):
