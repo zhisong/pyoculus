@@ -102,8 +102,9 @@ Inheritance diagram for pyoculus.problems.cartesian_bfield.CartesianBfield:</div
   <img src="classpyoculus_1_1problems_1_1cartesian__bfield_1_1_cartesian_bfield.png" usemap="#pyoculus.problems.cartesian_5Fbfield.CartesianBfield_map" alt=""/>
   <map id="pyoculus.problems.cartesian_5Fbfield.CartesianBfield_map" name="pyoculus.problems.cartesian_5Fbfield.CartesianBfield_map">
 <area href="classpyoculus_1_1problems_1_1cylindrical__problem_1_1_cylindrical_problem.html" alt="pyoculus.problems.cylindrical_problem.CylindricalProblem" shape="rect" coords="0,56,345,80"/>
+<area href="classpyoculus_1_1problems_1_1bfield__problem_1_1_bfield_problem.html" alt="pyoculus.problems.bfield_problem.BfieldProblem" shape="rect" coords="355,56,700,80"/>
 <area href="classpyoculus_1_1problems_1_1base__problem_1_1_base_problem.html" title="Abstract class that used to drive calculation." alt="pyoculus.problems.base_problem.BaseProblem" shape="rect" coords="0,0,345,24"/>
-<area href="classpyoculus_1_1problems_1_1simsgeo__biot__savart_1_1_simsgeo_biot_savart.html" alt="pyoculus.problems.simsgeo_biot_savart.SimsgeoBiotSavart" shape="rect" coords="0,168,345,192"/>
+<area href="classpyoculus_1_1problems_1_1simsgeo__biot__savart_1_1_simsgeo_biot_savart.html" alt="pyoculus.problems.simsgeo_biot_savart.SimsgeoBiotSavart" shape="rect" coords="177,168,522,192"/>
   </map>
 </div></div>
 <table class="memberdecls">
@@ -112,10 +113,6 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a637ec2972f674bee031d96a49e28bf89"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classpyoculus_1_1problems_1_1cartesian__bfield_1_1_cartesian_bfield.html#a637ec2972f674bee031d96a49e28bf89">__init__</a> (self, R0, Z0, <a class="el" href="classpyoculus_1_1problems_1_1cylindrical__problem_1_1_cylindrical_problem.html#a87557d3198e83b93daa37cda035eb3e1">Nfp</a>=1)</td></tr>
 <tr class="memdesc:a637ec2972f674bee031d96a49e28bf89"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set up the problem.  <a href="classpyoculus_1_1problems_1_1cartesian__bfield_1_1_cartesian_bfield.html#a637ec2972f674bee031d96a49e28bf89">More...</a><br /></td></tr>
 <tr class="separator:a637ec2972f674bee031d96a49e28bf89"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a423b1296f44169c68c1d7baf23eed6a4"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classpyoculus_1_1problems_1_1cartesian__bfield_1_1_cartesian_bfield.html#a423b1296f44169c68c1d7baf23eed6a4">B</a> (self, xyz, args=None)</td></tr>
-<tr class="separator:a423b1296f44169c68c1d7baf23eed6a4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1027314f3d7c6c3bba6fa76ada6b285d"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classpyoculus_1_1problems_1_1cartesian__bfield_1_1_cartesian_bfield.html#a1027314f3d7c6c3bba6fa76ada6b285d">dBdX</a> (self, xyz, args=None)</td></tr>
-<tr class="separator:a1027314f3d7c6c3bba6fa76ada6b285d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af7707682da9e26964e834b5fab049c2d"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classpyoculus_1_1problems_1_1cartesian__bfield_1_1_cartesian_bfield.html#af7707682da9e26964e834b5fab049c2d">f_RZ</a> (self, phi, RZ, args=None)</td></tr>
 <tr class="memdesc:af7707682da9e26964e834b5fab049c2d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns ODE RHS.  <a href="classpyoculus_1_1problems_1_1cartesian__bfield_1_1_cartesian_bfield.html#af7707682da9e26964e834b5fab049c2d">More...</a><br /></td></tr>
 <tr class="separator:af7707682da9e26964e834b5fab049c2d"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -153,6 +150,16 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:aca3e107db92e8d0b85378c2b8804d590 inherit pub_methods_classpyoculus_1_1problems_1_1base__problem_1_1_base_problem"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classpyoculus_1_1problems_1_1base__problem_1_1_base_problem.html#aca3e107db92e8d0b85378c2b8804d590">convert_coords</a> (self, coord1)</td></tr>
 <tr class="memdesc:aca3e107db92e8d0b85378c2b8804d590 inherit pub_methods_classpyoculus_1_1problems_1_1base__problem_1_1_base_problem"><td class="mdescLeft">&#160;</td><td class="mdescRight">Converts coordinates (for example \(s,\theta,\zeta\) to \(R,Z,\varphi\))  <a href="classpyoculus_1_1problems_1_1base__problem_1_1_base_problem.html#aca3e107db92e8d0b85378c2b8804d590">More...</a><br /></td></tr>
 <tr class="separator:aca3e107db92e8d0b85378c2b8804d590 inherit pub_methods_classpyoculus_1_1problems_1_1base__problem_1_1_base_problem"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="inherit_header pub_methods_classpyoculus_1_1problems_1_1bfield__problem_1_1_bfield_problem"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_classpyoculus_1_1problems_1_1bfield__problem_1_1_bfield_problem')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="classpyoculus_1_1problems_1_1bfield__problem_1_1_bfield_problem.html">pyoculus.problems.bfield_problem.BfieldProblem</a></td></tr>
+<tr class="memitem:a4a340bcaae5e839c3055b3cba45ed005 inherit pub_methods_classpyoculus_1_1problems_1_1bfield__problem_1_1_bfield_problem"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classpyoculus_1_1problems_1_1bfield__problem_1_1_bfield_problem.html#a4a340bcaae5e839c3055b3cba45ed005">__init__</a> (self)</td></tr>
+<tr class="memdesc:a4a340bcaae5e839c3055b3cba45ed005 inherit pub_methods_classpyoculus_1_1problems_1_1bfield__problem_1_1_bfield_problem"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set up the problem.  <a href="classpyoculus_1_1problems_1_1bfield__problem_1_1_bfield_problem.html#a4a340bcaae5e839c3055b3cba45ed005">More...</a><br /></td></tr>
+<tr class="separator:a4a340bcaae5e839c3055b3cba45ed005 inherit pub_methods_classpyoculus_1_1problems_1_1bfield__problem_1_1_bfield_problem"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a220418d75296759234e1e2df925ad1d1 inherit pub_methods_classpyoculus_1_1problems_1_1bfield__problem_1_1_bfield_problem"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classpyoculus_1_1problems_1_1bfield__problem_1_1_bfield_problem.html#a220418d75296759234e1e2df925ad1d1">B</a> (self, coords, args=None)</td></tr>
+<tr class="memdesc:a220418d75296759234e1e2df925ad1d1 inherit pub_methods_classpyoculus_1_1problems_1_1bfield__problem_1_1_bfield_problem"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns magnetic fields.  <a href="classpyoculus_1_1problems_1_1bfield__problem_1_1_bfield_problem.html#a220418d75296759234e1e2df925ad1d1">More...</a><br /></td></tr>
+<tr class="separator:a220418d75296759234e1e2df925ad1d1 inherit pub_methods_classpyoculus_1_1problems_1_1bfield__problem_1_1_bfield_problem"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6f79cc08f0251834bd8f718eadc06293 inherit pub_methods_classpyoculus_1_1problems_1_1bfield__problem_1_1_bfield_problem"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classpyoculus_1_1problems_1_1bfield__problem_1_1_bfield_problem.html#a6f79cc08f0251834bd8f718eadc06293">dBdX</a> (self, coords, args=None)</td></tr>
+<tr class="memdesc:a6f79cc08f0251834bd8f718eadc06293 inherit pub_methods_classpyoculus_1_1problems_1_1bfield__problem_1_1_bfield_problem"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns magnetic fields.  <a href="classpyoculus_1_1problems_1_1bfield__problem_1_1_bfield_problem.html#a6f79cc08f0251834bd8f718eadc06293">More...</a><br /></td></tr>
+<tr class="separator:a6f79cc08f0251834bd8f718eadc06293 inherit pub_methods_classpyoculus_1_1problems_1_1bfield__problem_1_1_bfield_problem"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="inherited" name="inherited"></a>
 Additional Inherited Members</h2></td></tr>
@@ -225,85 +232,13 @@ Additional Inherited Members</h2></td></tr>
   </dd>
 </dl>
 
-<p>Reimplemented from <a class="el" href="classpyoculus_1_1problems_1_1cylindrical__problem_1_1_cylindrical_problem.html#ad6234342ef1f327f9602989e8cd041cb">pyoculus.problems.cylindrical_problem.CylindricalProblem</a>.</p>
+<p>Reimplemented from <a class="el" href="classpyoculus_1_1problems_1_1bfield__problem_1_1_bfield_problem.html#a4a340bcaae5e839c3055b3cba45ed005">pyoculus.problems.bfield_problem.BfieldProblem</a>.</p>
 
 <p>Reimplemented in <a class="el" href="classpyoculus_1_1problems_1_1simsgeo__biot__savart_1_1_simsgeo_biot_savart.html#abefd4dd157efbd420b073155f284fc5c">pyoculus.problems.simsgeo_biot_savart.SimsgeoBiotSavart</a>.</p>
 
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
-<a id="a423b1296f44169c68c1d7baf23eed6a4" name="a423b1296f44169c68c1d7baf23eed6a4"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a423b1296f44169c68c1d7baf23eed6a4">&#9670;&nbsp;</a></span>B()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">def pyoculus.problems.cartesian_bfield.CartesianBfield.B </td>
-          <td>(</td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname"><em>self</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname"><em>xyz</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname"><em>args</em> = <code>None</code>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Reimplemented in <a class="el" href="classpyoculus_1_1problems_1_1simsgeo__biot__savart_1_1_simsgeo_biot_savart.html#ae010dec9e81fa23be20f60435ea72a33">pyoculus.problems.simsgeo_biot_savart.SimsgeoBiotSavart</a>.</p>
-
-</div>
-</div>
-<a id="a1027314f3d7c6c3bba6fa76ada6b285d" name="a1027314f3d7c6c3bba6fa76ada6b285d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a1027314f3d7c6c3bba6fa76ada6b285d">&#9670;&nbsp;</a></span>dBdX()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">def pyoculus.problems.cartesian_bfield.CartesianBfield.dBdX </td>
-          <td>(</td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname"><em>self</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname"><em>xyz</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname"><em>args</em> = <code>None</code>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Reimplemented in <a class="el" href="classpyoculus_1_1problems_1_1simsgeo__biot__savart_1_1_simsgeo_biot_savart.html#ad66b840315e669cae22c093e11240a97">pyoculus.problems.simsgeo_biot_savart.SimsgeoBiotSavart</a>.</p>
-
-</div>
-</div>
 <a id="af7707682da9e26964e834b5fab049c2d" name="af7707682da9e26964e834b5fab049c2d"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#af7707682da9e26964e834b5fab049c2d">&#9670;&nbsp;</a></span>f_RZ()</h2>
 

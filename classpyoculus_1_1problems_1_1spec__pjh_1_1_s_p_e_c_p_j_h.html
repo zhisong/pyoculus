@@ -105,9 +105,7 @@ Inheritance diagram for pyoculus.problems.spec_pjh.SPECPJH:</div>
  <div class="center">
   <img src="classpyoculus_1_1problems_1_1spec__pjh_1_1_s_p_e_c_p_j_h.png" usemap="#pyoculus.problems.spec_5Fpjh.SPECPJH_map" alt=""/>
   <map id="pyoculus.problems.spec_5Fpjh.SPECPJH_map" name="pyoculus.problems.spec_5Fpjh.SPECPJH_map">
-<area href="classpyoculus_1_1problems_1_1spec__problem_1_1_s_p_e_c_problem.html" title="Abstract class to setup the SPEC system for interfacing Fortran, used in ODE solver." alt="pyoculus.problems.spec_problem.SPECProblem" shape="rect" coords="0,112,312,136"/>
-<area href="classpyoculus_1_1problems_1_1toroidal__problem_1_1_toroidal_problem.html" alt="pyoculus.problems.toroidal_problem.ToroidalProblem" shape="rect" coords="0,56,312,80"/>
-<area href="classpyoculus_1_1problems_1_1base__problem_1_1_base_problem.html" title="Abstract class that used to drive calculation." alt="pyoculus.problems.base_problem.BaseProblem" shape="rect" coords="0,0,312,24"/>
+<area href="classpyoculus_1_1problems_1_1spec__problem_1_1_s_p_e_c_problem.html" title="Abstract class to setup the SPEC system for interfacing Fortran, used in ODE solver." alt="pyoculus.problems.spec_problem.SPECProblem" shape="rect" coords="0,0,284,24"/>
   </map>
 </div></div>
 <table class="memberdecls">
@@ -134,29 +132,6 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:ac3f0ac0dd5eba26cd53cdb9bf9e70d5a"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classpyoculus_1_1problems_1_1spec__problem_1_1_s_p_e_c_problem.html#ac3f0ac0dd5eba26cd53cdb9bf9e70d5a">__init__</a> (self, spec_data, lvol)</td></tr>
 <tr class="memdesc:ac3f0ac0dd5eba26cd53cdb9bf9e70d5a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set up the equilibrium for use of the fortran module.  <a href="classpyoculus_1_1problems_1_1spec__problem_1_1_s_p_e_c_problem.html#ac3f0ac0dd5eba26cd53cdb9bf9e70d5a">More...</a><br /></td></tr>
 <tr class="separator:ac3f0ac0dd5eba26cd53cdb9bf9e70d5a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a539003c9e1461a26ebdf89029ce7be24"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classpyoculus_1_1problems_1_1toroidal__problem_1_1_toroidal_problem.html#a539003c9e1461a26ebdf89029ce7be24">__init__</a> (self)</td></tr>
-<tr class="memdesc:a539003c9e1461a26ebdf89029ce7be24"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set up the problem with two cyclical coordinates, e.g.  <a href="classpyoculus_1_1problems_1_1toroidal__problem_1_1_toroidal_problem.html#a539003c9e1461a26ebdf89029ce7be24">More...</a><br /></td></tr>
-<tr class="separator:a539003c9e1461a26ebdf89029ce7be24"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a290ab18dcf7e87fbfdd39f112aadd693"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classpyoculus_1_1problems_1_1toroidal__problem_1_1_toroidal_problem.html#a290ab18dcf7e87fbfdd39f112aadd693">f</a> (self, zeta, st, args=None)</td></tr>
-<tr class="memdesc:a290ab18dcf7e87fbfdd39f112aadd693"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns ODE RHS.  <a href="classpyoculus_1_1problems_1_1toroidal__problem_1_1_toroidal_problem.html#a290ab18dcf7e87fbfdd39f112aadd693">More...</a><br /></td></tr>
-<tr class="separator:a290ab18dcf7e87fbfdd39f112aadd693"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3e47f7ccf6aa91052c5a5952506ffcdc"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classpyoculus_1_1problems_1_1toroidal__problem_1_1_toroidal_problem.html#a3e47f7ccf6aa91052c5a5952506ffcdc">f_tangent</a> (self, t, st, args=None)</td></tr>
-<tr class="memdesc:a3e47f7ccf6aa91052c5a5952506ffcdc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns ODE RHS, with tangent.  <a href="classpyoculus_1_1problems_1_1toroidal__problem_1_1_toroidal_problem.html#a3e47f7ccf6aa91052c5a5952506ffcdc">More...</a><br /></td></tr>
-<tr class="separator:a3e47f7ccf6aa91052c5a5952506ffcdc"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:acd5ea0832e716a7b95dc5da9f326433d"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classpyoculus_1_1problems_1_1toroidal__problem_1_1_toroidal_problem.html#acd5ea0832e716a7b95dc5da9f326433d">convert_coords</a> (self, coord1)</td></tr>
-<tr class="memdesc:acd5ea0832e716a7b95dc5da9f326433d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Converts coordinates, identity here.  <a href="classpyoculus_1_1problems_1_1toroidal__problem_1_1_toroidal_problem.html#acd5ea0832e716a7b95dc5da9f326433d">More...</a><br /></td></tr>
-<tr class="separator:acd5ea0832e716a7b95dc5da9f326433d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:afc15c0cd4cf6a498cfb30197cac0b11e"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classpyoculus_1_1problems_1_1base__problem_1_1_base_problem.html#afc15c0cd4cf6a498cfb30197cac0b11e">__init__</a> (self)</td></tr>
-<tr class="separator:afc15c0cd4cf6a498cfb30197cac0b11e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5bae7b9b3198b39c66631abd82791f98"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classpyoculus_1_1problems_1_1base__problem_1_1_base_problem.html#a5bae7b9b3198b39c66631abd82791f98">f</a> (self, t, y, args=None)</td></tr>
-<tr class="memdesc:a5bae7b9b3198b39c66631abd82791f98"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns ODE RHS.  <a href="classpyoculus_1_1problems_1_1base__problem_1_1_base_problem.html#a5bae7b9b3198b39c66631abd82791f98">More...</a><br /></td></tr>
-<tr class="separator:a5bae7b9b3198b39c66631abd82791f98"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac9e92ba38c3bfe727b43d58137bbb5bd"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classpyoculus_1_1problems_1_1base__problem_1_1_base_problem.html#ac9e92ba38c3bfe727b43d58137bbb5bd">f_tangent</a> (self, t, y, args=None)</td></tr>
-<tr class="memdesc:ac9e92ba38c3bfe727b43d58137bbb5bd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns ODE RHS, with tangent.  <a href="classpyoculus_1_1problems_1_1base__problem_1_1_base_problem.html#ac9e92ba38c3bfe727b43d58137bbb5bd">More...</a><br /></td></tr>
-<tr class="separator:ac9e92ba38c3bfe727b43d58137bbb5bd"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aca3e107db92e8d0b85378c2b8804d590"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classpyoculus_1_1problems_1_1base__problem_1_1_base_problem.html#aca3e107db92e8d0b85378c2b8804d590">convert_coords</a> (self, coord1)</td></tr>
-<tr class="memdesc:aca3e107db92e8d0b85378c2b8804d590"><td class="mdescLeft">&#160;</td><td class="mdescRight">Converts coordinates (for example \(s,\theta,\zeta\) to \(R,Z,\varphi\))  <a href="classpyoculus_1_1problems_1_1base__problem_1_1_base_problem.html#aca3e107db92e8d0b85378c2b8804d590">More...</a><br /></td></tr>
-<tr class="separator:aca3e107db92e8d0b85378c2b8804d590"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
@@ -205,24 +180,6 @@ Public Attributes</h2></td></tr>
 <tr class="separator:a7d0decf795af8f1cc5b99db11a079ab3 inherit pub_attribs_classpyoculus_1_1problems_1_1spec__problem_1_1_s_p_e_c_problem"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af750796cdb4c88ec45ed881c2b8efa94 inherit pub_attribs_classpyoculus_1_1problems_1_1spec__problem_1_1_s_p_e_c_problem"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classpyoculus_1_1problems_1_1spec__problem_1_1_s_p_e_c_problem.html#af750796cdb4c88ec45ed881c2b8efa94">Lcoordinatesingularity</a></td></tr>
 <tr class="separator:af750796cdb4c88ec45ed881c2b8efa94 inherit pub_attribs_classpyoculus_1_1problems_1_1spec__problem_1_1_s_p_e_c_problem"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="inherit_header pub_attribs_classpyoculus_1_1problems_1_1toroidal__problem_1_1_toroidal_problem"><td colspan="2" onclick="javascript:toggleInherit('pub_attribs_classpyoculus_1_1problems_1_1toroidal__problem_1_1_toroidal_problem')"><img src="closed.png" alt="-"/>&#160;Public Attributes inherited from <a class="el" href="classpyoculus_1_1problems_1_1toroidal__problem_1_1_toroidal_problem.html">pyoculus.problems.toroidal_problem.ToroidalProblem</a></td></tr>
-<tr class="memitem:a9326ab46c6d8525e3db8574ba6e4ae97 inherit pub_attribs_classpyoculus_1_1problems_1_1toroidal__problem_1_1_toroidal_problem"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classpyoculus_1_1problems_1_1toroidal__problem_1_1_toroidal_problem.html#a9326ab46c6d8525e3db8574ba6e4ae97">problem_size</a></td></tr>
-<tr class="separator:a9326ab46c6d8525e3db8574ba6e4ae97 inherit pub_attribs_classpyoculus_1_1problems_1_1toroidal__problem_1_1_toroidal_problem"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1902a229a31f7ce5d88033e50aa16fa2 inherit pub_attribs_classpyoculus_1_1problems_1_1toroidal__problem_1_1_toroidal_problem"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classpyoculus_1_1problems_1_1toroidal__problem_1_1_toroidal_problem.html#a1902a229a31f7ce5d88033e50aa16fa2">poincare_plot_type</a></td></tr>
-<tr class="separator:a1902a229a31f7ce5d88033e50aa16fa2 inherit pub_attribs_classpyoculus_1_1problems_1_1toroidal__problem_1_1_toroidal_problem"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae52f27b21f3e0b607560d62f9ba08e07 inherit pub_attribs_classpyoculus_1_1problems_1_1toroidal__problem_1_1_toroidal_problem"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classpyoculus_1_1problems_1_1toroidal__problem_1_1_toroidal_problem.html#ae52f27b21f3e0b607560d62f9ba08e07">poincare_plot_xlabel</a></td></tr>
-<tr class="separator:ae52f27b21f3e0b607560d62f9ba08e07 inherit pub_attribs_classpyoculus_1_1problems_1_1toroidal__problem_1_1_toroidal_problem"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4558d18e9807e799afa12f1ba9f14788 inherit pub_attribs_classpyoculus_1_1problems_1_1toroidal__problem_1_1_toroidal_problem"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classpyoculus_1_1problems_1_1toroidal__problem_1_1_toroidal_problem.html#a4558d18e9807e799afa12f1ba9f14788">poincare_plot_ylabel</a></td></tr>
-<tr class="separator:a4558d18e9807e799afa12f1ba9f14788 inherit pub_attribs_classpyoculus_1_1problems_1_1toroidal__problem_1_1_toroidal_problem"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="inherit_header pub_attribs_classpyoculus_1_1problems_1_1base__problem_1_1_base_problem"><td colspan="2" onclick="javascript:toggleInherit('pub_attribs_classpyoculus_1_1problems_1_1base__problem_1_1_base_problem')"><img src="closed.png" alt="-"/>&#160;Public Attributes inherited from <a class="el" href="classpyoculus_1_1problems_1_1base__problem_1_1_base_problem.html">pyoculus.problems.base_problem.BaseProblem</a></td></tr>
-<tr class="memitem:a740459f61e868ab01d3004667fafb56e inherit pub_attribs_classpyoculus_1_1problems_1_1base__problem_1_1_base_problem"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classpyoculus_1_1problems_1_1base__problem_1_1_base_problem.html#a740459f61e868ab01d3004667fafb56e">problem_size</a></td></tr>
-<tr class="separator:a740459f61e868ab01d3004667fafb56e inherit pub_attribs_classpyoculus_1_1problems_1_1base__problem_1_1_base_problem"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a898fb3d0797b41d6db679ab52c9047f9 inherit pub_attribs_classpyoculus_1_1problems_1_1base__problem_1_1_base_problem"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classpyoculus_1_1problems_1_1base__problem_1_1_base_problem.html#a898fb3d0797b41d6db679ab52c9047f9">poincare_plot_type</a></td></tr>
-<tr class="separator:a898fb3d0797b41d6db679ab52c9047f9 inherit pub_attribs_classpyoculus_1_1problems_1_1base__problem_1_1_base_problem"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1a9a1c7a3902530041c4aeb4f597ac83 inherit pub_attribs_classpyoculus_1_1problems_1_1base__problem_1_1_base_problem"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classpyoculus_1_1problems_1_1base__problem_1_1_base_problem.html#a1a9a1c7a3902530041c4aeb4f597ac83">poincare_plot_xlabel</a></td></tr>
-<tr class="separator:a1a9a1c7a3902530041c4aeb4f597ac83 inherit pub_attribs_classpyoculus_1_1problems_1_1base__problem_1_1_base_problem"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7995b4744e8ca99958a974051fe913de inherit pub_attribs_classpyoculus_1_1problems_1_1base__problem_1_1_base_problem"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classpyoculus_1_1problems_1_1base__problem_1_1_base_problem.html#a7995b4744e8ca99958a974051fe913de">poincare_plot_ylabel</a></td></tr>
-<tr class="separator:a7995b4744e8ca99958a974051fe913de inherit pub_attribs_classpyoculus_1_1problems_1_1base__problem_1_1_base_problem"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p >Class that used to setup the SPEC Pressure Jump Hamiltonian system for interfacing Fortran. </p>
@@ -383,8 +340,6 @@ Physics</h3>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>the xyz coordinates </dd></dl>
 
-<p>Reimplemented from <a class="el" href="classpyoculus_1_1problems_1_1toroidal__problem_1_1_toroidal_problem.html#acd5ea0832e716a7b95dc5da9f326433d">pyoculus.problems.toroidal_problem.ToroidalProblem</a>.</p>
-
 </div>
 </div>
 <a id="adf0c07ff64c020426108b4055e7b322a" name="adf0c07ff64c020426108b4055e7b322a"></a>
@@ -436,8 +391,6 @@ Physics</h3>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>array size 2, the RHS of the ODE </dd></dl>
 
-<p>Reimplemented from <a class="el" href="classpyoculus_1_1problems_1_1toroidal__problem_1_1_toroidal_problem.html#a290ab18dcf7e87fbfdd39f112aadd693">pyoculus.problems.toroidal_problem.ToroidalProblem</a>.</p>
-
 </div>
 </div>
 <a id="a19965a3a86752c3da923a48322036367" name="a19965a3a86752c3da923a48322036367"></a>
@@ -488,8 +441,6 @@ Physics</h3>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>array size 6, the RHS of the ODE </dd></dl>
-
-<p>Reimplemented from <a class="el" href="classpyoculus_1_1problems_1_1toroidal__problem_1_1_toroidal_problem.html#a3e47f7ccf6aa91052c5a5952506ffcdc">pyoculus.problems.toroidal_problem.ToroidalProblem</a>.</p>
 
 </div>
 </div>

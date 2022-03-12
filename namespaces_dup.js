@@ -9,8 +9,8 @@ var namespaces_dup =
       [ "get_zernike_rm", "namespacespecbasefn.html#a9d89f02b46b6d55c535c7b9634a64e9c", null ]
     ] ],
     [ "specbfield", "namespacespecbfield.html", [
-      [ "get_bfield", "namespacespecbfield.html#a550a47b1716ac3b0b11fad5999ffa79a", null ],
-      [ "get_bfield_tangent", "namespacespecbfield.html#a6dc6cd0473391de9cdbbbbb3d1d2eebf", null ]
+      [ "get_bfield", "namespacespecbfield.html#a70e5d85cfcad55f6a5221d66207838ab", null ],
+      [ "get_bfield_tangent", "namespacespecbfield.html#a640683164e1e8e0c138e14610ab873ca", null ]
     ] ],
     [ "specconstants", "namespacespecconstants.html", [
       [ "eight", "namespacespecconstants.html#a2fe2f55b9ddc50794aa0f77b74d992db", null ],

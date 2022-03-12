@@ -5,6 +5,9 @@ var dir_396fdd0e92596d9c909944d17c879379 =
     [ "base_problem.py", "base__problem_8py.html", [
       [ "pyoculus.problems.base_problem.BaseProblem", "classpyoculus_1_1problems_1_1base__problem_1_1_base_problem.html", "classpyoculus_1_1problems_1_1base__problem_1_1_base_problem" ]
     ] ],
+    [ "bfield_problem.py", "bfield__problem_8py.html", [
+      [ "pyoculus.problems.bfield_problem.BfieldProblem", "classpyoculus_1_1problems_1_1bfield__problem_1_1_bfield_problem.html", "classpyoculus_1_1problems_1_1bfield__problem_1_1_bfield_problem" ]
+    ] ],
     [ "cartesian_bfield.py", "cartesian__bfield_8py.html", [
       [ "pyoculus.problems.cartesian_bfield.CartesianBfield", "classpyoculus_1_1problems_1_1cartesian__bfield_1_1_cartesian_bfield.html", "classpyoculus_1_1problems_1_1cartesian__bfield_1_1_cartesian_bfield" ]
     ] ],
@@ -28,6 +31,9 @@ var dir_396fdd0e92596d9c909944d17c879379 =
     ] ],
     [ "spec_problem.py", "spec__problem_8py.html", [
       [ "pyoculus.problems.spec_problem.SPECProblem", "classpyoculus_1_1problems_1_1spec__problem_1_1_s_p_e_c_problem.html", "classpyoculus_1_1problems_1_1spec__problem_1_1_s_p_e_c_problem" ]
+    ] ],
+    [ "toroidal_bfield.py", "toroidal__bfield_8py.html", [
+      [ "pyoculus.problems.toroidal_bfield.ToroidalBfield", "classpyoculus_1_1problems_1_1toroidal__bfield_1_1_toroidal_bfield.html", "classpyoculus_1_1problems_1_1toroidal__bfield_1_1_toroidal_bfield" ]
     ] ],
     [ "toroidal_problem.py", "toroidal__problem_8py.html", [
       [ "pyoculus.problems.toroidal_problem.ToroidalProblem", "classpyoculus_1_1problems_1_1toroidal__problem_1_1_toroidal_problem.html", "classpyoculus_1_1problems_1_1toroidal__problem_1_1_toroidal_problem" ]

@@ -1,8 +1,8 @@
 var searchData=
 [
   ['get_5fb2_5finterface_0',['get_b2_interface',['../namespacespecpjh.html#a4d5eff8690a6cdac360f43cbd5183685',1,'specpjh']]],
-  ['get_5fbfield_1',['get_bfield',['../namespacespecbfield.html#a550a47b1716ac3b0b11fad5999ffa79a',1,'specbfield']]],
-  ['get_5fbfield_5ftangent_2',['get_bfield_tangent',['../namespacespecbfield.html#a6dc6cd0473391de9cdbbbbb3d1d2eebf',1,'specbfield']]],
+  ['get_5fbfield_1',['get_bfield',['../namespacespecbfield.html#a70e5d85cfcad55f6a5221d66207838ab',1,'specbfield']]],
+  ['get_5fbfield_5ftangent_2',['get_bfield_tangent',['../namespacespecbfield.html#a640683164e1e8e0c138e14610ab873ca',1,'specbfield']]],
   ['get_5fcheby_3',['get_cheby',['../namespacespecbasefn.html#a49831e1bf3bfadcc878f497364d002bd',1,'specbasefn']]],
   ['get_5fcheby_5fd2_4',['get_cheby_d2',['../namespacespecbasefn.html#a600732d82699331810eed1f70baff964',1,'specbasefn']]],
   ['get_5fcovariant_5ffield_5',['get_covariant_field',['../classpyoculus_1_1problems_1_1spec__pjh_1_1_s_p_e_c_p_j_h.html#aa263b98d6486657bd7c0e6673f44f69b',1,'pyoculus.problems.spec_pjh.SPECPJH.get_covariant_field()'],['../namespacespecpjh.html#a2287c2bbc52124aa207cf08f5c465307',1,'specpjh::get_covariant_field()']]],

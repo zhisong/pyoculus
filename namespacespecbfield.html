@@ -97,14 +97,14 @@ $(document).ready(function(){initNavTree('namespacespecbfield.html',''); initRes
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions/Subroutines</h2></td></tr>
-<tr class="memitem:a550a47b1716ac3b0b11fad5999ffa79a"><td class="memItemLeft" align="right" valign="top">subroutine&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacespecbfield.html#a550a47b1716ac3b0b11fad5999ffa79a">get_bfield</a> (zeta, st, Bst)</td></tr>
-<tr class="separator:a550a47b1716ac3b0b11fad5999ffa79a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6dc6cd0473391de9cdbbbbb3d1d2eebf"><td class="memItemLeft" align="right" valign="top">subroutine&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacespecbfield.html#a6dc6cd0473391de9cdbbbbb3d1d2eebf">get_bfield_tangent</a> (zeta, st, Bst)</td></tr>
-<tr class="separator:a6dc6cd0473391de9cdbbbbb3d1d2eebf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a70e5d85cfcad55f6a5221d66207838ab"><td class="memItemLeft" align="right" valign="top">subroutine&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacespecbfield.html#a70e5d85cfcad55f6a5221d66207838ab">get_bfield</a> (stz, Bstz)</td></tr>
+<tr class="separator:a70e5d85cfcad55f6a5221d66207838ab"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a640683164e1e8e0c138e14610ab873ca"><td class="memItemLeft" align="right" valign="top">subroutine&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacespecbfield.html#a640683164e1e8e0c138e14610ab873ca">get_bfield_tangent</a> (stz, Bstz, dBstz)</td></tr>
+<tr class="separator:a640683164e1e8e0c138e14610ab873ca"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Function/Subroutine Documentation</h2>
-<a id="a550a47b1716ac3b0b11fad5999ffa79a" name="a550a47b1716ac3b0b11fad5999ffa79a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a550a47b1716ac3b0b11fad5999ffa79a">&#9670;&nbsp;</a></span>get_bfield()</h2>
+<a id="a70e5d85cfcad55f6a5221d66207838ab" name="a70e5d85cfcad55f6a5221d66207838ab"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a70e5d85cfcad55f6a5221d66207838ab">&#9670;&nbsp;</a></span>get_bfield()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -112,20 +112,14 @@ Functions/Subroutines</h2></td></tr>
         <tr>
           <td class="memname">subroutine specbfield::get_bfield </td>
           <td>(</td>
-          <td class="paramtype">real(kind=real_kind), intent(in)&#160;</td>
-          <td class="paramname"><em>zeta</em>, </td>
+          <td class="paramtype">real(kind=real_kind), dimension(3), intent(in)&#160;</td>
+          <td class="paramname"><em>stz</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">real(kind=real_kind), dimension(2), intent(in)&#160;</td>
-          <td class="paramname"><em>st</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">real(kind=real_kind), dimension(2), intent(out)&#160;</td>
-          <td class="paramname"><em>Bst</em>&#160;</td>
+          <td class="paramtype">real(kind=real_kind), dimension(3), intent(out)&#160;</td>
+          <td class="paramname"><em>Bstz</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -137,8 +131,8 @@ Functions/Subroutines</h2></td></tr>
 
 </div>
 </div>
-<a id="a6dc6cd0473391de9cdbbbbb3d1d2eebf" name="a6dc6cd0473391de9cdbbbbb3d1d2eebf"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a6dc6cd0473391de9cdbbbbb3d1d2eebf">&#9670;&nbsp;</a></span>get_bfield_tangent()</h2>
+<a id="a640683164e1e8e0c138e14610ab873ca" name="a640683164e1e8e0c138e14610ab873ca"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a640683164e1e8e0c138e14610ab873ca">&#9670;&nbsp;</a></span>get_bfield_tangent()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -146,20 +140,20 @@ Functions/Subroutines</h2></td></tr>
         <tr>
           <td class="memname">subroutine specbfield::get_bfield_tangent </td>
           <td>(</td>
-          <td class="paramtype">real(kind=real_kind), intent(in)&#160;</td>
-          <td class="paramname"><em>zeta</em>, </td>
+          <td class="paramtype">real(kind=real_kind), dimension(3), intent(in)&#160;</td>
+          <td class="paramname"><em>stz</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">real(kind=real_kind), dimension(6), intent(in)&#160;</td>
-          <td class="paramname"><em>st</em>, </td>
+          <td class="paramtype">real(kind=real_kind), dimension(3), intent(out)&#160;</td>
+          <td class="paramname"><em>Bstz</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">real(kind=real_kind), dimension(6), intent(out)&#160;</td>
-          <td class="paramname"><em>Bst</em>&#160;</td>
+          <td class="paramtype">real(kind=real_kind), dimension(3,3), intent(out)&#160;</td>
+          <td class="paramname"><em>dBstz</em>&#160;</td>
         </tr>
         <tr>
           <td></td>

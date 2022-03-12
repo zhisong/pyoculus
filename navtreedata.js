@@ -66,8 +66,8 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "____init_____8py.html",
-"classpyoculus_1_1solvers_1_1base__solver_1_1_base_solver.html#a56075abd8cd999373a6dcec9eb66d84c",
-"namespacespecvariables.html"
+"classpyoculus_1_1problems_1_1two__waves_1_1_two_waves.html#ad5ad9f119aeae7a78bbc4b955fd250e9",
+"namespacespeccoords.html#a80b745a42dc8d6b3f78eef5fcb4b65e9"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';
