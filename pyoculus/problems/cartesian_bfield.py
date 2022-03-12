@@ -4,9 +4,10 @@
 #
 
 from .cylindrical_problem import CylindricalProblem
+from .bfield_problem import BfieldProblem
 import numpy as np
 
-class CartesianBfield(CylindricalProblem):
+class CartesianBfield(CylindricalProblem, BfieldProblem):
 
     def __init__(self, R0, Z0, Nfp=1):
         """! Set up the problem
@@ -15,17 +16,6 @@ class CartesianBfield(CylindricalProblem):
         """
 
         super().__init__(R0, Z0, Nfp)
-
-
-    def B(self, xyz, args=None):
-        raise NotImplementedError(
-            "A CartesianBfield class should implement member function B"
-        )
-
-    def dBdX(self, xyz, args=None):
-        raise NotImplementedError(
-            "A CartesianBfield class should implement member function dBdX"
-        )
 
     def f_RZ(self, phi, RZ, args=None):
         """! Returns ODE RHS
@@ -75,10 +65,11 @@ class CartesianBfield(CylindricalProblem):
             Z
         ])
         
-        B = np.array([self.B(xyz, args)]).T
+        B, dBdX = self.dBdX(xyz, args)
+        B = np.array(B).T
         Bx = B[0,0]
         By = B[1,0]
-        dBdX = np.array(self.dBdX(xyz, args))
+        dBdX = np.array(dBdX)
 
         invJacobian = self._inv_Jacobian(R,phi,Z)
         Jacobian = np.linalg.inv(invJacobian)

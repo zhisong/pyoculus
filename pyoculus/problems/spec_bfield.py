@@ -3,6 +3,7 @@
 #  @author Zhisong Qu (zhisong.qu@anu.edu.au)
 #
 from .spec_problem import SPECProblem
+from .toroidal_bfield import ToroidalBfield
 import numpy as np
 
 ## Class that used to setup the SPEC bfield problem for interfacing Fortran, used in ODE solver.
@@ -11,7 +12,7 @@ import numpy as np
 # The SPECBfield system of ODEs is given by
 # \f[ \frac{ds}{d\zeta} = \frac{B^{s}}{B^{\zeta}}  \f]
 # \f[ \frac{d\theta}{d\zeta} = \frac{B^{\theta}}{B^{\zeta}}  \f]
-class SPECBfield(SPECProblem):
+class SPECBfield(SPECProblem, ToroidalBfield):
 
     ## the problem size, 2 for 1.5D/2D Hamiltonian system
 
@@ -38,22 +39,22 @@ class SPECBfield(SPECProblem):
         else:
             raise ValueError("Unknown Igeometry!")
 
-    def f(self, zeta, st, arg1=None):
-        """! Python wrapper for magnetic field ODE RHS
-        @param zeta the zeta coordinate
-        @param st   array size 2, the (s, theta) coordinate
-        @param arg1 parameter for the ODE, not used here
-        @returns    array size 2, the RHS of the ODE
+    def B(self, coords, args=None):
+        """! Returns magnetic fields
+        @param coordinates \f$(s,\theta,\zeta)\f$
+        @param arg1 parameter
+        @returns the contravariant magnetic fields
         """
-        return self.fortran_module.specbfield.get_bfield(zeta, st)
+        return self.fortran_module.specbfield.get_bfield(coords)
 
-    def f_tangent(self, zeta, st, arg1=None):
-        """! Python wrapper for magnetic field ODE RHS, with RHS
-        @param zeta the zeta coordinate
-        @param st   array size 6, the (s, theta, ds1, dtheta1, ds2, dtheta2) coordinate
-        @param arg1 parameter for the ODE, not used here
+    def dBdX(self, coords, args=None):
+        """! Returns magnetic fields
+        @param coordinates \f$(s,\theta,\zeta)\f$
+        @param arg1 parameter
+        @returns B, dBdX, the contravariant magnetic fields, the derivatives of them
         """
-        return self.fortran_module.specbfield.get_bfield_tangent(zeta, st)
+        B, dB = self.fortran_module.specbfield.get_bfield_tangent(coords)
+        return B, dB.T
 
     def convert_coords(self, stz):
         """! Python wrapper for getting the xyz coordinates from stz

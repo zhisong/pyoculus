@@ -4,6 +4,7 @@
 #
 
 from .cylindrical_problem import CylindricalProblem
+from .bfield_problem import BfieldProblem
 import numpy as np
 
 ## Class that used to setup the cylindrical bfield problem used in ODE solver.
@@ -11,7 +12,7 @@ import numpy as np
 # The system of ODEs is given by
 # \f[ \frac{dR}{d\phi} = \frac{B^{R}}{B^{\phi}}  \f]
 # \f[ \frac{dZ}{d\phi} = \frac{B^{Z}}{B^{\phi}}  \f]
-class CylindricalBfield(CylindricalProblem):
+class CylindricalBfield(CylindricalProblem, BfieldProblem):
     def __init__(self, R0, Z0, Nfp=1):
         """! Set up the problem
         @param R0 the R coordinate of the magnetic axis
@@ -19,16 +20,6 @@ class CylindricalBfield(CylindricalProblem):
         """
 
         super().__init__(R0, Z0, Nfp)
-
-    def B(self, RphiZ, args=None):
-        raise NotImplementedError(
-            "A CylindricalBfield class should implement member function B"
-        )
-
-    def dBdX(self, RphiZ, args=None):
-        raise NotImplementedError(
-            "A CylindricalBfield class should implement member function dBdX"
-        )
 
     def f_RZ(self, phi, RZ, args=None):
         """! Returns ODE RHS

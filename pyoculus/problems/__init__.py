@@ -1,4 +1,5 @@
 from .base_problem import *
+from .bfield_problem import *
 from .spec_problem import *
 from .spec_bfield import *
 from .spec_pjh import *
@@ -6,5 +7,7 @@ from .two_waves import *
 from .cartesian_bfield import *
 from .cylindrical_problem import *
 from .cylindrical_bfield import *
+from .toroidal_problem import *
+from .toroidal_bfield import *
 from .simsgeo_biot_savart import *
 from .m3dc1_bfield import *

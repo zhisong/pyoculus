@@ -11,7 +11,7 @@ MODULE SPECbfield
 
 !-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!
 
-  SUBROUTINE get_bfield( zeta, st, Bst )
+  SUBROUTINE get_bfield( stz, Bstz )
 !f2py threadsafe
     
   !-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!
@@ -26,11 +26,11 @@ MODULE SPECbfield
     
     IMPLICIT NONE
     
-    REAL(KIND=REAL_KIND), INTENT(IN)   :: zeta,  st(2)
-    REAL(KIND=REAL_KIND), INTENT(OUT)  ::       Bst(2)
+    REAL(KIND=REAL_KIND), INTENT(IN)   ::       stz(3)
+    REAL(KIND=REAL_KIND), INTENT(OUT)  ::       Bstz(3)
     
     INTEGER              :: lvol, ii, ll, mi, ni
-    REAL(KIND=REAL_KIND) :: teta, lss, sbar, arg, carg, sarg, dBu(1:3)
+    REAL(KIND=REAL_KIND) :: teta, lss, sbar, arg, carg, sarg, dBu(1:3), zeta
     REAL(KIND=REAL_KIND) :: cheby(0:Lrad,0:1), zernike(0:Lrad,0:Mpol,0:1)
     
     REAL(KIND=REAL_KIND) :: TT(0:Lrad,0:1) ! this is almost identical to cheby; 17 Dec 15;
@@ -39,11 +39,11 @@ MODULE SPECbfield
 
     lvol = ivol ;  ! short hand
 
-    Bst(1:2) = (/ zero , zero /) ! set default intent out; this should cause a compilation error IF Node.ne.2;
+    Bstz(1:3) = 0 ! set default intent out; this should cause a compilation error IF Node.ne.2;
   
   !-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!
     
-    lss = st(1) ; teta = st(2) 
+    lss = stz(1) ; teta = stz(2); zeta = stz(3)
       
     IF( Lcoordinatesingularity ) sbar = MAX( ( lss + one ) * half, zero )
 
@@ -79,17 +79,6 @@ MODULE SPECbfield
 
   !-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!
 
-    ! DO ll = 0, Lrad ! loop over Chebyshev summation; 20 Feb 13;
-    !   ;dBu(1) = dBu(1) + ( - mi * Aze(ll+1,ii) - ni * Ate(ll+1,ii) ) * TT(ll,0) * sarg
-    !   ;dBu(2) = dBu(2) + (                                  -      Aze(ll+1,ii) ) * TT(ll,1) * carg
-    !   ;dBu(3) = dBu(3) + (        Ate(ll+1,ii)                                  ) * TT(ll,1) * carg
-    !   IF( NOTstellsym ) THEN ! include non-symmetric harmonics; 28 Jan 13;
-    !   dBu(1) = dBu(1) + ( + mi * Azo(ll+1,ii) + ni * Ato(ll+1,ii) ) * TT(ll,0) * carg
-    !   dBu(2) = dBu(2) + (                                  -      Azo(ll+1,ii) ) * TT(ll,1) * sarg
-    !   dBu(3) = dBu(3) + (        Ato(ll+1,ii)                                  ) * TT(ll,1) * sarg
-    !   ENDIF
-    ! ENDDO ! end of DO ll; 10 Dec 15;
-
       dBu(1) = dBu(1) + SUM(( - mi * Aze(1:Lrad+1,ii)- ni * Ate(1:Lrad+1,ii) ) * TT(0:Lrad, 0)) * sarg
       dBu(2) = dBu(2) + SUM((                        -      Aze(1:Lrad+1,ii) ) * TT(0:Lrad, 1)) * carg
       dBu(3) = dBu(3) + SUM((        Ate(1:Lrad+1,ii)                        ) * TT(0:Lrad, 1)) * carg
@@ -105,7 +94,7 @@ MODULE SPECbfield
     
   !-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!
 
-    Bst(1:2) = dBu(1:2) / dBu(3) ! normalize field line equations to toroidal field; 20 Apr 13;
+    Bstz= dBu
     
   !-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!
 
@@ -113,7 +102,7 @@ MODULE SPECbfield
 
 !-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!
 
-subroutine get_bfield_tangent( zeta, st, Bst )
+subroutine get_bfield_tangent( stz, Bstz, dBstz )
 !f2py threadsafe 
 !-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!
 
@@ -127,30 +116,27 @@ subroutine get_bfield_tangent( zeta, st, Bst )
     
     IMPLICIT NONE
     
-    REAL(KIND=REAL_KIND), INTENT(IN)   :: zeta,  st(6)
-    REAL(KIND=REAL_KIND), INTENT(OUT)  ::       Bst(6)
+    REAL(KIND=REAL_KIND), INTENT(IN)   ::       stz(3)
+    REAL(KIND=REAL_KIND), INTENT(OUT)  ::       Bstz(3)
+    REAL(KIND=REAL_KIND), INTENT(OUT)  ::       dBstz(3,3)
     
     INTEGER              :: lvol, ii, ll, mi, ni
-    REAL(KIND=REAL_KIND) :: teta, lss, sbar, arg, carg, sarg, dBu(1:3,0:2)
+    REAL(KIND=REAL_KIND) :: teta, lss, sbar, arg, carg, sarg, dBu(1:3,0:2), zeta
     REAL(KIND=REAL_KIND) :: cheby(0:Lrad,0:2), zernike(0:Lrad,0:Mpol,0:2)
     
     REAL(KIND=REAL_KIND) :: TT(0:Lrad,0:2) ! this is almost identical to cheby; 17 Dec 15;
-
-    REAL(KIND=REAL_KIND) :: M(2,2), deltax(2,2), gBzeta
 
 !-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!
 
     lvol = ivol ;
 
-    Bst = zero ! set default intent out
+    Bstz = zero ! set default intent out
+
+    dBstz = zero
  
 !-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!
   
-    lss = st(1) ; teta = st(2) ;
-  
-    ! the perturbation
-    deltax(1:2,1) = st(3:4);
-    deltax(1:2,2) = st(5:6);
+    lss = stz(1) ; teta = stz(2) ; zeta = stz(3)
   
     IF( Lcoordinatesingularity ) sbar = MAX( ( lss + one ) * half, zero )
 
@@ -213,29 +199,16 @@ subroutine get_bfield_tangent( zeta, st, Bst )
         dBu(3,2) = dBu(3,2) + mi * SUM((        Ato(1:Lrad+1,ii)                         ) * TT(0:Lrad,1)) * carg
       ENDIF
    
+    ! dzeta is not useful so keep it zero
+
 ! !-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!
    
     ENDDO ! end of DO ii = 1, mn;
   
 ! !-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!
 
-    gBzeta = dBu(3,0) ! gBzeta is returned through global; 20 Apr 13;
-  
-! !-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!
-
-    Bst(1:2) = dBu(1:2,0) / gBzeta ! normalize field line equations to toroidal field; 20 Apr 13;
-
-
-    ! assemble the tangent matrix
-    M(1,1) = (dBu(1,1) * dBu(3,0) - dBu(3,1) * dBu(1,0)) / gBzeta**2   ! d(Bs/Bz)/ds
-    M(1,2) = (dBu(1,2) * dBu(3,0) - dBu(3,2) * dBu(1,0)) / gBzeta**2   ! d(Bs/Bz)/dt
-    M(2,1) = (dBu(2,1) * dBu(3,0) - dBu(3,1) * dBu(2,0)) / gBzeta**2   ! d(Bt/Bz)/ds
-    M(2,2) = (dBu(2,2) * dBu(3,0) - dBu(3,2) * dBu(2,0)) / gBzeta**2   ! d(Bt/Bz)/dt
-
-    deltax = MATMUL(M, deltax)
-
-    Bst(3:4) = deltax(1:2,1)
-    Bst(5:6) = deltax(1:2,2)
+    Bstz = dBu(1:3,0)
+    dBstz = dBu(1:3,1:2)
 
 ! !-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!
 
