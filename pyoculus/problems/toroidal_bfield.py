@@ -43,7 +43,7 @@ class ToroidalBfield(ToroidalProblem, BfieldProblem):
         deltax = deltax @ M / gBzeta**2
 
         df = np.zeros([6])
-        df[0:2] = Bu[0:1] / Bu[2]
+        df[0:2] = Bu[0:2] / Bu[2]
         df[2:6] = deltax.flatten()
 
         return df
