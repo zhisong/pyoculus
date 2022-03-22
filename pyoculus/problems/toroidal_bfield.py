@@ -21,7 +21,7 @@ class ToroidalBfield(ToroidalProblem, BfieldProblem):
         @returns the RHS of the ODE
         """
         stz = np.array([st[0], st[1], zeta])
-        B = self.B(stz, args)[0]
+        B = self.B(stz, args)
         f = np.array([B[0] / B[2], B[1] / B[2]])
         return f
 
@@ -33,7 +33,7 @@ class ToroidalBfield(ToroidalProblem, BfieldProblem):
         @returns the RHS of the ODE, with tangent
         """
         stz = np.array([st[0], st[1], zeta])
-        Bu, dBu = self.dBdX(stz, args)[0]
+        Bu, dBu = self.dBdX(stz, args)
 
         deltax = np.reshape(st[2:], [2,2])
         gBzeta = Bu[2]

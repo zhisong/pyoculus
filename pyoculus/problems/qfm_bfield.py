@@ -17,58 +17,99 @@ class QFMBfield(ToroidalBfield):
         """
         self.pb = pb
         self.surfaces = surfaces
+        self.poincare_plot_type = pb.poincare_plot_type
+        self.poincare_plot_xlabel = pb.poincare_plot_xlabel
+        self.poincare_plot_ylabel = pb.poincare_plot_ylabel
         super().__init__()
     
     def B(self, coords, args=None):
         """! Returns magnetic fields
-        @param coordinates \f$(\rho,\vartheta,\zeta)\f$
+        @param coords \f$(\rho,\vartheta,\zeta)\f$
         @param arg1 parameter
         @returns the contravariant magnetic fields
         """
-        coords2d = np.atleast_2d(coords)
-        r = coords2d[:,0]
-        t = coords2d[:,1]
-        z = coords2d[:,2]
+ 
+        r = np.atleast_1d(coords[0])
+        t = np.atleast_1d(coords[1])
+        z = np.atleast_1d(coords[2])
 
-        coordsout = self.surfaces.get_coords(r, t, z, derivative=1)
-        coordsin = np.array([coordsout.s, coordsout.t, z]).T
+        coordsout = self.surfaces.get_coords(r, t, z, derivative=1, input1D=True)
+        coordsin = np.array([coordsout.s[0], coordsout.t[0], coordsout.z[0]])
         B = self.pb.B(coordsin)
+        B = self.surfaces.contra_vector_transform(B, coordsout)
 
-        
+        return B.flatten()
 
     def dBdX(self, coords, args=None):
         """! Returns magnetic fields
-        @param coordinates \f$(s,\theta,\zeta)\f$
+        @param coords \f$(s,\theta,\zeta)\f$
         @param arg1 parameter
         @returns B, dBdX, the contravariant magnetic fields, the derivatives of them
         """
-        B, dB = self.fortran_module.specbfield.get_bfield_tangent(coords)
-        return B, dB.T
+
+        r = np.atleast_1d(coords[0])
+        t = np.atleast_1d(coords[1])
+        z = np.atleast_1d(coords[2])
+
+        coordsout = self.surfaces.get_coords(r, t, z, derivative=2, input1D=True)
+        coordsin = np.array([coordsout.s[0], coordsout.t[0], coordsout.z[0]])
+        B, dBdX = self.pb.dBdX(coordsin)
+        B, dBdX = self.surfaces.contra_vector_transform(B, coordsout, derivative=True, dv=dBdX)
+
+        return B[0], dBdX[0]
+
+    def B_many(self, coords, args=None):
+        """! Returns magnetic fields
+        @param coords \f$(\rho,\vartheta,\zeta)\f$
+        @param args the precomputed output from self.surfaces.get_coords. If None is given then it will be computed
+        @returns the contravariant magnetic fields
+        """
+
+        r = coords[:,0]
+        t = coords[:,1]
+        z = coords[:,2]
+
+        if args is None:
+            coordsout = self.surfaces.get_coords(r, t, z, derivative=1, input1D=True)
+        else:
+            coordsout = args
+
+        B = self.pb.B_many(coords)
+        B = self.surfaces.contra_vector_transform(B, coordsout)
+
+        return B
+
+    def dBdX_many(self, coords, args=None):
+        """! Returns magnetic fields
+        @param coords \f$(s,\theta,\zeta)\f$
+        @param args the precomputed output from self.surfaces.get_coords. If None is given then it will be computed
+        @returns B, dBdX, the contravariant magnetic fields, the derivatives of them
+        """
+        r = coords[:,0]
+        t = coords[:,1]
+        z = coords[:,2]
+
+        if args is None:
+            coordsout = self.surfaces.get_coords(r, t, z, derivative=2, input1D=True)
+        else:
+            coordsout = args
+
+        B, dBdX = self.pb.dBdX_many(coords)
+        B, dBdX = self.surfaces.contra_vector_transform(B, coordsout, derivative=True, dv=dBdX)
+
+        return B
 
     def convert_coords(self, stz):
         """! Python wrapper for getting the xyz coordinates from stz
         @param stz  the stz coordinate
         @returns the xyz coordinates
         """
-        xyz = self.fortran_module.speccoords.get_xyz(stz)
 
-        # depending on the geometry, return RZ or yx
-        if self.Igeometry == 1:
-            # for a slab, return x=R, y=theta, z=zeta
-            return np.array(
-                [
-                    xyz[0],
-                    np.mod(stz[1], 2 * np.pi) * self.rpol,
-                    np.mod(stz[2], 2 * np.pi) * self.rtor,
-                ],
-                dtype=np.float64,
-            )
-        if self.Igeometry == 2:
-            # for cylinderical geometry, return x=r*cos theta, y=zeta*rtor, z=sin theta
-            return np.array(
-                [xyz[0] * np.cos(stz[1]), stz[2] * self.rtor, xyz[0] * np.sin(stz[1])],
-                dtype=np.float64,
-            )
-        if self.Igeometry == 3:
-            # for toroidal geometry, return x=R, y=zeta, z=Z
-            return xyz
+        r = np.atleast_1d(stz[0])
+        t = np.atleast_1d(stz[1])
+        z = np.atleast_1d(stz[2])
+
+        coordsout = self.surfaces.get_coords(r, t, z)
+
+        return self.pb.convert_coords(np.array([coordsout.s[0], coordsout.t[0], coordsout.z[0]]))
+

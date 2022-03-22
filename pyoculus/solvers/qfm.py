@@ -4,7 +4,7 @@
 #
 
 from .base_solver import BaseSolver
-from pyoculus.problems import ToroidalBfield
+from pyoculus.problems import QFMBfield
 import numpy as np
 
 nax = np.newaxis

@@ -45,13 +45,8 @@ class SPECBfield(SPECProblem, ToroidalBfield):
         @param arg1 parameter
         @returns the contravariant magnetic fields
         """
-        coords2d = np.atleast_2d(coords)
-        Blist = []
 
-        for coords1 in coords2d:
-            Blist.append(self.fortran_module.specbfield.get_bfield(coords1))
-        
-        return np.array(Blist)
+        return self.fortran_module.specbfield.get_bfield(coords1)
 
     def dBdX(self, coords, args=None):
         """! Returns magnetic fields
@@ -59,14 +54,38 @@ class SPECBfield(SPECProblem, ToroidalBfield):
         @param arg1 parameter
         @returns B, dBdX, the contravariant magnetic fields, the derivatives of them
         """
+
+        return self.fortran_module.specbfield.get_bfield_tangent(coords)
+
+    def B_many(self, coords, args=None):
+        """! Returns magnetic fields, with multipy coordinate inputs
+        @param coords array (..., 3)
+        @param arg1 parameter
+        @returns the contravariant magnetic fields
+        """
+        coords2d = np.atleast_2d(coords)
+        Blist = []
+
+        for coords1d in coords2d:
+            Blist.attach(self.B(coords1d))
+
+        return np.array(Blist)
+
+    def dBdX_many(self, coords, args=None):
+        """! Returns magnetic fields
+        @param coords array (..., 3)
+        @param arg1 parameter
+        @returns B, dBdX, the contravariant magnetic fields, the derivatives of them
+        """
         coords2d = np.atleast_2d(coords)
         Blist = []
         dBlist = []
-        for coords1 in coords2d:
-            B, dB = self.fortran_module.specbfield.get_bfield_tangent(coords)
-            Blist.append(B)
-            dBlist.append(dB.T)
 
+        for coords1d in coords2d:
+            B, dBdX = self.dBdX(coords1d)
+            Blist.attach(B)
+            dBlist.attach(dBdX)
+            
         return np.array(Blist), np.array(dBlist)
 
     def convert_coords(self, stz):

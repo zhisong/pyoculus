@@ -3,12 +3,9 @@
 #  @author Zhisong Qu (zhisong.qu@anu.edu.au)
 #
 
-from .base_solver import BaseSolver
-
 import numpy as np
 
 nax = np.newaxis
-
 
 class SurfacesToroidal:
     """! Toroidal surfaces object
@@ -166,10 +163,10 @@ class SurfacesToroidal:
             zeros = np.zeros_like(coords.s)
             ones = np.ones_like(coords.t)
 
-            coords.ds = np.array([dsdr, dsdt, dsdz])
-            coords.dt = np.array([dtdr, dtdt, dtdz])
-            coords.dz = np.array([zeros, zeros, ones])
-            coords.jacobi = np.array([coords.ds, coords.dt, coords.dz])
+            coords.ds = np.stack([dsdr, dsdt, dsdz], -1)
+            coords.dt = np.stack([dtdr, dtdt, dtdz], -1)
+            coords.dz = np.stack([zeros, zeros, ones], -1)
+            coords.jacobi = np.stack([coords.ds, coords.dt, coords.dz], -2)
 
         if derivative > 1:
             ddscns = np.transpose(self._scn_d2(sarr), [1, 2, 0])
@@ -218,23 +215,23 @@ class SurfacesToroidal:
                 d2sdtdz += np.sum(ssns * mnsinalpha, axis=(0, 1))
                 d2tdtdz += np.sum(tcns * mncosalpha, axis=(0, 1))
 
-            coords.dds = np.array(
+            coords.dds = np.move_axis( np.array(
                 [
                     [d2sdrdr, d2sdrdt, d2sdrdz],
                     [d2sdrdt, d2sdtdt, d2sdtdz],
                     [d2sdrdz, d2sdtdz, d2sdzdz],
                 ]
-            )
-            coords.ddt = np.array(
+            ), (0,1), (-2,-1))
+            coords.ddt = np.move_axis(np.array(
                 [
                     [d2tdrdr, d2tdrdt, d2tdrdz],
                     [d2tdrdt, d2tdtdt, d2tdtdz],
                     [d2tdrdz, d2tdtdz, d2tdzdz],
                 ]
-            )
+            ), (0,1), (-2,-1))
 
             coords.ddz = np.zeros_like(coords.dds)
-            coords.djacobi = np.array([coords.dds, coords.ddt, coords.ddz])
+            coords.djacobi = np.stack([coords.dds, coords.ddt, coords.ddz], -3)
 
         return coords
 
@@ -246,8 +243,7 @@ class SurfacesToroidal:
         @param dJ  the derivative of \f$|J|\f$ wrt \f$(s,\theta,\zeta)\f$, have the dimension (3 derivatives,...)
         @returns Joutput, dJoutput the transformed Jacobian and the derivatives wrt \f$(\rho,\vartheta,\zeta)\f$
         """
-        jacobi = np.moveaxis(coords.jacobi, [0, -1], [-2, -1])
-        Joutput = J * np.linalg.det(jacobi)
+        Joutput = J * np.linalg.det(coords.jacobi)
 
         return Joutput
 
@@ -271,12 +267,7 @@ class SurfacesToroidal:
         is the Jacobi matrix.
         """
 
-        if len(coords.s.shape) == 1:  # input1D
-            goutput = np.einsum("jia,jka,kla->ila", coords.jacobi, g, coords.jacobi)
-        else:  # not input1D
-            goutput = np.einsum(
-                "jiabc,jkabc,klabc->ilabc", coords.jacobi, g, coords.jacobi
-            )
+        goutput =  np.moveaxis(coords.jacobi, -1, -2) @ g @ coords.jacobi
 
         return goutput
 
@@ -339,10 +330,7 @@ class SurfacesToroidal:
         Similarly we can compute the \f$\vartheta\f$ and \f$\zeta\f$ derivatives.
 
         """
-        vm = np.moveaxis(v, [0], [-1])
-        jm = np.moveaxis(coords.jacobi, [0, -1], [-2, -1])
-        voutput = np.linalg.solve(jm, vm)
-        voutput = np.moveaxis(voutput, [-1], [0])
+        voutput = np.linalg.solve(coords.jacobi, v)
 
         return voutput
 
