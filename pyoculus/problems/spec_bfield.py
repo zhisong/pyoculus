@@ -46,7 +46,7 @@ class SPECBfield(SPECProblem, ToroidalBfield):
         @returns the contravariant magnetic fields
         """
 
-        return self.fortran_module.specbfield.get_bfield(coords1)
+        return self.fortran_module.specbfield.get_bfield(coords)
 
     def dBdX(self, coords, args=None):
         """! Returns magnetic fields

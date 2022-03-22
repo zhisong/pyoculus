@@ -11,7 +11,7 @@ nax = np.newaxis
 
 class QFM(BaseSolver):
     def __init__(
-        self, problem : ToroidalBfield, params=dict(), integrator=None, integrator_params=dict()
+        self, problem : QFMBfield, params=dict(), integrator=None, integrator_params=dict()
     ):
         """! Set up the class of the fixed point finder
         @param problem must inherit pyoculus.problems.BaseProblem, the problem to solve
@@ -35,9 +35,6 @@ class QFM(BaseSolver):
 
         self.sym = params["stellar_sym"]
         self._MM = params["nfft_multiplier"]
-
-        if not isinstance(problem, ToroidalBfield):
-            raise ValueError('Currently only support the problem class ToroidalBfield')
             
         super().__init__(problem, params, integrator, integrator_params)
 
