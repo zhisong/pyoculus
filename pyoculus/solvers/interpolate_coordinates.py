@@ -9,6 +9,7 @@ import numpy as np
 
 nax = np.newaxis
 
+
 class SurfacesToroidal:
     """! Toroidal surfaces object
     Define surfaces \f$s(\vartheta, \zeta) \f$ and the angle transformations \f$ \theta (\vartheta, \zeta) \f$.
@@ -24,14 +25,14 @@ class SurfacesToroidal:
     \f]
     If stellarator symmetry is assumed, then \f$s\f$ will only have cosine components and \f$\theta \f$ will only have sine components.
 
-    Each surface is assigned a new radial label \f$\bar{s}_i\f$.
-    Now a new set of coordinates \f$(\bar{s}, \vartheta, \zeta)\f$ will be constructed
-    given the relationship \f$s(\bar{s}, \vartheta, \zeta), \theta(\bar{s}, \vartheta, \zeta)\f$.
-    If \f$\bar{s}\f$ is not on one of the known surfaces, an interpolation will be performed on all the Fourier harmonics radially using the method of the user's choice.
+    Each surface is assigned a new radial label \f$\rho_i\f$.
+    Now a new set of coordinates \f$(\rho, \vartheta, \zeta)\f$ will be constructed
+    given the relationship \f$s(\rho, \vartheta, \zeta), \theta(\rho, \vartheta, \zeta)\f$.
+    If \f$\rho\f$ is not on one of the known surfaces, an interpolation will be performed on all the Fourier harmonics radially using the method of the user's choice.
     """
 
     ## Output class
-    class Output:
+    class CoordsOutput:
         def __init__(self):
             pass
 
@@ -73,16 +74,16 @@ class SurfacesToroidal:
         pass
 
     def get_coords(self, sarr=[0], tarr=[0], zarr=[0], derivative=0, input1D=True):
-        """! Compute the coordinates and their derivatives given \f$\bar{s}, \vartheta, \zeta\f$
-        @param sarr \f$\bar{s}\f$, an array
+        """! Compute the coordinates and their derivatives given \f$\rho, \vartheta, \zeta\f$
+        @param sarr \f$\rho\f$, an array
         @param tarr \f$\vartheta\f$, an array
         @param zarr \f$\zeta\f$, an array
         @param derivative  0:only return \f$s, \theta\f$, 1: also return the derivatives, 2: also return the second derivatives
         @param input1D if False, create a meshgrid with sarr, tarr and zarr, if True, treat them as a list of points
-        @returns coords  coords.s, coords.t contains the coordinates \f$s,\theta\f$. coords.ds and dt contains the first derivatives. coords.dds and ddt contains second derivates. coords.jacobi contains the jacobi matrix \f$J = \partial(s,\theta,\zeta)/\partial(\bar{s},\vartheta,\zeta)\f$, coords.djacobi contains the derivative.
+        @returns coords  coords.s, coords.t contains the coordinates \f$s,\theta\f$. coords.ds and dt contains the first derivatives. coords.dds and ddt contains second derivates. coords.jacobi contains the jacobi matrix \f$J = \partial(s,\theta,\zeta)/\partial(\rho,\vartheta,\zeta)\f$, coords.djacobi contains the derivative.
         """
 
-        coords = self.Output()
+        coords = self.CoordsOutput()
 
         sarr = np.atleast_1d(sarr)
         tarr = np.atleast_1d(tarr)
@@ -147,26 +148,26 @@ class SurfacesToroidal:
             nsinalpha = nlist * sinalpha
             ncosalpha = nlist * cosalpha
 
-            dsds = np.sum(dscns * cosalpha, axis=(0, 1))
-            dtds = np.sum(dtsns * sinalpha, axis=(0, 1))
+            dsdr = np.sum(dscns * cosalpha, axis=(0, 1))
+            dtdr = np.sum(dtsns * sinalpha, axis=(0, 1))
             dsdt = -np.sum(scns * msinalpha, axis=(0, 1))
             dtdt = 1 + np.sum(tsns * mcosalpha, axis=(0, 1))
             dsdz = np.sum(scns * nsinalpha, axis=(0, 1))
             dtdz = -np.sum(tsns * ncosalpha, axis=(0, 1))
 
             if not self.sym:
-                dsds += np.sum(dssns * sinalpha, axis=(0, 1))
-                dtds += np.sum(dtcns * cosalpha, axis=(0, 1))
+                dsdr += np.sum(dssns * sinalpha, axis=(0, 1))
+                dtdr += np.sum(dtcns * cosalpha, axis=(0, 1))
                 dsdt += np.sum(ssns * mcosalpha, axis=(0, 1))
                 dtdt += -np.sum(tcns * msinalpha, axis=(0, 1))
                 dsdz += -np.sum(ssns * ncosalpha, axis=(0, 1))
                 dtdz += np.sum(tcns * nsinalpha, axis=(0, 1))
-            
+
             zeros = np.zeros_like(coords.s)
             ones = np.ones_like(coords.t)
 
-            coords.ds = np.array([dsds, dsdt, dsdz])
-            coords.dt = np.array([dtds, dtdt, dtdz])
+            coords.ds = np.array([dsdr, dsdt, dsdz])
+            coords.dt = np.array([dtdr, dtdt, dtdz])
             coords.dz = np.array([zeros, zeros, ones])
             coords.jacobi = np.array([coords.ds, coords.dt, coords.dz])
 
@@ -190,12 +191,12 @@ class SurfacesToroidal:
             mncosalpha = mlist * nlist * cosalpha
             mnsinalpha = mlist * nlist * sinalpha
 
-            d2sdsds = np.sum(ddscns * cosalpha, axis=(0, 1))
-            d2tdsds = np.sum(ddtsns * sinalpha, axis=(0, 1))
-            d2sdsdt = -np.sum(dscns * msinalpha, axis=(0, 1))
-            d2tdsdt = np.sum(dtsns * mcosalpha, axis=(0, 1))
-            d2sdsdz = np.sum(dscns * nsinalpha, axis=(0, 1))
-            d2tdsdz = -np.sum(dtsns * ncosalpha, axis=(0, 1))
+            d2sdrdr = np.sum(ddscns * cosalpha, axis=(0, 1))
+            d2tdrdr = np.sum(ddtsns * sinalpha, axis=(0, 1))
+            d2sdrdt = -np.sum(dscns * msinalpha, axis=(0, 1))
+            d2tdrdt = np.sum(dtsns * mcosalpha, axis=(0, 1))
+            d2sdrdz = np.sum(dscns * nsinalpha, axis=(0, 1))
+            d2tdrdz = -np.sum(dtsns * ncosalpha, axis=(0, 1))
             d2sdtdt = -np.sum(scns * mmcosalpha, axis=(0, 1))
             d2tdtdt = -np.sum(tsns * mmsinalpha, axis=(0, 1))
             d2sdzdz = -np.sum(scns * nncosalpha, axis=(0, 1))
@@ -204,12 +205,12 @@ class SurfacesToroidal:
             d2tdtdz = np.sum(tsns * mnsinalpha, axis=(0, 1))
 
             if not self.sym:
-                d2sdsds += np.sum(ddscns * sinalpha, axis=(0, 1))
-                d2tdsds += np.sum(ddtsns * cosalpha, axis=(0, 1))
-                d2sdsdt += np.sum(dssns * mcosalpha, axis=(0, 1))
-                d2tdsdt += -np.sum(dtcns * msinalpha, axis=(0, 1))
-                d2sdsdz += -np.sum(dssns * ncosalpha, axis=(0, 1))
-                d2tdsdz += np.sum(dtcns * nsinalpha, axis=(0, 1))
+                d2sdrdr += np.sum(ddscns * sinalpha, axis=(0, 1))
+                d2tdrdr += np.sum(ddtsns * cosalpha, axis=(0, 1))
+                d2sdrdt += np.sum(dssns * mcosalpha, axis=(0, 1))
+                d2tdrdt += -np.sum(dtcns * msinalpha, axis=(0, 1))
+                d2sdrdz += -np.sum(dssns * ncosalpha, axis=(0, 1))
+                d2tdrdz += np.sum(dtcns * nsinalpha, axis=(0, 1))
                 d2sdtdt += -np.sum(ssns * mmsinalpha, axis=(0, 1))
                 d2tdtdt += -np.sum(tcns * mmcosalpha, axis=(0, 1))
                 d2sdzdz += -np.sum(ssns * nnsinalpha, axis=(0, 1))
@@ -219,16 +220,16 @@ class SurfacesToroidal:
 
             coords.dds = np.array(
                 [
-                    [d2sdsds, d2sdsdt, d2sdsdz],
-                    [d2sdsdt, d2sdtdt, d2sdtdz],
-                    [d2sdsdz, d2sdtdz, d2sdzdz],
+                    [d2sdrdr, d2sdrdt, d2sdrdz],
+                    [d2sdrdt, d2sdtdt, d2sdtdz],
+                    [d2sdrdz, d2sdtdz, d2sdzdz],
                 ]
             )
             coords.ddt = np.array(
                 [
-                    [d2tdsds, d2tdsdt, d2tdsdz],
-                    [d2tdsdt, d2tdtdt, d2tdtdz],
-                    [d2tdsdz, d2tdtdz, d2tdzdz],
+                    [d2tdrdr, d2tdrdt, d2tdrdz],
+                    [d2tdrdt, d2tdtdt, d2tdtdz],
+                    [d2tdrdz, d2tdtdz, d2tdzdz],
                 ]
             )
 
@@ -237,111 +238,113 @@ class SurfacesToroidal:
 
         return coords
 
-    def jacobian_transform(self, J, coords, derivative=False, dJ=None):
+    def jacobian_transform(self, J, coords: CoordsOutput, derivative=False, dJ=None):
         """! Compute the coordinate transformation for the Jacobian
         @param the Jacobian \f$|J|\f$ of the old coordinate \f$(s,\theta,\zeta)\f$ to be transformed
         @param coords  the output of get_coords, should match the dimension of J
         @param derivative  if the derivatives are needed or not. If True, dJ is required.
         @param dJ  the derivative of \f$|J|\f$ wrt \f$(s,\theta,\zeta)\f$, have the dimension (3 derivatives,...)
-        @returns Joutput, dJoutput the transformed Jacobian and the derivatives wrt \f$(\bar{s},\vartheta,\zeta)\f$
+        @returns Joutput, dJoutput the transformed Jacobian and the derivatives wrt \f$(\rho,\vartheta,\zeta)\f$
         """
-        jacobi = np.moveaxis(coords.jacobi, [0,-1], [-2,-1])
+        jacobi = np.moveaxis(coords.jacobi, [0, -1], [-2, -1])
         Joutput = J * np.linalg.det(jacobi)
 
         return Joutput
 
-
-    def metric_transform(self, g, coords, derivative=False, dg=None):
+    def metric_transform(self, g, coords: CoordsOutput, derivative=False, dg=None):
         """! Compute the coordinate transformation for a metric tensor \f$g_{ij}\f$ (lower!)
         @param g  the metric \f$g_{ij}\f$ of the old coordinate \f$(s,\theta,\zeta)\f$ to be transformed, should have the dimension (3,3,...)
         @param coords  the output of get_coords, should match the dimension of g
         @param derivative  if the derivatives are needed or not. If True, dg is required.
         @param dg  the derivative of g wrt \f$(s,\theta,\zeta)\f$, have the dimension (3 derivatives, 3,3,...)
-        @returns goutput, [dgoutput], the transformed metric and the derivative wrt \f$(\bar{s},\vartheta,\zeta)\f$
+        @returns goutput, [dgoutput], the transformed metric and the derivative wrt \f$(\rho,\vartheta,\zeta)\f$
 
-        Let the input metric for \f$(s, \theta, \zeta)\f$  being \f$\mathbf{g}\f$, 
-        the metric for \f$(\bar{s}, \vartheta, \zeta)\f$ is given by
+        Let the input metric for \f$(s, \theta, \zeta)\f$  being \f$\mathbf{g}\f$,
+        the metric for \f$(\rho, \vartheta, \zeta)\f$ is given by
         \f[
             \mathbf{G} = \mathbf{J}^T \mathbf{g} \mathbf{J},
         \f]
         where
         \f[
-            \mathbf{J} = \frac{\partial(s,\theta,\zeta)}{\partial(\bar{s},\vartheta,\zeta)}
+            \mathbf{J} = \frac{\partial(s,\theta,\zeta)}{\partial(\rho,\vartheta,\zeta)}
         \f]
         is the Jacobi matrix.
         """
 
-        if len(coords.s.shape) == 1: # input1D
+        if len(coords.s.shape) == 1:  # input1D
             goutput = np.einsum("jia,jka,kla->ila", coords.jacobi, g, coords.jacobi)
-        else: # not input1D
-            goutput = np.einsum("jiabc,jkabc,klabc->ilabc", coords.jacobi, g, coords.jacobi)
+        else:  # not input1D
+            goutput = np.einsum(
+                "jiabc,jkabc,klabc->ilabc", coords.jacobi, g, coords.jacobi
+            )
 
         return goutput
 
-    def contra_vector_transform(self, v, coords, derivative=False, dv=None):
+    def contra_vector_transform(
+        self, v, coords: CoordsOutput, derivative=False, dv=None
+    ):
         """! Compute the coordinate transformation for a contravariant vector \f$v^i\f$ (upper!)
         @param v  the vector \f$v^i\f$ to be transformed, should have the dimension (3,...)
         @param coords  the output of get_coords, should match the dimension of v
         @param derivative  if the derivatives are needed or not. If True, dv is required.
         @param dv  the derivative of v wrt \f$(s,\theta,\zeta)\f$, have the dimension (3 derivatives, 3 component,...)
-        @returns voutput, dvoutput, the transformed metric and the derivative wrt \f$(\bar{s},\vartheta,\zeta)\f$
+        @returns voutput, dvoutput, the transformed metric and the derivative wrt \f$(\rho,\vartheta,\zeta)\f$
 
         The vector transformation is given by
         \f[
             \left(\begin{array}{c}
-            v^{\bar{s}} \\ v^{\vartheta} \\ v^{\zeta}
+            v^{\rho} \\ v^{\vartheta} \\ v^{\zeta}
             \end{array}\right)
-            = \mathbf{J}^{-1} 
+            = \mathbf{J}^{-1}
             \left(\begin{array}{c}
             v^{{s}} \\ v^{\theta} \\ v^{\zeta}
             \end{array}\right),
         \f]
         where
         \f[
-            \mathbf{J} = \frac{\partial(s,\theta,\zeta)}{\partial(\bar{s},\vartheta,\zeta)}
+            \mathbf{J} = \frac{\partial(s,\theta,\zeta)}{\partial(\rho,\vartheta,\zeta)}
         \f]
         is the Jacobi matrix. For computing the result we use matrix solve instead of matrix inversion.
 
         When the derivative is needed, we note that
         \f[
-            \frac{d}{d\bar{s}}\mathbf{J}
+            \frac{d}{d\rho}\mathbf{J}
             \left(\begin{array}{c}
-            v^{\bar{s}} \\ v^{\vartheta} \\ v^{\zeta}
+            v^{\rho} \\ v^{\vartheta} \\ v^{\zeta}
             \end{array}\right)
             +\mathbf{J}
-            \frac{d}{d\bar{s}}\left(\begin{array}{c}
-            v^{\bar{s}} \\ v^{\vartheta} \\ v^{\zeta}
+            \frac{d}{d\rho}\left(\begin{array}{c}
+            v^{\rho} \\ v^{\vartheta} \\ v^{\zeta}
             \end{array}\right)
-            = 
-            \frac{d}{d\bar{s}}\left(\begin{array}{c}
+            =
+            \frac{d}{d\rho}\left(\begin{array}{c}
             v^{{s}} \\ v^{\theta} \\ v^{\zeta}
             \end{array}\right),
         \f]
         therefore
         \f[
-            \frac{d}{d\bar{s}}\left(\begin{array}{c}
-            v^{\bar{s}} \\ v^{\vartheta} \\ v^{\zeta}
+            \frac{d}{d\rho}\left(\begin{array}{c}
+            v^{\rho} \\ v^{\vartheta} \\ v^{\zeta}
             \end{array}\right)
-            = 
+            =
             \mathbf{J}^{-1}
-            \left[\frac{d}{d\bar{s}}\left(\begin{array}{c}
+            \left[\frac{d}{d\rho}\left(\begin{array}{c}
             v^{{s}} \\ v^{\theta} \\ v^{\zeta}
             \end{array}\right)
-            -\frac{d}{d\bar{s}}\mathbf{J}
+            -\frac{d}{d\rho}\mathbf{J}
             \left(\begin{array}{c}
-            v^{\bar{s}} \\ v^{\vartheta} \\ v^{\zeta}
+            v^{\rho} \\ v^{\vartheta} \\ v^{\zeta}
             \end{array}\right)\right].
         \f]
         Similarly we can compute the \f$\vartheta\f$ and \f$\zeta\f$ derivatives.
-        
+
         """
         vm = np.moveaxis(v, [0], [-1])
-        jm = np.moveaxis(coords.jacobi, [0,-1], [-2,-1])
+        jm = np.moveaxis(coords.jacobi, [0, -1], [-2, -1])
         voutput = np.linalg.solve(jm, vm)
         voutput = np.moveaxis(voutput, [-1], [0])
 
         return voutput
-
 
     def construct_interpolant(self, method="cubic_spline", **kwargs):
         """! Construct the interpolant between surfaces for the given method

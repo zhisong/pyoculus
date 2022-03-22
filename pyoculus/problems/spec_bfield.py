@@ -45,7 +45,13 @@ class SPECBfield(SPECProblem, ToroidalBfield):
         @param arg1 parameter
         @returns the contravariant magnetic fields
         """
-        return self.fortran_module.specbfield.get_bfield(coords)
+        coords2d = np.atleast_2d(coords)
+        Blist = []
+
+        for coords1 in coords2d:
+            Blist.append(self.fortran_module.specbfield.get_bfield(coords1))
+        
+        return np.array(Blist)
 
     def dBdX(self, coords, args=None):
         """! Returns magnetic fields
@@ -53,8 +59,15 @@ class SPECBfield(SPECProblem, ToroidalBfield):
         @param arg1 parameter
         @returns B, dBdX, the contravariant magnetic fields, the derivatives of them
         """
-        B, dB = self.fortran_module.specbfield.get_bfield_tangent(coords)
-        return B, dB.T
+        coords2d = np.atleast_2d(coords)
+        Blist = []
+        dBlist = []
+        for coords1 in coords2d:
+            B, dB = self.fortran_module.specbfield.get_bfield_tangent(coords)
+            Blist.append(B)
+            dBlist.append(dB.T)
+
+        return np.array(Blist), np.array(dBlist)
 
     def convert_coords(self, stz):
         """! Python wrapper for getting the xyz coordinates from stz

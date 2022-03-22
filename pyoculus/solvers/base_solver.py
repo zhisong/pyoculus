@@ -21,7 +21,7 @@ class BaseSolver:
         """! Sets up the solver
         @param problem must inherit pyoculus.problems.BaseProblem, the problem to solve
         @param params dict, the parameters for the solver
-        @param integrator the integrator to use, must inherit \pyoculus.integrators.BaseIntegrator, if set to None by default using RKIntegrator
+        @param integrator the integrator to use, must inherit pyoculus.integrators.BaseIntegrator, if set to None by default using RKIntegrator
         @param integrator_params dict, the parmaters passed to the integrator
         """
         ## flagging if the computation is done and successful
