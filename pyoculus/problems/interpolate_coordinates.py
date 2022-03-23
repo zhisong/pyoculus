@@ -4,8 +4,10 @@
 #
 
 import numpy as np
+from scipy.special.orthogonal import jacobi
 
 nax = np.newaxis
+
 
 class SurfacesToroidal:
     """! Toroidal surfaces object
@@ -95,7 +97,7 @@ class SurfacesToroidal:
         else:
             alpha = mtheta[:, nax, nax, :, nax] - nzeta[nax, :, nax, nax, :]
             t0arr = tarr[nax, :, nax]
-            z0arr = zarr[nax, :, nax]
+            z0arr = zarr[nax, nax, :]
 
         cosalpha = np.cos(alpha)
         sinalpha = np.sin(alpha)
@@ -112,7 +114,7 @@ class SurfacesToroidal:
                 tcns = tcns[:, :, :, nax, nax]
 
         s = np.sum(scns * cosalpha, axis=(0, 1))
-        t = tarr + np.sum(tsns * sinalpha, axis=(0, 1))
+        t = t0arr + np.sum(tsns * sinalpha, axis=(0, 1))
 
         if not self.sym:
             s += np.sum(ssns * sinalpha, axis=(0, 1))
@@ -167,6 +169,7 @@ class SurfacesToroidal:
             coords.dt = np.stack([dtdr, dtdt, dtdz], -1)
             coords.dz = np.stack([zeros, zeros, ones], -1)
             coords.jacobi = np.stack([coords.ds, coords.dt, coords.dz], -2)
+            coords.jacobian = dsdr * dtdt - dtdr * dsdt
 
         if derivative > 1:
             ddscns = np.transpose(self._scn_d2(sarr), [1, 2, 0])
@@ -215,35 +218,49 @@ class SurfacesToroidal:
                 d2sdtdz += np.sum(ssns * mnsinalpha, axis=(0, 1))
                 d2tdtdz += np.sum(tcns * mncosalpha, axis=(0, 1))
 
-            coords.dds = np.move_axis( np.array(
-                [
-                    [d2sdrdr, d2sdrdt, d2sdrdz],
-                    [d2sdrdt, d2sdtdt, d2sdtdz],
-                    [d2sdrdz, d2sdtdz, d2sdzdz],
-                ]
-            ), (0,1), (-2,-1))
-            coords.ddt = np.move_axis(np.array(
-                [
-                    [d2tdrdr, d2tdrdt, d2tdrdz],
-                    [d2tdrdt, d2tdtdt, d2tdtdz],
-                    [d2tdrdz, d2tdtdz, d2tdzdz],
-                ]
-            ), (0,1), (-2,-1))
+            coords.dds = np.moveaxis(
+                np.array(
+                    [
+                        [d2sdrdr, d2sdrdt, d2sdrdz],
+                        [d2sdrdt, d2sdtdt, d2sdtdz],
+                        [d2sdrdz, d2sdtdz, d2sdzdz],
+                    ]
+                ),
+                (0, 1),
+                (-2, -1),
+            )
+            coords.ddt = np.moveaxis(
+                np.array(
+                    [
+                        [d2tdrdr, d2tdrdt, d2tdrdz],
+                        [d2tdrdt, d2tdtdt, d2tdtdz],
+                        [d2tdrdz, d2tdtdz, d2tdzdz],
+                    ]
+                ),
+                (0, 1),
+                (-2, -1),
+            )
 
             coords.ddz = np.zeros_like(coords.dds)
             coords.djacobi = np.stack([coords.dds, coords.ddt, coords.ddz], -3)
+            coords.djacobian = (
+                coords.dds[..., 0] * dtdt[..., nax]
+                + dsdr[..., nax] * coords.ddt[..., 1]
+                - coords.ddt[..., 0] * dsdt[..., nax]
+                - dtdr * coords.dds[..., 1]
+            )
 
         return coords
 
-    def jacobian_transform(self, J, coords: CoordsOutput, derivative=False, dJ=None):
-        """! Compute the coordinate transformation for the Jacobian
-        @param the Jacobian \f$|J|\f$ of the old coordinate \f$(s,\theta,\zeta)\f$ to be transformed
-        @param coords  the output of get_coords, should match the dimension of J
-        @param derivative  if the derivatives are needed or not. If True, dJ is required.
-        @param dJ  the derivative of \f$|J|\f$ wrt \f$(s,\theta,\zeta)\f$, have the dimension (3 derivatives,...)
-        @returns Joutput, dJoutput the transformed Jacobian and the derivatives wrt \f$(\rho,\vartheta,\zeta)\f$
-        """
-        Joutput = J * np.linalg.det(coords.jacobi)
+    # def jacobian_transform(self, J, coords: CoordsOutput, derivative=False, dJ=None):
+    #     """! Compute the coordinate transformation for the Jacobian
+    #     @param the Jacobian \f$|J|\f$ of the old coordinate \f$(s,\theta,\zeta)\f$ to be transformed
+    #     @param coords  the output of get_coords, should match the dimension of J
+    #     @param derivative  if the derivatives are needed or not. If True, dJ is required.
+    #     @param dJ  the derivative of \f$|J|\f$ wrt \f$(s,\theta,\zeta)\f$, have the dimension (3 derivatives,...)
+    #     @returns Joutput, dJoutput the transformed Jacobian and the derivatives wrt \f$(\rho,\vartheta,\zeta)\f$
+    #     """
+    #     Joutput = J * coords.jacobian
 
         return Joutput
 
@@ -267,16 +284,17 @@ class SurfacesToroidal:
         is the Jacobi matrix.
         """
 
-        goutput =  np.moveaxis(coords.jacobi, -1, -2) @ g @ coords.jacobi
+        goutput = np.moveaxis(coords.jacobi, -1, -2) @ g @ coords.jacobi
 
         return goutput
 
     def contra_vector_transform(
-        self, v, coords: CoordsOutput, derivative=False, dv=None
+        self, v, coords: CoordsOutput, has_jacobian=False, derivative=False, dv=None
     ):
         """! Compute the coordinate transformation for a contravariant vector \f$v^i\f$ (upper!)
         @param v  the vector \f$v^i\f$ to be transformed, should have the dimension (3,...)
         @param coords  the output of get_coords, should match the dimension of v
+        @param has_jacobian  if the given vector already contains the jacobian
         @param derivative  if the derivatives are needed or not. If True, dv is required.
         @param dv  the derivative of v wrt \f$(s,\theta,\zeta)\f$, have the dimension (3 derivatives, 3 component,...)
         @returns voutput, dvoutput, the transformed metric and the derivative wrt \f$(\rho,\vartheta,\zeta)\f$
@@ -331,6 +349,9 @@ class SurfacesToroidal:
 
         """
         voutput = np.linalg.solve(coords.jacobi, v)
+
+        if has_jacobian:
+            voutput = voutput * coords.jacobian[...,nax]
 
         return voutput
 

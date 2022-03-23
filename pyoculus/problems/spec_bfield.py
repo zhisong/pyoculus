@@ -39,6 +39,9 @@ class SPECBfield(SPECProblem, ToroidalBfield):
         else:
             raise ValueError("Unknown Igeometry!")
 
+        ## The output of B contains the jacobian factor
+        self.has_jacobian = True
+
     def B(self, coords, args=None):
         """! Returns magnetic fields
         @param coordinates \f$(s,\theta,\zeta)\f$
@@ -67,7 +70,7 @@ class SPECBfield(SPECProblem, ToroidalBfield):
         Blist = []
 
         for coords1d in coords2d:
-            Blist.attach(self.B(coords1d))
+            Blist.append(self.B(coords1d))
 
         return np.array(Blist)
 
@@ -83,8 +86,8 @@ class SPECBfield(SPECProblem, ToroidalBfield):
 
         for coords1d in coords2d:
             B, dBdX = self.dBdX(coords1d)
-            Blist.attach(B)
-            dBlist.attach(dBdX)
+            Blist.append(B)
+            dBlist.append(dBdX)
             
         return np.array(Blist), np.array(dBlist)
 

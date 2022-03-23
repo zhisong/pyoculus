@@ -2,7 +2,7 @@
 #  @brief the perturbed slab problem
 #  @author Zhisong Qu (zhisong.qu@anu.edu.au)
 
-from .toroidal_problem import ToroidalProblem
+from .toroidal_bfield import ToroidalBfield
 import numpy as np
 
 ##
@@ -11,18 +11,24 @@ import numpy as np
 # Details in
 # S.R. Hudson, Phys. Plasmas 11, 677 (2004).
 #
-# The Hamiltonian of the system is given by
-# \f[ H(q,p,t) = \frac{p^2}{2} - k \left[ \frac{1}{2} \cos (2q - t) + \frac{1}{3} \cos(3q - 2t) \right] \f]
+# The magnetic field is given by
+# \f[
+#    \mathbf{B} = \nabla s \times \nabla \theta - \nabla \chi(s, \theta, \zeta) \times \nabla \zeta
+# \f]
 #
-# The ODEs are given by
+# The Hamiltonian of the magnetic field is given by
+# \f[ \chi(s, \theta,\zeta) = \frac{s^2}{2} - k \left[ \frac{1}{2} \cos (2\theta - \zeta) + \frac{1}{3} \cos(3\theta - 2\zeta) \right] \f]
 #
-#  \f[ \frac{dq}{dt} = p, \quad \frac{dp}{dt} = - k \left[ \sin (2q - t) + \sin(3q - 2t) \right] \f]
+# The magnetic fields are given by
+#
+#  \f[ B^s = - k \left[ \sin (2\theta - \zeta) + \sin(3\theta - 2\zeta)\right], \quad B^\theta = s , \quad B^\zeta = 1
+# \f]
 #
 # To use the class:
 #
 #     ps = TwoWaves(k=0.002)
 #
-class TwoWaves(ToroidalProblem):
+class TwoWaves(ToroidalBfield):
 
 
     def __init__(self, k=0.002):
@@ -32,6 +38,7 @@ class TwoWaves(ToroidalProblem):
         super().__init__()
         self.k = k
         self.Nfp = 1
+        self.has_jacobian = True
 
         ## the problem size, 2 for 1.5D/2D Hamiltonian system
         self.problem_size = 2

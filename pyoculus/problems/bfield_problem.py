@@ -8,7 +8,8 @@ class BfieldProblem():
     def __init__(self):
         """! Set up the problem
         """
-        pass
+        ## if the output magnetic field contains the jacobian factor or not
+        self.has_jacobian = False
 
 
     def B(self, coords, args=None):
