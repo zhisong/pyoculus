@@ -4,24 +4,24 @@
 #
 
 from .base_solver import BaseSolver
-from pyoculus.problems import QFMBfield
+from pyoculus.problems import ToroidalBfield
 import numpy as np
 
 nax = np.newaxis
 
 class QFM(BaseSolver):
     def __init__(
-        self, problem, params=dict(), integrator=None, integrator_params=dict()
+        self, problem : ToroidalBfield, params=dict(), integrator=None, integrator_params=dict()
     ):
         """! Set up the class of the fixed point finder
-        @param problem must inherit pyoculus.problems.BaseProblem, the problem to solve
+        @param problem must inherit pyoculus.problems.ToroidalBfield, the problem to solve
         @param params dict, the parameters for the solver
         @param integrator the integrator to use, must inherit \pyoculus.integrators.BaseIntegrator, if set to None by default using RKIntegrator (not used here)
         @param integrator_params dict, the parmaters passed to the integrator (not used here)
 
         <code> params['pqMpol']=4 </code> -- Fourier resolution multiplier for poloidal direction
         <code> params['pqNtor']=4 </code> -- Fourier resolution multiplier for toroidal direction
-        <code> params['nfft_multiplier']=4 </code> -- the extended (multiplier) resolution for FFT in toroidal direction
+        <code> params['nfft_multiplier']=4 </code> -- the extended (multiplier) resolution for FFT
         """
 
         if "ntheta" not in params.keys():
@@ -52,11 +52,18 @@ class QFM(BaseSolver):
         pqMpol = self._pqMpol
         iota = pp / qq
 
+        ## The number of toroidal modes
         qN = qq * pqNtor
+        ## The number of action curves with different area poloidally to be found
         fM = MM * pqMpol
+        ## The number of points poloidally after folding the curves
+        qfM = qq * fM
+        ## The number of toroidal points for action gradient calculation
         Nfft = MM * qN
+        ## The zeta distance between toroidal points
         dz = 2 * np.pi / ( MM * pqNtor )
         self.dz = dz
+        ## The theta distance between poloidal action curves
         dt = (np.pi * 2 / qq) / fM
 
         self._nlist = np.arange(0, qN+1)
