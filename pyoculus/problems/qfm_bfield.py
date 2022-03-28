@@ -75,7 +75,7 @@ class QFMBfield(ToroidalBfield):
         else:
             coordsout = args
 
-        B = self.pb.B_many(coords)
+        B = self.pb.B_many(np.stack([coordsout.s, coordsout.t, z], -1))
         B = self.surfaces.contra_vector_transform(B, coordsout, has_jacobian=self.pb.has_jacobian)
 
         return B
@@ -95,7 +95,7 @@ class QFMBfield(ToroidalBfield):
         else:
             coordsout = args
 
-        B, dBdX = self.pb.dBdX_many(coords)
+        B, dBdX = self.pb.dBdX_many(np.stack([coordsout.s, coordsout.t, z], -1))
         B, dBdX = self.surfaces.contra_vector_transform(B, coordsout, has_jacobian=self.pb.has_jacobian, derivative=True, dv=dBdX)
 
         return B

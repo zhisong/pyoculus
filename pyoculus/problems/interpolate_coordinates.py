@@ -53,8 +53,8 @@ class SurfacesToroidal:
         ## Number of surfaces
         self.nsurfaces = nsurfaces
 
-        ## The new s coordinate for each surface
-        self.ssurfs = np.linspace(0, 1, nsurfaces)
+        ## The rho coordinate for each surface
+        self.rhosurfs = np.linspace(0, 1, nsurfaces)
 
         ## The cosine coefficients of \f$s\f$, dimension (#interfaces, mpol, 2*ntor+1)
         self.scn = np.zeros([nsurfaces, mpol + 1, 2 * ntor + 1])
@@ -252,15 +252,15 @@ class SurfacesToroidal:
 
         return coords
 
-    # def jacobian_transform(self, J, coords: CoordsOutput, derivative=False, dJ=None):
-    #     """! Compute the coordinate transformation for the Jacobian
-    #     @param the Jacobian \f$|J|\f$ of the old coordinate \f$(s,\theta,\zeta)\f$ to be transformed
-    #     @param coords  the output of get_coords, should match the dimension of J
-    #     @param derivative  if the derivatives are needed or not. If True, dJ is required.
-    #     @param dJ  the derivative of \f$|J|\f$ wrt \f$(s,\theta,\zeta)\f$, have the dimension (3 derivatives,...)
-    #     @returns Joutput, dJoutput the transformed Jacobian and the derivatives wrt \f$(\rho,\vartheta,\zeta)\f$
-    #     """
-    #     Joutput = J * coords.jacobian
+        # def jacobian_transform(self, J, coords: CoordsOutput, derivative=False, dJ=None):
+        #     """! Compute the coordinate transformation for the Jacobian
+        #     @param the Jacobian \f$|J|\f$ of the old coordinate \f$(s,\theta,\zeta)\f$ to be transformed
+        #     @param coords  the output of get_coords, should match the dimension of J
+        #     @param derivative  if the derivatives are needed or not. If True, dJ is required.
+        #     @param dJ  the derivative of \f$|J|\f$ wrt \f$(s,\theta,\zeta)\f$, have the dimension (3 derivatives,...)
+        #     @returns Joutput, dJoutput the transformed Jacobian and the derivatives wrt \f$(\rho,\vartheta,\zeta)\f$
+        #     """
+        #     Joutput = J * coords.jacobian
 
         return Joutput
 
@@ -351,15 +351,19 @@ class SurfacesToroidal:
         voutput = np.linalg.solve(coords.jacobi, v)
 
         if has_jacobian:
-            voutput = voutput * coords.jacobian[...,nax]
+            voutput = voutput * coords.jacobian[..., nax]
 
         return voutput
 
-    def construct_interpolant(self, method="cubic_spline", **kwargs):
+    def construct_interpolant(self, rhosurfs=None, method="cubic_spline", **kwargs):
         """! Construct the interpolant between surfaces for the given method
+        @param rhosurfs  The \f$\rho\f$ coordinates for each surface. If input is None, the default or internally stored will be used.
         @param method  The method being used, can be one of ['cubic_spline', 'cubic_hermite', 'pchip']. The corresponding scipy class is being used.
         @param **kwargs Other parameters passing onto the interpolant constructor
         """
+
+        if rhosurfs is None:
+            rhosurfs = self.rhosurfs
 
         self._mlist = np.arange(0, self.mpol + 1)
         self._nlist = (
@@ -371,43 +375,39 @@ class SurfacesToroidal:
             from scipy.interpolate import CubicSpline
 
             ## The radial interpolant for s cosine components
-            self._scn_int = CubicSpline(self.ssurfs, self.scn, axis=0, **kwargs)
+            self._scn_int = CubicSpline(rhosurfs, self.scn, axis=0, **kwargs)
             ## The radial interpolant for theta sine components
-            self._tsn_int = CubicSpline(self.ssurfs, self.tsn, axis=0, **kwargs)
+            self._tsn_int = CubicSpline(rhosurfs, self.tsn, axis=0, **kwargs)
             if not self.sym:
                 ## The radial interpolant for s sine components
-                self._ssn_int = CubicSpline(self.ssurfs, self.ssn, axis=0, **kwargs)
+                self._ssn_int = CubicSpline(rhosurfs, self.ssn, axis=0, **kwargs)
                 ## The radial interpolant for theta cosine components
-                self._tcn_int = CubicSpline(self.ssurfs, self.tcn, axis=0, **kwargs)
+                self._tcn_int = CubicSpline(rhosurfs, self.tcn, axis=0, **kwargs)
         elif method == "cubic_hermite":  ## this is used in the original Hudson version
             from scipy.interpolate import CubicHermiteSpline
 
             dydx = np.zeros_like(self.scn)
             self._scn_int = CubicHermiteSpline(
-                self.ssurfs, self.scn, dydx, axis=0, **kwargs
+                rhosurfs, self.scn, dydx, axis=0, **kwargs
             )
             self._tsn_int = CubicHermiteSpline(
-                self.ssurfs, self.tsn, dydx, axis=0, **kwargs
+                rhosurfs, self.tsn, dydx, axis=0, **kwargs
             )
             if not self.sym:
                 self._ssn_int = CubicHermiteSpline(
-                    self.ssurfs, self.ssn, dydx, axis=0, **kwargs
+                    rhosurfs, self.ssn, dydx, axis=0, **kwargs
                 )
                 self._tcn_int = CubicHermiteSpline(
-                    self.ssurfs, self.tcn, dydx, axis=0, **kwargs
+                    rhosurfs, self.tcn, dydx, axis=0, **kwargs
                 )
         elif method == "pchip":
             from scipy.interpolate import PchipInterpolator
 
-            self._scn_int = PchipInterpolator(self.ssurfs, self.scn, axis=0, **kwargs)
-            self._tsn_int = PchipInterpolator(self.ssurfs, self.tsn, axis=0, **kwargs)
+            self._scn_int = PchipInterpolator(rhosurfs, self.scn, axis=0, **kwargs)
+            self._tsn_int = PchipInterpolator(rhosurfs, self.tsn, axis=0, **kwargs)
             if not self.sym:
-                self._ssn_int = PchipInterpolator(
-                    self.ssurfs, self.ssn, axis=0, **kwargs
-                )
-                self._tcn_int = PchipInterpolator(
-                    self.ssurfs, self.tcn, axis=0, **kwargs
-                )
+                self._ssn_int = PchipInterpolator(rhosurfs, self.ssn, axis=0, **kwargs)
+                self._tcn_int = PchipInterpolator(rhosurfs, self.tcn, axis=0, **kwargs)
         else:
             raise ValueError("Unknown choice of interpolant")
 
@@ -454,7 +454,7 @@ class SurfacesToroidal:
             )
 
         # unfold the surface labels
-        self.ssurfs = self.tsn[:, 0, 0]
+        self.rhosurfs = self.tsn[:, 0, 0]
         self.tsn[:, 0, 0] = 0
 
         self.nsurfaces = dims[1]
@@ -476,5 +476,5 @@ class SurfacesToroidal:
                 [self.scn[nax, :], self.tsn[nax, :], self.ssn[nax, :], self.tcn[nax, :]]
             )
         # fold in the s labels, because the m=0,n=0 sine component is not used
-        surfaces[1, :, 0, 0] = self.ssurfs
+        surfaces[1, :, 0, 0] = self.rhosurfs
         surfaces.tofile(filename)

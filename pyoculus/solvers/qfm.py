@@ -11,7 +11,7 @@ nax = np.newaxis
 
 class QFM(BaseSolver):
     def __init__(
-        self, problem : QFMBfield, params=dict(), integrator=None, integrator_params=dict()
+        self, problem, params=dict(), integrator=None, integrator_params=dict()
     ):
         """! Set up the class of the fixed point finder
         @param problem must inherit pyoculus.problems.BaseProblem, the problem to solve
@@ -19,26 +19,26 @@ class QFM(BaseSolver):
         @param integrator the integrator to use, must inherit \pyoculus.integrators.BaseIntegrator, if set to None by default using RKIntegrator (not used here)
         @param integrator_params dict, the parmaters passed to the integrator (not used here)
 
-        <code> params['ntheta']=100 </code> -- the number of theta points for theta integration
-        <code> params['nfft_multiplier']=8 </code> -- the extended (multiplier) resolution for FFT
-        <code> params['stellar_sym']=True </code> -- if stellarator symmetry is assumed
+        <code> params['pqMpol']=4 </code> -- Fourier resolution multiplier for poloidal direction
+        <code> params['pqNtor']=4 </code> -- Fourier resolution multiplier for toroidal direction
+        <code> params['nfft_multiplier']=4 </code> -- the extended (multiplier) resolution for FFT in toroidal direction
         """
 
         if "ntheta" not in params.keys():
             params["ntheta"] = 100
 
         if "nfft_multiplier" not in params.keys():
-            params["nfft_multiplier"] = 8
+            params["nfft_multiplier"] = 4
 
         if "pqNtor" not in params.keys():
-            params["pqNtor"] = 1
+            params["pqNtor"] = 4
+        
+        if "pqMpol" not in params.keys():
+            params["pqMpol"] = 4
 
-        if "stellar_sym" not in params.keys():
-            params["stellar_sym"] = True
-
-        self.sym = params["stellar_sym"]
         self._MM = params["nfft_multiplier"]
         self._pqNtor = params["pqNtor"]
+        self._pqMpol = params["pqMpol"]
 
         integrator_params["ode"] = problem.f
             
@@ -49,12 +49,15 @@ class QFM(BaseSolver):
         # shorthand
         MM = self._MM
         pqNtor = self._pqNtor
+        pqMpol = self._pqMpol
         iota = pp / qq
 
         qN = qq * pqNtor
+        fM = MM * pqMpol
         Nfft = MM * qN
         dz = 2 * np.pi / ( MM * pqNtor )
         self.dz = dz
+        dt = (np.pi * 2 / qq) / fM
 
         self._nlist = np.arange(0, qN+1)
         self._zeta = np.arange(0, Nfft) * dz
@@ -62,24 +65,49 @@ class QFM(BaseSolver):
         self._cnzq = np.cos(self._nzq)
         self._snzq = np.sin(self._nzq)
 
-        nv0 = 0
-        rcn0=np.zeros(qN+1)
-        tcn0=np.zeros(qN+1)
-        rsn0=np.zeros(qN+1)
-        tsn0=np.zeros(qN+1)
+        rcnarr = np.zeros([fM, qN+1])
+        tcnarr = np.zeros([fM, qN+1])
+        rsnarr = np.zeros([fM, qN+1])
+        tsnarr = np.zeros([fM, qN+1])
+        nvarr = np.zeros(fM)
 
-        rcn0[0] = 0.5
-        xx0 = self._pack_dof(nv0, rcn0, tsn0, rsn0, tcn0)
-        sol = root(self.action_gradient, xx0, args=(pp,qq,0), method='hybr')
-        success = sol.success
-        if success:
-            nv, rcn, tsn, rsn, tcn = self._unpack_dof(sol.x, qN)
-        else:
-            raise RuntimeError("QFM orbit for pp=" + str(pp) + ",qq=" + str(qq) + ",a=" + str(a) + " not found.")
+        for jpq in range(fM):
 
-        print(nv, rcn, tsn, rsn, tcn)
+            a = jpq * dt
 
-    def action_gradient(self, xx, pp, qq, a):
+            if jpq == 0:
+                nv0 = 0
+                rcn0=np.zeros(qN+1)
+                tcn0=np.zeros(qN+1)
+                rsn0=np.zeros(qN+1)
+                tsn0=np.zeros(qN+1)
+                rcn0[0] = 0.5696316139769048
+                tcn0[0] = 0
+            else:
+                nv0 = nvarr[jpq-1].copy()
+                rcn0 = rcnarr[jpq-1, :].copy()
+                tcn0 = tcnarr[jpq-1, :].copy()
+                rsn0 = rsnarr[jpq-1, :].copy()
+                tsn0 = tsnarr[jpq-1, :].copy()
+                tcn0[0] += dt
+                
+            xx0 = self._pack_dof(nv0, rcn0, tsn0, rsn0, tcn0)
+            sol = root(self.action_gradient, xx0, args=(pp,qq,a,qN,Nfft), method='hybr', tol=1e-8)
+            success = sol.success
+            if success:
+                nv, rcn, tsn, rsn, tcn = self._unpack_dof(sol.x, qN)
+            else:
+                raise RuntimeError("QFM orbit for pp=" + str(pp) + ",qq=" + str(qq) + ",a=" + str(a) + " not found.")
+
+            rcnarr[jpq, :] = rcn
+            tsnarr[jpq, :] = tsn
+            tcnarr[jpq, :] = tcn
+            rsnarr[jpq, :] = rsn
+            nvarr[jpq] = nv
+
+        return nvarr, rcnarr, tsnarr, rsnarr, tcnarr
+
+    def action_gradient(self, xx, pp, qq, a, qN, Nfft):
         """! Computes the action gradient, being used in root finding
         @param xx  the packed degrees of freedom. It should contain rcn, tsn, rsn, tcn, nv.
         @param pp  the poloidal periodicity of the island, should be an integer
@@ -102,12 +130,7 @@ class QFM(BaseSolver):
         \end{eqnarray}
         """
         # shorthand
-        MM = self._MM
-        pqNtor = self._pqNtor
         iota = pp / qq
-
-        qN = qq * pqNtor
-        Nfft = MM * qN
 
         # unpack dof
         nv, rcn, tsn, rsn, tcn = self._unpack_dof(xx, qN)
@@ -161,11 +184,11 @@ class QFM(BaseSolver):
         @param qN  Fourier resolution
         @returns nv, rcn, tsn, rsn, tcn
         """
-        nv = xx[0]
-        rcn = xx[1:qN+2]
-        tsn = np.concatenate([[0], xx[qN+2:2*qN+2]])
-        rsn = np.concatenate([[0], xx[2*qN+2:3*qN+2]])
-        tcn = xx[3*qN+2:]
+        nv = xx[0] - 1
+        rcn = xx[1:qN+2] - 1
+        tsn = np.concatenate([[0], xx[qN+2:2*qN+2]-1])
+        rsn = np.concatenate([[0], xx[2*qN+2:3*qN+2]-1])
+        tcn = xx[3*qN+2:] - 1
         
         return nv, rcn, tsn, rsn, tcn
 
@@ -177,7 +200,7 @@ class QFM(BaseSolver):
         @param rsn
         @param tcn
         """
-        xx = np.concatenate([[nv], rcn, tsn[1:], rsn[1:], tcn])
+        xx = np.concatenate([[nv], rcn, tsn[1:], rsn[1:], tcn]) + 1
         
         return xx
 

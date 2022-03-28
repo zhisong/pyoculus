@@ -58,7 +58,8 @@ class SPECBfield(SPECProblem, ToroidalBfield):
         @returns B, dBdX, the contravariant magnetic fields, the derivatives of them
         """
 
-        return self.fortran_module.specbfield.get_bfield_tangent(coords)
+        B, dB = self.fortran_module.specbfield.get_bfield_tangent(coords)
+        return B, dB.T
 
     def B_many(self, coords, args=None):
         """! Returns magnetic fields, with multipy coordinate inputs
