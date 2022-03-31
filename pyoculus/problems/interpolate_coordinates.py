@@ -69,8 +69,21 @@ class SurfacesToroidal:
             ## The cosine coefficients of \f$\vartheta\f$, dimension (#interfaces, mpol, 2*ntor+1)
             self.tcn = self.tsn.copy()
 
-    def add_surface(self, surface, location=0):
-        pass
+    def add_surface(self, rho, scn, tsn, ssn=None, tcn=None):
+        """! Adding a surface into the system with radial label rho
+        """
+        # find between which surfaces to add according to the radial label 
+        for i in range(len(self.rhosurfs)):
+            if self.rhosurfs[i] > rho:
+                break
+
+        self.scn = np.insert(self.scn,i,scn,0)
+        self.tsn = np.insert(self.tsn,i,tsn,0)
+        if not self.sym:
+            self.tcn = np.insert(self.tcn,i,tcn,0)
+            self.ssn = np.insert(self.ssn,i,ssn,0)
+
+        self.rhosurfs = np.insert(self.rhosurfs,i,rho,0)
 
     def get_coords(self, sarr=[0], tarr=[0], zarr=[0], derivative=0, input1D=True):
         """! Compute the coordinates and their derivatives given \f$\rho, \vartheta, \zeta\f$
