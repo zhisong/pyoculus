@@ -28,6 +28,7 @@ class QFM(BaseSolver):
         <code> params['pqNtor']=4 </code> -- Fourier resolution multiplier for toroidal direction
         <code> params['nfft_multiplier']=4 </code> -- the extended (multiplier) resolution for FFT
         <code> params['action_gradient_mode']='real' </code> -- 'real' or 'fourier', compute the action gradient in real space or fourier space
+        <code> params['stellar_sym']=True </code> -- stellarator symmetry
         """
 
         if "ntheta" not in params.keys():
@@ -42,6 +43,9 @@ class QFM(BaseSolver):
         if "pqMpol" not in params.keys():
             params["pqMpol"] = 8
 
+        if "stellar_sym" not in params.keys():
+            params["stellar_sym"] = True
+
         if "action_gradient_mode" not in params.keys():
             params["action_gradient_mode"] = "real"
 
@@ -50,12 +54,56 @@ class QFM(BaseSolver):
         self._pqMpol = params["pqMpol"]
         self._action_gradient_mode = params["action_gradient_mode"]
         self.Nfp = problem.Nfp
+        self.sym = params["stellar_sym"]
 
         integrator_params["ode"] = problem.f
 
         super().__init__(problem, params, integrator, integrator_params)
 
-    def straighten_boundary(self, rho=1, tol=1e-9, niter=10):
+    def construct_qfms(self, plist, qlist, sguesslist=None, bounding_surfaces=[0.0,1.0], rho_label='s', niter=5):
+        """! Construct the QFM surfaces for given list of p and q
+        This subroutine will iteratively construct the QFM surfaces for the given list of p and q.
+        If the system has boundaries with constants s that are flux surfaces, two bounding surfaces will be added.
+        Otherwise, the outmost two QFM surfaces will be the new bounding surfaces.
+        @param plist the list of p
+        @param qlist the list of q
+        @param sguesslist guess of the approximate s coordinate of each surface
+        @param bounding_surfaces instruct to add the bounding surfaces for these s coordinates, maximum two
+        @param rho_label what to use for the new radius label \f$\rho\f$. Can be 's', 'tflux', 'sqrttflux'.
+        @param niter the number of iterations in constructing QFM based of straight field line coordinates
+
+        @returns an instance of pyoculus.problems.SurfacesToroidal containing the intepolation coordinates.
+        """
+        from pyoculus.problems import SurfacesToroidal, QFMBfield
+
+        surfaces = SurfacesToroidal(mpol=self._pqMpol, ntor=self._pqNtor, nsurfaces=2, stellar_sym=self.sym)
+        # adding bounding surfaces if needed
+        if bounding_surfaces is not None:
+            for i, s in enumerate(bounding_surfaces):
+                surfaces.scn[i,0,0] = s
+            self.straighten_boundary(surfaces)
+
+        # now construct the given list of QFMs
+        for i in range(len(plist)):
+            if sguesslist is not None:
+                scn, tsn, ssn, tcn = self.action(plist[i],qlist[i],sguesslist[i])
+            else:
+                scn, tsn, ssn, tcn = self.action(plist[i],qlist[i])
+
+            if rho_label == 's':
+                rho = scn[0,0]
+            else:
+                raise ValueError('unsupported rho_label')
+
+            surfaces.add_surface(rho, scn, tsn, ssn, tcn)
+        
+        return surfaces
+
+    def compute_tflux():
+        pass
+
+
+    def straighten_boundary(self, surfaces, tol=1e-9, niter=10):
         """! Convert a boundary surface to have straight field line
         For a boundary surface with rho=constant, find the function \f$\lambda(\vartheta, \zeta)\f$ with transformation
         \f[
@@ -72,13 +120,33 @@ class QFM(BaseSolver):
         \f[
             \frac{B^\theta}{B^\zeta}(\theta = \vartheta + \lambda(\vartheta, \zeta), \zeta) = \frac{1}{q} (1 + \lambda_\vartheta) + \lambda_\zeta
         \f]
+        A fixed-point iteration method will be used.
+        For a initial guess of \f$\lambda \f$, we use it to compute the left-hand-side.
+        An updated \f$\lambda \f$ is then computed by solving the right-hand-side assuming the left-hand-side is given.
+        This new \f$\lambda \f$ is again substituted into the left hand side to generate a new right-hand-side.
+        The process is repeated until converged (the difference between two iterations is lower than a threshold, or a given number of iteration is reached).
+        @param surfaces class SurfacesToroidal, the surfaces for which the first and last surface are bounding surfaces
+        @param tol the tolerance to stop iteration
+        @param niter the number of iterations
+        """
+        rho0 = surfaces.scn[0,0,0]
+        iota, lambda_sn, lambda_cn = self._straighten_boundary(rho0, tol=tol, niter=niter)
+        surfaces.replace_surface(0, tsn=lambda_sn, tcn=lambda_cn)
+
+        rho0 = surfaces.scn[-1,0,0]
+        iota, lambda_sn, lambda_cn = self._straighten_boundary(rho0, tol=tol, niter=niter)
+        surfaces.replace_surface(-1, tsn=lambda_sn, tcn=lambda_cn)
+
+    def _straighten_boundary(self, rho=1, tol=1e-9, niter=10):
+        """! Convert a boundary surface to have straight field line, internal function
+        For a boundary surface with rho=constant, find the function \f$\lambda(\vartheta, \zeta)\f$ with transformation
         @param rho the boundary surface coordinate
         @param tol the tolerance to stop iteration
         @param niter the number of iterations
         @returns tsn, tcn  the sine and cosine coefficient of the map \f$\lambda\f$ in \f$\theta = \vartheta + \lambda(\vartheta, \zeta)\f$
         """
         mpol = self._pqMpol
-        ntor = mpol = self._pqNtor
+        ntor = self._pqNtor
 
         nfft_theta = self._MM * mpol
         nfft_zeta = self._MM * ntor
@@ -138,7 +206,22 @@ class QFM(BaseSolver):
         return iota, lambda_sn, lambda_cn
 
 
-    def action(self, pp, qq, rguess=0.5, method="hybr"):
+    def action(self, pp : int, qq : int, sguess=0.5, root_method="hybr", tol=1e-8):
+        """! Construct a QFM surface based on Stuart's method, for a given orbit periodicity pp and qq.
+        The surface in the old coordinate \f$(s, \theta, \zeta)\f$ will be expressed in Fourier harmonics of the reverse mapping
+        \f[
+            s(\vartheta, \zeta) = \sum_{m,n} s_{c, m, n} \cos(m \vartheta - n \zeta) + s_{s, m, n} \sin(m \vartheta - n \zeta),
+        \f]
+        \f[
+            \theta(\vartheta, \zeta) = \vartheta + \sum_{m,n} t_{c, m, n} \cos(m \vartheta - n \zeta) + t_{s, m, n} \sin(m \vartheta - n \zeta),
+        \f]
+        @param pp the orbit peroidicity. The rotational transform of such a surface will be pp/qq.
+        @param qq the orbit peroidicity. The rotational transform of such a surface will be pp/qq.
+        @param sguess a guess of the s coordinate for the surfaces.
+        @param root_method root finding method being used in scipy.optimize.root
+        @param tol the tolarence of root finding
+        @returns scn_surf, tsn_surf, ssn_surf, tcn_surf - the Fourier harmonics of the surface transformation.
+        """
         from scipy.optimize import root
 
         # shorthand
@@ -157,7 +240,7 @@ class QFM(BaseSolver):
         Nfft = MM * qq * pqNtor
         ## The zeta distance between toroidal points
         dz = 2 * np.pi / (MM * pqNtor)
-        self.dz = dz
+        self._dz = dz
         ## The theta distance between poloidal action curves
         dt = (np.pi * 2 / qq) / fM
 
@@ -183,7 +266,7 @@ class QFM(BaseSolver):
                 tcn0 = np.zeros(qN + 1)
                 rsn0 = np.zeros(qN + 1)
                 tsn0 = np.zeros(qN + 1)
-                rcn0[0] = rguess
+                rcn0[0] = sguess
                 tcn0[0] = 0
             else:
                 nv0 = nvarr[jpq - 1].copy()
@@ -198,8 +281,8 @@ class QFM(BaseSolver):
                 self.action_gradient,
                 xx0,
                 args=(pp, qq, a, self._action_gradient_mode),
-                method=method,
-                tol=1e-8,
+                method=root_method,
+                tol=tol,
             )
             success = sol.success
             if success:

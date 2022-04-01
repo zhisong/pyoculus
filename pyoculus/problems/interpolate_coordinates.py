@@ -69,8 +69,13 @@ class SurfacesToroidal:
             ## The cosine coefficients of \f$\vartheta\f$, dimension (#interfaces, mpol, 2*ntor+1)
             self.tcn = self.tsn.copy()
 
-    def add_surface(self, rho, scn, tsn, ssn=None, tcn=None):
+    def add_surface(self, rho:float, scn, tsn, ssn=None, tcn=None):
         """! Adding a surface into the system with radial label rho
+        @param rho the new coordinate \f$\rho\f$ for this new surface
+        @param scn the cosine components of \f$s(\rho, \vartheta, \zeta)\f$
+        @param tsn the sine components of \f$\theta(\rho, \vartheta, \zeta)\f$
+        @param ssn the sine componets of \f$s(\rho, \vartheta, \zeta)\f$
+        @param tcn the cosine components of \f$\theta(\rho, \vartheta, \zeta)\f$
         """
         # find between which surfaces to add according to the radial label 
         for i in range(len(self.rhosurfs)):
@@ -84,6 +89,28 @@ class SurfacesToroidal:
             self.ssn = np.insert(self.ssn,i,ssn,0)
 
         self.rhosurfs = np.insert(self.rhosurfs,i,rho,0)
+
+    def replace_surface(self, idx:int, rho:float=None, scn=None, tsn=None, ssn=None, tcn=None):
+        """! Replacing a surface by the new one
+        @param idx the index of the surface to be replaced
+        @param rho the new coordinate \f$\rho\f$ for this new surface. If this is None then keep same.
+        @param scn the cosine components of \f$s(\rho, \vartheta, \zeta)\f$. If this is None then keep same.
+        @param tsn the sine components of \f$\theta(\rho, \vartheta, \zeta)\f$. If this is None then keep same.
+        @param ssn the sine componets of \f$s(\rho, \vartheta, \zeta)\f$. If this is None then keep same.
+        @param tcn the cosine components of \f$\theta(\rho, \vartheta, \zeta)\f$. If this is None then keep same.
+        """
+        if not scn is None:
+            self.scn[idx] = scn
+        if not tsn is None:
+            self.tsn[idx] = tsn
+        if not self.sym:
+            if not tcn is None:
+                self.tcn[idx] = tcn
+            if not ssn is None:
+                self.ssn[idx] = ssn
+
+        if not rho is None:
+            self.rhosurfs[idx] = rho
 
     def get_coords(self, sarr=[0], tarr=[0], zarr=[0], derivative=0, input1D=True):
         """! Compute the coordinates and their derivatives given \f$\rho, \vartheta, \zeta\f$
