@@ -69,6 +69,12 @@ class SurfacesToroidal:
             ## The cosine coefficients of \f$\vartheta\f$, dimension (#interfaces, mpol, 2*ntor+1)
             self.tcn = self.tsn.copy()
 
+        self._mlist = np.arange(0, self.mpol + 1)
+        self._nlist = (
+            np.concatenate([np.arange(0, self.ntor + 1), np.arange(-self.ntor, 0)])
+            * self.Nfp
+        )
+
     def add_surface(self, rho:float, scn, tsn, ssn=None, tcn=None):
         """! Adding a surface into the system with radial label rho
         @param rho the new coordinate \f$\rho\f$ for this new surface
@@ -405,12 +411,6 @@ class SurfacesToroidal:
         if rhosurfs is None:
             rhosurfs = self.rhosurfs
 
-        self._mlist = np.arange(0, self.mpol + 1)
-        self._nlist = (
-            np.concatenate([np.arange(0, self.ntor + 1), np.arange(-self.ntor, 0)])
-            * self.Nfp
-        )
-
         if method == "cubic_spline":
             from scipy.interpolate import CubicSpline
 
@@ -470,12 +470,44 @@ class SurfacesToroidal:
             ## The radial interpolant for theta cosine components, second derivative
             self._tcn_d2 = self._tcn_int.derivative(2)
 
-    def read_surfaces_from_file(self, filename, Nfp=None):
+    def plot(self, zeta=0, npoints=129, **kwargs):
+        """!Plot the surfaces
+        @param zeta the toroidal plane
+        @param npoints the number of points in the plot
+        @param **kwargs all other parameters going into plt.plot
+        """
+
+        import matplotlib.pyplot as plt
+
+        nsurf = self.scn.shape[0]
+        vartheta = np.linspace(0,2 * np.pi,npoints)
+        alpha = self._mlist[nax,:,nax] * vartheta[:,nax,nax] - self._nlist[nax,nax,:] * zeta
+        cosalpha = np.cos(alpha)
+        sinalpha = np.sin(alpha)
+
+        for i in range(nsurf):
+            scn = self.scn[i]
+            tsn = self.tsn[i]
+
+            s = np.sum(scn * cosalpha, axis=(-1,-2))
+            t = vartheta + np.sum(tsn * sinalpha, axis=(-1,-2))
+
+            if not self.sym:
+                ssn = self.ssn[i]
+                tcn = self.tcn[i]
+                s += np.sum(ssn * sinalpha, axis=(-1,-2))
+                t += np.sum(tcn * cosalpha, axis=(-1,-2))
+            
+            plt.plot(t, s, 'k', **kwargs)
+
+    def read_surfaces_from_file(self, filename='data.npz', Nfp=None):
         """! Read the surfaces into a numpy array on disk
         @param filename  the filename to load from
         @param Nfp  the toroidal periodicity, if known.
         """
-        surfaces = np.fromfile(filename)
+        npzfile = np.load(filename)
+        surfaces = npzfile['surfaces']
+        self.rhosurfs = npzfile['rhosurfs']
         dims = surfaces.shape
 
         if dims[0] == 2:
@@ -493,9 +525,6 @@ class SurfacesToroidal:
                 "The first dimension of the array should either be 2 (stellarator symmetry) or 4 (non-stellarator symmetry)"
             )
 
-        # unfold the surface labels
-        self.rhosurfs = self.tsn[:, 0, 0]
-        self.tsn[:, 0, 0] = 0
 
         self.nsurfaces = dims[1]
         self.mpol = dims[2] - 1
@@ -504,7 +533,12 @@ class SurfacesToroidal:
         if not Nfp is None:
             self.Nfp = Nfp
 
-    def write_surfaces_to_file(self, filename):
+        self._mlist = np.arange(0, self.mpol + 1)
+        self._nlist = (
+            np.concatenate([np.arange(0, self.ntor + 1), np.arange(-self.ntor, 0)])
+            * self.Nfp
+        )
+    def write_surfaces_to_file(self, filename='data.npz'):
         """! Save the surfaces into a numpy array on disk
         @param filename  the filename to save to
         """
@@ -515,6 +549,4 @@ class SurfacesToroidal:
             surfaces = np.concatenate(
                 [self.scn[nax, :], self.tsn[nax, :], self.ssn[nax, :], self.tcn[nax, :]]
             )
-        # fold in the s labels, because the m=0,n=0 sine component is not used
-        surfaces[1, :, 0, 0] = self.rhosurfs
-        surfaces.tofile(filename)
+        np.savez(filename, surfaces=surfaces, rhosurfs=self.rhosurfs)

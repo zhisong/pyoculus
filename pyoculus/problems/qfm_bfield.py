@@ -21,6 +21,7 @@ class QFMBfield(ToroidalBfield):
         self.poincare_plot_xlabel = pb.poincare_plot_xlabel
         self.poincare_plot_ylabel = pb.poincare_plot_ylabel
         self.Nfp = pb.Nfp
+        self.has_jacobian = pb.has_jacobian
         super().__init__()
     
     def B(self, coords, args=None):
@@ -55,7 +56,7 @@ class QFMBfield(ToroidalBfield):
         coordsout = self.surfaces.get_coords(r, t, z, derivative=2, input1D=True)
         coordsin = np.array([coordsout.s[0], coordsout.t[0], coordsout.z[0]])
         B, dBdX = self.pb.dBdX(coordsin)
-        B, dBdX = self.surfaces.contra_vector_transform(np.atleast_2d(B), coordsout, has_jacobian=self.pb.has_jacobian, derivative=True, dv=np.atleast_3d(dBdX))
+        B, dBdX = self.surfaces.contra_vector_transform(np.atleast_2d(B), coordsout, has_jacobian=self.has_jacobian, derivative=True, dv=np.atleast_3d(dBdX))
 
         return B[0], dBdX[0]
 
@@ -76,7 +77,7 @@ class QFMBfield(ToroidalBfield):
             coordsout = args
 
         B = self.pb.B_many(np.stack([coordsout.s, coordsout.t, z], -1))
-        B = self.surfaces.contra_vector_transform(B, coordsout, has_jacobian=self.pb.has_jacobian)
+        B = self.surfaces.contra_vector_transform(B, coordsout, has_jacobian=self.has_jacobian)
 
         return B
 

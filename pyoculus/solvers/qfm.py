@@ -3,6 +3,8 @@
 #  @author Zhisong Qu (zhisong.qu@anu.edu.au)
 #
 
+from matplotlib.pyplot import axis
+from scipy.special.orthogonal import jacobi
 from .base_solver import BaseSolver
 from pyoculus.problems import ToroidalBfield
 import numpy as np
@@ -27,7 +29,6 @@ class QFM(BaseSolver):
         <code> params['pqMpol']=8 </code> -- Fourier resolution multiplier for poloidal direction
         <code> params['pqNtor']=4 </code> -- Fourier resolution multiplier for toroidal direction
         <code> params['nfft_multiplier']=4 </code> -- the extended (multiplier) resolution for FFT
-        <code> params['action_gradient_mode']='real' </code> -- 'real' or 'fourier', compute the action gradient in real space or fourier space
         <code> params['stellar_sym']=True </code> -- stellarator symmetry
         """
 
@@ -46,13 +47,10 @@ class QFM(BaseSolver):
         if "stellar_sym" not in params.keys():
             params["stellar_sym"] = True
 
-        if "action_gradient_mode" not in params.keys():
-            params["action_gradient_mode"] = "real"
-
         self._MM = params["nfft_multiplier"] * 2
+        self.nfft_multiplier = params["nfft_multiplier"]
         self._pqNtor = params["pqNtor"]
         self._pqMpol = params["pqMpol"]
-        self._action_gradient_mode = params["action_gradient_mode"]
         self.Nfp = problem.Nfp
         self.sym = params["stellar_sym"]
 
@@ -60,7 +58,16 @@ class QFM(BaseSolver):
 
         super().__init__(problem, params, integrator, integrator_params)
 
-    def construct_qfms(self, plist, qlist, sguesslist=None, bounding_surfaces=[0.0,1.0], rho_label='s', niter=5):
+    def construct_qfms(
+        self,
+        plist,
+        qlist,
+        sguesslist=None,
+        bounding_surfaces=[0.0, 1.0],
+        rho_label="s",
+        niter=5,
+        verbose=True,
+    ):
         """! Construct the QFM surfaces for given list of p and q
         This subroutine will iteratively construct the QFM surfaces for the given list of p and q.
         If the system has boundaries with constants s that are flux surfaces, two bounding surfaces will be added.
@@ -71,37 +78,44 @@ class QFM(BaseSolver):
         @param bounding_surfaces instruct to add the bounding surfaces for these s coordinates, maximum two
         @param rho_label what to use for the new radius label \f$\rho\f$. Can be 's', 'tflux', 'sqrttflux'.
         @param niter the number of iterations in constructing QFM based of straight field line coordinates
+        @param verbose if True, print the progress
 
         @returns an instance of pyoculus.problems.SurfacesToroidal containing the intepolation coordinates.
         """
         from pyoculus.problems import SurfacesToroidal, QFMBfield
 
-        surfaces = SurfacesToroidal(mpol=self._pqMpol, ntor=self._pqNtor, nsurfaces=2, stellar_sym=self.sym)
+        surfaces = SurfacesToroidal(
+            mpol=self._pqMpol, ntor=self._pqNtor, nsurfaces=2, stellar_sym=self.sym
+        )
         # adding bounding surfaces if needed
         if bounding_surfaces is not None:
             for i, s in enumerate(bounding_surfaces):
-                surfaces.scn[i,0,0] = s
+                surfaces.scn[i, 0, 0] = s
+                if rho_label == "s":
+                    surfaces.rhosurfs[i] = s
             self.straighten_boundary(surfaces)
 
         # now construct the given list of QFMs
         for i in range(len(plist)):
             if sguesslist is not None:
-                scn, tsn, ssn, tcn = self.action(plist[i],qlist[i],sguesslist[i])
+                scn, tsn, ssn, tcn = self.action(plist[i], qlist[i], sguesslist[i])
             else:
-                scn, tsn, ssn, tcn = self.action(plist[i],qlist[i])
+                scn, tsn, ssn, tcn = self.action(plist[i], qlist[i])
 
-            if rho_label == 's':
-                rho = scn[0,0]
+            if rho_label == "s":
+                rho = scn[0, 0]
             else:
-                raise ValueError('unsupported rho_label')
+                raise ValueError("unsupported rho_label")
 
             surfaces.add_surface(rho, scn, tsn, ssn, tcn)
-        
+
+            if verbose:
+                print(str(i + 1) + "/" + str(len(plist)) + " completed.")
+
         return surfaces
 
     def compute_tflux():
         pass
-
 
     def straighten_boundary(self, surfaces, tol=1e-9, niter=10):
         """! Convert a boundary surface to have straight field line
@@ -129,12 +143,16 @@ class QFM(BaseSolver):
         @param tol the tolerance to stop iteration
         @param niter the number of iterations
         """
-        rho0 = surfaces.scn[0,0,0]
-        iota, lambda_sn, lambda_cn = self._straighten_boundary(rho0, tol=tol, niter=niter)
+        rho0 = surfaces.scn[0, 0, 0]
+        iota, lambda_sn, lambda_cn = self._straighten_boundary(
+            rho0, tol=tol, niter=niter
+        )
         surfaces.replace_surface(0, tsn=lambda_sn, tcn=lambda_cn)
 
-        rho0 = surfaces.scn[-1,0,0]
-        iota, lambda_sn, lambda_cn = self._straighten_boundary(rho0, tol=tol, niter=niter)
+        rho0 = surfaces.scn[-1, 0, 0]
+        iota, lambda_sn, lambda_cn = self._straighten_boundary(
+            rho0, tol=tol, niter=niter
+        )
         surfaces.replace_surface(-1, tsn=lambda_sn, tcn=lambda_cn)
 
     def _straighten_boundary(self, rho=1, tol=1e-9, niter=10):
@@ -154,8 +172,12 @@ class QFM(BaseSolver):
         rarr = np.ones([1]) * rho
         zarr = np.linspace(0, np.pi * 2, nfft_zeta, endpoint=False)
 
-        rarr = np.broadcast_to(rarr[:, np.newaxis, np.newaxis], [1, nfft_theta, nfft_zeta])
-        zarr = np.broadcast_to(zarr[np.newaxis, np.newaxis, :], [1, nfft_theta, nfft_zeta])
+        rarr = np.broadcast_to(
+            rarr[:, np.newaxis, np.newaxis], [1, nfft_theta, nfft_zeta]
+        )
+        zarr = np.broadcast_to(
+            zarr[np.newaxis, np.newaxis, :], [1, nfft_theta, nfft_zeta]
+        )
 
         lambda_cn = np.zeros([mpol + 1, 2 * ntor + 1])
         lambda_sn = np.zeros([mpol + 1, 2 * ntor + 1])
@@ -189,12 +211,12 @@ class QFM(BaseSolver):
 
             iota = cn[0, 0]
 
-            lambda_cn[0, 1:] = sn[0, 1:] / (-mlist[0,nax] * iota + nlist[nax,1:])
-            lambda_sn[0, 1:] = cn[0, 1:] / (+mlist[0,nax] * iota - nlist[nax,1:])
-            lambda_cn[1:, :] = sn[1:, :] / (-mlist[1:,nax] * iota + nlist[nax,:])
-            lambda_sn[1:, :] = cn[1:, :] / (+mlist[1:,nax] * iota - nlist[nax,:])
-            lambda_cn[0,0] = 0
-            lambda_sn[0,0] = 0
+            lambda_cn[0, 1:] = sn[0, 1:] / (-mlist[0, nax] * iota + nlist[nax, 1:])
+            lambda_sn[0, 1:] = cn[0, 1:] / (+mlist[0, nax] * iota - nlist[nax, 1:])
+            lambda_cn[1:, :] = sn[1:, :] / (-mlist[1:, nax] * iota + nlist[nax, :])
+            lambda_sn[1:, :] = cn[1:, :] / (+mlist[1:, nax] * iota - nlist[nax, :])
+            lambda_cn[0, 0] = 0
+            lambda_sn[0, 0] = 0
 
             erriota = np.abs(iota - iota_old)
             errcn = np.max(np.abs(lambda_cn - lambda_cn_old))
@@ -205,8 +227,7 @@ class QFM(BaseSolver):
 
         return iota, lambda_sn, lambda_cn
 
-
-    def action(self, pp : int, qq : int, sguess=0.5, root_method="hybr", tol=1e-8):
+    def action(self, pp: int, qq: int, sguess=0.5, root_method="hybr", tol=1e-8):
         """! Construct a QFM surface based on Stuart's method, for a given orbit periodicity pp and qq.
         The surface in the old coordinate \f$(s, \theta, \zeta)\f$ will be expressed in Fourier harmonics of the reverse mapping
         \f[
@@ -256,6 +277,14 @@ class QFM(BaseSolver):
         tsnarr = np.zeros([fM, qN + 1])
         nvarr = np.zeros(fM)
 
+        # test if problem.dBdX_many is implemented
+        try:
+            B, dBdX = self._problem.dBdX_many(np.array([[0,0,0]]))
+        except NotImplementedError:
+            use_jacobi = False
+        else:
+            use_jacobi = True
+
         for jpq in range(fM):
 
             a = jpq * dt
@@ -277,16 +306,26 @@ class QFM(BaseSolver):
                 tcn0[0] += dt
 
             xx0 = self._pack_dof(nv0, rcn0, tsn0, rsn0, tcn0)
-            sol = root(
-                self.action_gradient,
-                xx0,
-                args=(pp, qq, a, self._action_gradient_mode),
-                method=root_method,
-                tol=tol,
-            )
+            if not use_jacobi:
+                sol = root(
+                    self.action_gradient,
+                    xx0,
+                    args=(pp, qq, a, qN, Nfft),
+                    method=root_method,
+                    tol=tol,
+                )
+            else:
+                sol = root(
+                    self.action_gradient,
+                    xx0,
+                    args=(pp, qq, a, qN, Nfft),
+                    method=root_method,
+                    jac=self.action_gradient_jacobi,
+                    tol=tol,
+                )
             success = sol.success
             if success:
-                nv, rcn, tsn, rsn, tcn = self._unpack_dof(sol.x)
+                nv, rcn, tsn, rsn, tcn = self._unpack_dof(sol.x, qN)
             else:
                 raise RuntimeError(
                     "QFM orbit for pp="
@@ -305,11 +344,11 @@ class QFM(BaseSolver):
             nvarr[jpq] = nv
 
         # wrap the lines into a 2D surface in (alpha, zeta)
-        r = irfft1D(rcnarr, rsnarr, MM // 2)
+        r = irfft1D(rcnarr, rsnarr, self.nfft_multiplier)
         z = np.linspace(0, 2 * qq * np.pi, r.shape[-1], endpoint=False)
         # Note that we will remove the DC part ~ alpha and the p/q*zeta part which will be counted seperately
         tcnarr[:, 0] = 0
-        t = irfft1D(tcnarr, tsnarr, MM // 2)
+        t = irfft1D(tcnarr, tsnarr, self.nfft_multiplier)
 
         r2D_alpha = np.zeros([qfM, Nfft])
         t2D_alpha = np.zeros([qfM, Nfft])
@@ -346,15 +385,13 @@ class QFM(BaseSolver):
 
         return scn_surf, tsn_surf, ssn_surf, tcn_surf
 
-    def action_gradient(self, xx, pp, qq, a, mode="real"):
+    def action_gradient(self, xx, pp, qq, a, qN, Nfft):
         """! Computes the action gradient, being used in root finding
         @param xx  the packed degrees of freedom. It should contain rcn, tsn, rsn, tcn, nv.
         @param pp  the poloidal periodicity of the island, should be an integer
         @param qq  the toroidal periodicity of the island, should be an integer
         @param a   the target area
-        @param mode  "real" or "fourier", to compute the equations in real space or fourier space
         @returns ff  the equtions to find zeros, see below.
-
         Construct the Fourier transform of \f$B^\vartheta_i / B^\zeta_i\f$ and \f$B^\rho_i / B^\zeta_i + \bar \nu / (J B^\zeta_i)\f$,
         \f[
         B^\t / B^\z & = & f^c_0 + \sum_{n=1}^{qN} \left[ f^c_n \cos(n\z/q) + f^s_n \sin(n\z/q) \right], \label{eqn:f}
@@ -371,77 +408,161 @@ class QFM(BaseSolver):
         """
         # shorthand
         iota = pp / qq
-        qN = (xx.size - 1) // 4
 
         # unpack dof
-        nv, rcn, tsn, rsn, tcn = self._unpack_dof(xx)
+        nv, rcn, tsn, rsn, tcn = self._unpack_dof(xx, qN)
 
-        if mode == "fourier":
-            r = np.sum(rcn[:, nax] * self._cnzq, axis=0) + np.sum(
-                rsn[:, nax] * self._snzq, axis=0
-            )
-            t = np.sum(tcn[:, nax] * self._cnzq, axis=0) + np.sum(
-                tsn[:, nax] * self._snzq, axis=0
-            )
-            z = self._zeta
-            t += iota * z
-        elif mode == "real":
-            r = irfft1D(rcn, rsn)
-            z = np.linspace(0, 2 * qq * np.pi, r.size, endpoint=False)
-            t = irfft1D(tcn, tsn) + iota * z
-            rdot = irfft1D(rsn * self._nlist / qq, -rcn * self._nlist / qq)
-            tdot = irfft1D(tsn * self._nlist / qq, -tcn * self._nlist / qq) + iota
-        else:
-            raise ValueError("space should be 'real' or 'fourier' ")
+        r = irfft1D(rcn, rsn, self.nfft_multiplier)
+        t = irfft1D(tcn, tsn, self.nfft_multiplier)
+        z = self._zeta
+        t += iota * z
 
-        # area = ( np.sum( t ) + np.pi * pp) * self.dz / (qq*2*np.pi) - pp * np.pi
+        # area = ( np.sum( t ) + np.pi * pp) * self._dz / (qq*2*np.pi) - pp * np.pi
         area = tcn[0]
 
         B = self._problem.B_many(np.stack([r, t, z], -1))
 
-        gBr = B[:, 0]
-        gBt = B[:, 1]
-        gBz = B[:, 2]
+        Br = B[:, 0]
+        Bt = B[:, 1]
+        Bz = B[:, 2]
 
-        rhs_tdot = gBt / gBz
-        rhs_rdot = gBr / gBz - nv / gBz
+        if not self._problem.has_jacobian:
+            jacobian = self._problem.jacobian_many(np.stack([r, t, z], -1))
+            Bz = Bz * jacobian
+
+        rhs_tdot = Bt / Bz
+        rhs_rdot = Br / Bz - nv / Bz
+
+        rhs_rdot_fft_cos, rhs_rdot_fft_sin = rfft1D(rhs_rdot)
+        rhs_tdot_fft_cos, rhs_tdot_fft_sin = rfft1D(rhs_tdot)
 
         # now pack the function values
         ff = np.zeros_like(xx)
+
         ff[0] = area - a
-
-        if mode == "fourier":
-            rhs_tdot_fft_cos, rhs_tdot_fft_sin = rfft1D(rhs_tdot)
-            rhs_rdot_fft_cos, rhs_rdot_fft_sin = rfft1D(rhs_rdot)
-
-            ff[1 : qN + 2] = rsn * self._nlist / qq - rhs_rdot_fft_cos[0 : qN + 1]
-            ff[qN + 2 : 2 * qN + 1] = (
-                -rcn * self._nlist / qq - rhs_rdot_fft_sin[0 : qN + 1]
-            )[1:-1]
-            ff[2 * qN + 1 : 3 * qN + 2] = (
-                tsn * self._nlist / qq - rhs_tdot_fft_cos[0 : qN + 1]
-            )
-            ff[2 * qN + 1] += iota
-            ff[3 * qN + 2 :] = (-tcn * self._nlist / qq - rhs_tdot_fft_sin[0 : qN + 1])[
-                1:-1
-            ]
-        elif mode == "real":
-            ff[1 : 2 * qN + 1] = rdot - rhs_rdot
-            ff[2 * qN + 1 :] = tdot - rhs_tdot
+        ff[1 : qN + 2] = rsn * self._nlist / qq - rhs_rdot_fft_cos[0 : qN + 1]
+        ff[qN + 2 : 2 * qN + 2] = (
+            -rcn * self._nlist / qq - rhs_rdot_fft_sin[0 : qN + 1]
+        )[1:]
+        ff[2 * qN + 2 : 3 * qN + 3] = (
+            tsn * self._nlist / qq - rhs_tdot_fft_cos[0 : qN + 1]
+        )
+        ff[2 * qN + 2] += iota
+        ff[3 * qN + 3 :] = (-tcn * self._nlist / qq - rhs_tdot_fft_sin[0 : qN + 1])[1:]
 
         return ff
 
-    def _unpack_dof(self, xx):
+    def action_gradient_jacobi(self, xx, pp, qq, a, qN, Nfft):
+        """! Computes the jacobi matrix of action gradient, being used in root finding
+        @param xx  the packed degrees of freedom. It should contain rcn, tsn, rsn, tcn, nv.
+        @param pp  the poloidal periodicity of the island, should be an integer
+        @param qq  the toroidal periodicity of the island, should be an integer
+        @param a   the target area
+        @returns dff  the jacobian
+        """
+
+        # shorthand
+        iota = pp / qq
+
+        # unpack dof
+        nv, rcn, tsn, rsn, tcn = self._unpack_dof(xx, qN)
+
+        r = irfft1D(rcn, rsn, self.nfft_multiplier)
+        t = irfft1D(tcn, tsn, self.nfft_multiplier)
+        z = self._zeta
+        t += iota * z
+
+        # area = ( np.sum( t ) + np.pi * pp) * self._dz / (qq*2*np.pi) - pp * np.pi
+        area = tcn[0]
+
+        B, dBdX = self._problem.dBdX_many(np.stack([r, t, z], -1))
+
+        Br = B[:, 0]
+        Bt = B[:, 1]
+        Bz = B[:, 2]
+
+        dBrdr = dBdX[:, 0, 0]
+        dBrdt = dBdX[:, 1, 0]
+        dBtdr = dBdX[:, 0, 1]
+        dBtdt = dBdX[:, 1, 1]
+        dBzdr = dBdX[:, 0, 2]
+        dBzdt = dBdX[:, 1, 2]
+
+        if not self._problem.has_jacobian:
+            jacobian = self._problem.jacobian_many(np.stack([r, t, z], -1))
+            Bz = Bz * jacobian
+
+        oBz = 1 / Bz
+
+        # rhs_tdot = Bt / Bz
+        # rhs_rdot = Br / Bz - nv / Bz
+
+        rhs_tdot_dr = dBtdr / Bz - Bt / Bz ** 2 * dBzdr
+        rhs_tdot_dt = dBtdt / Bz - Bt / Bz ** 2 * dBzdt
+        rhs_rdot_dr = dBrdr / Bz - (Br - nv) / Bz ** 2 * dBzdr
+        rhs_rdot_dt = dBrdt / Bz - (Br - nv) / Bz ** 2 * dBzdt
+
+        oBz_cos, oBz_sin = rfft1D(oBz)
+        tdot_drcn = rhs_tdot_dr[nax, :] * self._cnzq
+        tdot_drsn = rhs_tdot_dr[nax, :] * self._snzq
+        tdot_dtcn = rhs_tdot_dt[nax, :] * self._cnzq
+        tdot_dtsn = rhs_tdot_dt[nax, :] * self._snzq
+        rdot_drcn = rhs_rdot_dr[nax, :] * self._cnzq
+        rdot_drsn = rhs_rdot_dr[nax, :] * self._snzq
+        rdot_dtcn = rhs_rdot_dt[nax, :] * self._cnzq
+        rdot_dtsn = rhs_rdot_dt[nax, :] * self._snzq
+
+        dummy_nv = np.zeros([1, tdot_drcn.shape[-1]])
+        dtdot = self._pack_dof(dummy_nv, tdot_drcn, tdot_dtsn, tdot_drsn, tdot_dtcn) - 1
+        drdot = self._pack_dof(dummy_nv, rdot_drcn, rdot_dtsn, rdot_drsn, rdot_dtcn) - 1
+        dtdot_cos, dtdot_sin = rfft1D(dtdot)
+        drdot_cos, drdot_sin = rfft1D(drdot)
+        dtdot_cos = dtdot_cos.T
+        dtdot_sin = dtdot_sin.T
+        drdot_cos = drdot_cos.T
+        drdot_sin = drdot_sin.T
+
+        # now pack the function values
+        ff = np.zeros([xx.size, xx.size])
+
+        ff[1 : qN + 2, :] = -drdot_cos[0 : qN + 1]
+        ff[qN + 2 : 2 * qN + 2, :] = -drdot_sin[1 : qN + 1]
+        ff[2 * qN + 2 : 3 * qN + 3, :] = -dtdot_cos[0 : qN + 1]
+        ff[3 * qN + 3 :, :] = -dtdot_sin[1 : qN + 1]
+
+        ff[0, 3 * qN + 2] += 1  # tcn[0]
+        ff[np.arange(1, qN + 2), np.arange(2 * qN + 1, 3 * qN + 2)] += (
+            self._nlist / qq
+        )  # rsn
+        ff[np.arange(qN + 2, 2 * qN + 2), np.arange(2, qN + 2)] += -(self._nlist / qq)[
+            1:
+        ]  # -rcn[1:]
+        ff[np.arange(2 * qN + 2, 3 * qN + 3), np.arange(qN + 1, 2 * qN + 2)] += (
+            self._nlist / qq
+        )  # tsn
+        ff[np.arange(3 * qN + 3, 4 * qN + 3), np.arange(3 * qN + 3, 4 * qN + 3)] += -(
+            self._nlist / qq
+        )[
+            1:
+        ]  # -tcn[1:]
+
+        # derivative wrt nv
+        ff[1 : qN + 2, 0] += oBz_cos[0 : qN + 1]
+        ff[qN + 2 : 2 * qN + 2, 0] += oBz_sin[1 : qN + 1]
+
+        return ff
+
+    def _unpack_dof(self, xx, qN):
         """! Unpack the degrees of freedom into Fourier harmonics
         @param xx  the packed degrees of freedom
+        @param qN  Fourier resolution
         @returns nv, rcn, tsn, rsn, tcn
         """
-        qN = (xx.size - 1) // 4
         nv = xx[0] - 1
         rcn = xx[1 : qN + 2] - 1
-        tsn = np.concatenate([[0], xx[qN + 2 : 2 * qN + 1] - 1, [0]])
-        rsn = np.concatenate([[0], xx[2 * qN + 1 : 3 * qN] - 1, [0]])
-        tcn = xx[3 * qN :] - 1
+        tsn = np.concatenate([[0], xx[qN + 2 : 2 * qN + 2] - 1])
+        rsn = np.concatenate([[0], xx[2 * qN + 2 : 3 * qN + 2] - 1])
+        tcn = xx[3 * qN + 2 :] - 1
 
         return nv, rcn, tsn, rsn, tcn
 
@@ -453,7 +574,7 @@ class QFM(BaseSolver):
         @param rsn
         @param tcn
         """
-        xx = np.concatenate([[nv], rcn, tsn[1:-1], rsn[1:-1], tcn]) + 1
+        xx = np.concatenate([np.atleast_1d(nv), rcn, tsn[1:], rsn[1:], tcn], axis=0) + 1
 
         return xx
 
@@ -482,12 +603,9 @@ def irfft1D(cos_in, sin_in, nfft_multiplier=1):
     @returns the function value in real space
     """
     Nfft = nfft_multiplier * (cos_in.shape[-1] - 1)
-    sin_in_new = sin_in.copy()
-    sin_in_new[0] = 0
-    sin_in_new[-1] = 0
     ffft = (cos_in - complex(0, 1) * sin_in) * Nfft
     ffft[..., 0] *= 2
-    result = np.fft.irfft(ffft, 2 * Nfft)
+    result = np.fft.irfft(ffft, 2 * Nfft, axis=-1)
     return result
 
 
@@ -512,16 +630,25 @@ def rfft2D(f, mpol=None, ntor=None):
     if ntor is None:
         ntor = Nfft2 // 4
 
+    mpol_data = Nfft1 // 2
+    ntor_data = Nfft2 // 2 - 1
+
     cn = np.zeros([mpol + 1, 2 * ntor + 1])
     sn = np.zeros([mpol + 1, 2 * ntor + 1])
 
-    # 1. assuming mpol and ntor are lower than that of the data
-    # so we just need to truncate it, otherwise we will need to pad it
-    idxlist = np.concatenate([[0], -np.arange(1, ntor + 1), np.arange(ntor, 0, -1)])
-    cn[0 : mpol + 1, :] = fftcos[0 : mpol + 1, idxlist]
-    sn[0 : mpol + 1, :] = fftsin[0 : mpol + 1, idxlist]
-
-    # 2, mpol is higher than data, ntor is lower
+    if mpol < mpol_data and ntor < ntor_data:
+        # 1. assuming mpol and ntor are lower than that of the data
+        # so we just need to truncate it, otherwise we will need to pad it
+        idxlist = np.concatenate([[0], -np.arange(1, ntor + 1), np.arange(ntor, 0, -1)])
+        cn[0 : mpol + 1, :] = fftcos[0 : mpol + 1, idxlist]
+        sn[0 : mpol + 1, :] = fftsin[0 : mpol + 1, idxlist]
+    elif mpol >= mpol_data and ntor < ntor_data:
+        # 2, mpol is higher than data, ntor is lower
+        idxlist = np.concatenate([[0], -np.arange(1, ntor + 1), np.arange(ntor, 0, -1)])
+        cn[0 : mpol_data + 1, :] = fftcos[0 : mpol_data + 1, idxlist]
+        sn[0 : mpol_data + 1, :] = fftsin[0 : mpol_data + 1, idxlist]
+    else:
+        raise ValueError("A higher value of pqNtor is needed")
 
     return cn, sn
 
