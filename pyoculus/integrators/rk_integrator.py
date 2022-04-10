@@ -24,6 +24,8 @@ class RKIntegrator(BaseIntegrator):
 
         <code>params['rtol']=1e-7</code> -- relative tolerance
 
+        <code>params['nsteps']=10000</code> -- the maximum number of integration steps before reporting an error
+
         <code>params['type']='dopri5'</code> -- the type of integrator, 'dopri5' for RK45, 'dop853' for RK853
         """
 
@@ -46,13 +48,17 @@ class RKIntegrator(BaseIntegrator):
             params["rtol"] = 1e-7  # set to default value
         self.rtol = params["rtol"]
 
+        if "nsteps" not in params.keys():
+            params["nsteps"] = 10000
+        self.nsteps = params["nsteps"]
+
         if "args" not in params.keys():
             params["args"] = None
         self.args = params["args"]
 
         # set up the integrator
         self.integrator = ode(self.rhs).set_integrator(
-            params["type"], rtol=params["rtol"]
+            params["type"], rtol=params["rtol"], nsteps=self.nsteps
         )
 
         super().__init__(params)
