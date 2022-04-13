@@ -18,7 +18,7 @@ class M3DC1Bfield(CylindricalBfield):
         self._B = B_sim
         super().__init__(R0, Z0, 1)
 
-    def B(self, RphiZ, args=None):
+    def B(self, RphiZ, *args):
         """! The magnetic field, being used by parent class CylindricalBfield
         @param RphiZ array with coordinates \f$(R, \phi, Z)\f$
         @returns \f$(B_R, B_\phi, B_Z)\f$

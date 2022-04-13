@@ -3,6 +3,7 @@
 #  @author Zhisong Qu (zhisong.qu@anu.edu.au)
 #
 
+from inspect import ismemberdescriptor
 from matplotlib.pyplot import axis
 from scipy.special.orthogonal import jacobi
 from .base_solver import BaseSolver
@@ -197,9 +198,7 @@ class QFM(BaseSolver):
                 + lambda_real
             )
 
-            coords = np.stack([rarr.flatten(), tarr.flatten(), zarr.flatten()], -1)
-
-            B = self._problem.B_many(coords)
+            B = self._problem.B_many(rarr.flatten(), tarr.flatten(), zarr.flatten(), input1D=True)
 
             Bs = np.reshape(B[:, 0], [nfft_theta, nfft_zeta])
             Bt = np.reshape(B[:, 1], [nfft_theta, nfft_zeta])
@@ -279,7 +278,8 @@ class QFM(BaseSolver):
 
         # test if problem.dBdX_many is implemented
         try:
-            B, dBdX = self._problem.dBdX_many(np.array([[0,0,0]]))
+            zero_coords =np.zeros([1])
+            B, dBdX = self._problem.dBdX_many(zero_coords, zero_coords, zero_coords, input1D=True)
         except NotImplementedError:
             use_jacobi = False
         else:
@@ -420,14 +420,14 @@ class QFM(BaseSolver):
         # area = ( np.sum( t ) + np.pi * pp) * self._dz / (qq*2*np.pi) - pp * np.pi
         area = tcn[0]
 
-        B = self._problem.B_many(np.stack([r, t, z], -1))
+        B = self._problem.B_many(r, t, z, input1D=True)
 
         Br = B[:, 0]
         Bt = B[:, 1]
         Bz = B[:, 2]
 
         if not self._problem.has_jacobian:
-            jacobian = self._problem.jacobian_many(np.stack([r, t, z], -1))
+            jacobian = self._problem.jacobian_many(r, t, z, input1D=True)
             Bz = Bz * jacobian
 
         rhs_tdot = Bt / Bz
@@ -475,7 +475,7 @@ class QFM(BaseSolver):
         # area = ( np.sum( t ) + np.pi * pp) * self._dz / (qq*2*np.pi) - pp * np.pi
         area = tcn[0]
 
-        B, dBdX = self._problem.dBdX_many(np.stack([r, t, z], -1))
+        B, dBdX = self._problem.dBdX_many(r, t, z, input1D=True)
 
         Br = B[:, 0]
         Bt = B[:, 1]
@@ -489,7 +489,7 @@ class QFM(BaseSolver):
         dBzdt = dBdX[:, 1, 2]
 
         if not self._problem.has_jacobian:
-            jacobian = self._problem.jacobian_many(np.stack([r, t, z], -1))
+            jacobian = self._problem.jacobian_many(r, t, z, input1D=True)
             Bz = Bz * jacobian
 
         oBz = 1 / Bz

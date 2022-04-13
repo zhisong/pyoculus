@@ -75,7 +75,7 @@ class SurfacesToroidal:
             * self.Nfp
         )
 
-    def add_surface(self, rho:float, scn, tsn, ssn=None, tcn=None):
+    def add_surface(self, rho: float, scn, tsn, ssn=None, tcn=None):
         """! Adding a surface into the system with radial label rho
         @param rho the new coordinate \f$\rho\f$ for this new surface
         @param scn the cosine components of \f$s(\rho, \vartheta, \zeta)\f$
@@ -83,20 +83,22 @@ class SurfacesToroidal:
         @param ssn the sine componets of \f$s(\rho, \vartheta, \zeta)\f$
         @param tcn the cosine components of \f$\theta(\rho, \vartheta, \zeta)\f$
         """
-        # find between which surfaces to add according to the radial label 
+        # find between which surfaces to add according to the radial label
         for i in range(len(self.rhosurfs)):
             if self.rhosurfs[i] > rho:
                 break
 
-        self.scn = np.insert(self.scn,i,scn,0)
-        self.tsn = np.insert(self.tsn,i,tsn,0)
+        self.scn = np.insert(self.scn, i, scn, 0)
+        self.tsn = np.insert(self.tsn, i, tsn, 0)
         if not self.sym:
-            self.tcn = np.insert(self.tcn,i,tcn,0)
-            self.ssn = np.insert(self.ssn,i,ssn,0)
+            self.tcn = np.insert(self.tcn, i, tcn, 0)
+            self.ssn = np.insert(self.ssn, i, ssn, 0)
 
-        self.rhosurfs = np.insert(self.rhosurfs,i,rho,0)
+        self.rhosurfs = np.insert(self.rhosurfs, i, rho, 0)
 
-    def replace_surface(self, idx:int, rho:float=None, scn=None, tsn=None, ssn=None, tcn=None):
+    def replace_surface(
+        self, idx: int, rho: float = None, scn=None, tsn=None, ssn=None, tcn=None
+    ):
         """! Replacing a surface by the new one
         @param idx the index of the surface to be replaced
         @param rho the new coordinate \f$\rho\f$ for this new surface. If this is None then keep same.
@@ -298,24 +300,26 @@ class SurfacesToroidal:
 
         return coords
 
-        # def jacobian_transform(self, J, coords: CoordsOutput, derivative=False, dJ=None):
-        #     """! Compute the coordinate transformation for the Jacobian
-        #     @param the Jacobian \f$|J|\f$ of the old coordinate \f$(s,\theta,\zeta)\f$ to be transformed
-        #     @param coords  the output of get_coords, should match the dimension of J
-        #     @param derivative  if the derivatives are needed or not. If True, dJ is required.
-        #     @param dJ  the derivative of \f$|J|\f$ wrt \f$(s,\theta,\zeta)\f$, have the dimension (3 derivatives,...)
-        #     @returns Joutput, dJoutput the transformed Jacobian and the derivatives wrt \f$(\rho,\vartheta,\zeta)\f$
-        #     """
-        #     Joutput = J * coords.jacobian
+    def jacobi_transform(self, jacobi, coords: CoordsOutput):
+        """! Compute the derivatives wrt the new coordinate given the derivatives in the old coordinates
+        @param jacobi the Jacobi matrix \f$\partial(f_1, \cdots, f_N) / \partial (s,\theta,\zeta)\f$
+        @param coords  the output of get_coords, should match the dimension of J
+        @returns jacobi_output the transformed Jacobi matrix and the derivatives wrt \f$(\rho,\vartheta,\zeta)\f$
 
-        return Joutput
+        Given \f$N\f$ variables \f$f_1, \cdots, f_N \f$, the jacobi matrix (derivatives wrt the new coordinate is given by the chain rule
+        \f[
+            \frac{\partial(f_1, \cdots, f_N)}{\partial(\rho, \vartheta, \zeta)} = \frac{\partial(f_1, \cdots, f_N)}{\partial(s, \theta, \zeta)} 
+            \cdot \frac{\partial(s, \theta, \zeta)}{\partial(\rho, \vartheta, \zeta)}
+        \f]
+        """
+        jacobi_output = jacobi @ coords.jacobi
 
-    def metric_transform(self, g, coords: CoordsOutput, derivative=False, dg=None):
-        """! Compute the coordinate transformation for a metric tensor \f$g_{ij}\f$ (lower!)
+        return jacobi_output
+
+    def metric_transform(self, g, coords: CoordsOutput):
+        """! Compute the coordinate transformation for a metric tensor \f$g_{ij}\f$ (lower!) (derivative computation under construction)
         @param g  the metric \f$g_{ij}\f$ of the old coordinate \f$(s,\theta,\zeta)\f$ to be transformed, should have the dimension (3,3,...)
         @param coords  the output of get_coords, should match the dimension of g
-        @param derivative  if the derivatives are needed or not. If True, dg is required.
-        @param dg  the derivative of g wrt \f$(s,\theta,\zeta)\f$, have the dimension (3 derivatives, 3,3,...)
         @returns goutput, [dgoutput], the transformed metric and the derivative wrt \f$(\rho,\vartheta,\zeta)\f$
 
         Let the input metric for \f$(s, \theta, \zeta)\f$  being \f$\mathbf{g}\f$,
@@ -363,43 +367,74 @@ class SurfacesToroidal:
 
         When the derivative is needed, we note that
         \f[
-            \frac{d}{d\rho}\mathbf{J}
+            \frac{\partial }{\partial \rho}\mathbf{J}
             \left(\begin{array}{c}
             v^{\rho} \\ v^{\vartheta} \\ v^{\zeta}
             \end{array}\right)
             +\mathbf{J}
-            \frac{d}{d\rho}\left(\begin{array}{c}
+            \frac{\partial }{\partial \rho}\left(\begin{array}{c}
             v^{\rho} \\ v^{\vartheta} \\ v^{\zeta}
             \end{array}\right)
             =
-            \frac{d}{d\rho}\left(\begin{array}{c}
+            \frac{\partial }{\partial \rho}\left(\begin{array}{c}
             v^{{s}} \\ v^{\theta} \\ v^{\zeta}
             \end{array}\right),
         \f]
         therefore
         \f[
-            \frac{d}{d\rho}\left(\begin{array}{c}
+            \frac{\partial}{\partial \rho}\left(\begin{array}{c}
             v^{\rho} \\ v^{\vartheta} \\ v^{\zeta}
             \end{array}\right)
             =
             \mathbf{J}^{-1}
-            \left[\frac{d}{d\rho}\left(\begin{array}{c}
+            \left[\frac{\partial }{\partial \rho}\left(\begin{array}{c}
             v^{{s}} \\ v^{\theta} \\ v^{\zeta}
             \end{array}\right)
-            -\frac{d}{d\rho}\mathbf{J}
+            -\frac{\partial \mathbf{J}}{\partial\rho}
             \left(\begin{array}{c}
             v^{\rho} \\ v^{\vartheta} \\ v^{\zeta}
             \end{array}\right)\right].
         \f]
+
         Similarly we can compute the \f$\vartheta\f$ and \f$\zeta\f$ derivatives.
+
+        Now,
+        \f[
+            \frac{\partial (v^{{s}},  v^{\theta},  v^{\zeta})}{\partial(\rho, \vartheta, \zeta)} =
+            \frac{\partial (v^{{s}},  v^{\theta},  v^{\zeta})}{\partial(s, \theta, \zeta)}
+            \times
+            \frac{\partial(s, \theta, \zeta)}{\partial(\rho, \vartheta, \zeta)}
+        \f]
+
+        Summing up
+        \f[
+            \frac{\partial ( v^{\rho}, v^{\vartheta}, v^{\zeta})}{\partial(\rho, \vartheta, \zeta)} =
+            \mathbf{J}^{-1} \cdot \frac{\partial (v^{{s}},  v^{\theta},  v^{\zeta})}{\partial(s, \theta, \zeta)} \cdot \mathbf{J}
+            - \mathbf{J}^{-1} \cdot (\mathbf{J}_\rho, \mathbf{J}_\vartheta, \mathbf{J}_\zeta) \cdot \left(\begin{array}{c}
+            v^{\rho} \\ v^{\vartheta} \\ v^{\zeta}
+            \end{array}\right)
+        \f]
 
         """
         voutput = np.linalg.solve(coords.jacobi, v)
 
-        if has_jacobian:
-            voutput = voutput * coords.jacobian[..., nax]
+        if derivative:
+            rhs = np.moveaxis(dv, -1, -2) @ coords.jacobi
+            rhs -= np.einsum('...ijk,...j->...ik', coords.djacobi, voutput)
+            dvoutput = np.moveaxis(np.linalg.solve(coords.jacobi, rhs), -1, -2)
 
-        return voutput
+        if has_jacobian:
+
+            if derivative:
+                dvoutput *= coords.jacobian[..., nax, nax]
+                dvoutput += coords.djacobian[..., :, nax] * voutput[..., nax, :]
+
+            voutput *= coords.jacobian[..., nax]
+
+        if derivative:
+            return voutput, dvoutput
+        else:
+            return voutput
 
     def construct_interpolant(self, rhosurfs=None, method="cubic_spline", **kwargs):
         """! Construct the interpolant between surfaces for the given method
@@ -480,8 +515,11 @@ class SurfacesToroidal:
         import matplotlib.pyplot as plt
 
         nsurf = self.scn.shape[0]
-        vartheta = np.linspace(0,2 * np.pi,npoints)
-        alpha = self._mlist[nax,:,nax] * vartheta[:,nax,nax] - self._nlist[nax,nax,:] * zeta
+        vartheta = np.linspace(0, 2 * np.pi, npoints)
+        alpha = (
+            self._mlist[nax, :, nax] * vartheta[:, nax, nax]
+            - self._nlist[nax, nax, :] * zeta
+        )
         cosalpha = np.cos(alpha)
         sinalpha = np.sin(alpha)
 
@@ -489,25 +527,25 @@ class SurfacesToroidal:
             scn = self.scn[i]
             tsn = self.tsn[i]
 
-            s = np.sum(scn * cosalpha, axis=(-1,-2))
-            t = vartheta + np.sum(tsn * sinalpha, axis=(-1,-2))
+            s = np.sum(scn * cosalpha, axis=(-1, -2))
+            t = vartheta + np.sum(tsn * sinalpha, axis=(-1, -2))
 
             if not self.sym:
                 ssn = self.ssn[i]
                 tcn = self.tcn[i]
-                s += np.sum(ssn * sinalpha, axis=(-1,-2))
-                t += np.sum(tcn * cosalpha, axis=(-1,-2))
-            
-            plt.plot(t, s, 'k', **kwargs)
+                s += np.sum(ssn * sinalpha, axis=(-1, -2))
+                t += np.sum(tcn * cosalpha, axis=(-1, -2))
 
-    def read_surfaces_from_file(self, filename='data.npz', Nfp=None):
+            plt.plot(t, s, "k", **kwargs)
+
+    def read_surfaces_from_file(self, filename="data.npz", Nfp=None):
         """! Read the surfaces into a numpy array on disk
         @param filename  the filename to load from
         @param Nfp  the toroidal periodicity, if known.
         """
         npzfile = np.load(filename)
-        surfaces = npzfile['surfaces']
-        self.rhosurfs = npzfile['rhosurfs']
+        surfaces = npzfile["surfaces"]
+        self.rhosurfs = npzfile["rhosurfs"]
         dims = surfaces.shape
 
         if dims[0] == 2:
@@ -525,7 +563,6 @@ class SurfacesToroidal:
                 "The first dimension of the array should either be 2 (stellarator symmetry) or 4 (non-stellarator symmetry)"
             )
 
-
         self.nsurfaces = dims[1]
         self.mpol = dims[2] - 1
         self.ntor = (dims[3] - 1) // 2
@@ -538,7 +575,8 @@ class SurfacesToroidal:
             np.concatenate([np.arange(0, self.ntor + 1), np.arange(-self.ntor, 0)])
             * self.Nfp
         )
-    def write_surfaces_to_file(self, filename='data.npz'):
+
+    def write_surfaces_to_file(self, filename="data.npz"):
         """! Save the surfaces into a numpy array on disk
         @param filename  the filename to save to
         """

@@ -15,20 +15,20 @@ class ToroidalProblem(BaseProblem):
         self.poincare_plot_xlabel = "x"
         self.poincare_plot_ylabel = "y"
 
-    def f(self, zeta, st, args=None):
+    def f(self, zeta, st, *args):
         """! Returns ODE RHS
         @param zeta cylindrical angle in ODE
         @param st \f$(s, \theta)\f$ in ODE
-        @param arg1 parameter for the ODE
+        @param *args extra parameters for the ODE
         @returns the RHS of the ODE
         """
         raise NotImplementedError("A problem class should implement member function f")
 
-    def f_tangent(self, t, st, args=None):
+    def f_tangent(self, t, st, *args):
         """! Returns ODE RHS, with tangent
         @param zeta cylindrical angle in ODE
         @param st \f$(s, \theta, ds_1, d\theta_1, ds_2, d\theta_2)\f$ in ODE
-        @param arg1 parameter for the ODE
+        @param *args extra parameters for the ODE
         @returns the RHS of the ODE, with tangent
         """
         raise NotImplementedError(

@@ -42,53 +42,79 @@ class SPECBfield(SPECProblem, ToroidalBfield):
         ## The output of B contains the jacobian factor
         self.has_jacobian = True
 
-    def B(self, coords, args=None):
+    def B(self, coords, *args):
         """! Returns magnetic fields
         @param coordinates \f$(s,\theta,\zeta)\f$
-        @param arg1 parameter
+        @param *args extra parameters
         @returns the contravariant magnetic fields
         """
 
         return self.fortran_module.specbfield.get_bfield(coords)
 
-    def dBdX(self, coords, args=None):
+    def dBdX(self, coords, *args):
         """! Returns magnetic fields
         @param coordinates \f$(s,\theta,\zeta)\f$
-        @param arg1 parameter
+        @param *args extra parameters
         @returns B, dBdX, the contravariant magnetic fields, the derivatives of them
         """
 
         B, dB = self.fortran_module.specbfield.get_bfield_tangent(coords)
-        return B, dB.T
+        return B, dB
 
-    def B_many(self, coords, args=None):
+    def B_many(self, x1arr, x2arr, x3arr, input1D=True, *args):
         """! Returns magnetic fields, with multipy coordinate inputs
-        @param coords array (..., 3)
-        @param arg1 parameter
+        @param x1arr the first coordinates. Should have the same length as the other two if input1D=True.
+        @param x2arr the second coordinates. Should have the same length as the other two if input1D=True.
+        @param x3arr the third coordinates. Should have the same length as the other two if input1D=True.
+        @param input1D if False, create a meshgrid with sarr, tarr and zarr, if True, treat them as a list of points
+        @param *args extra parameters
         @returns the contravariant magnetic fields
         """
-        coords2d = np.atleast_2d(coords)
-        Blist = np.zeros_like(coords2d)
+        x1arr = np.atleast_1d(x1arr)
+        x2arr = np.atleast_1d(x2arr)
+        x3arr = np.atleast_1d(x3arr)
 
-        for i in range(coords2d.shape[0]):
-            coords1d = coords2d[i]
-            Blist[i] = self.B(coords1d)
+        if not input1D:
+            size = (x1arr.size, x2arr.size, x3arr.size)
+            s = np.broadcast_to(x1arr[:, np.newaxis, np.newaxis], size).flatten()
+            t = np.broadcast_to(x2arr[np.newaxis, :, np.newaxis], size).flatten()
+            z = np.broadcast_to(x3arr[np.newaxis, np.newaxis, :], size).flatten()
+            n = s.size
+            Blist = self.fortran_module.specbfield.get_bfield_many_1d(s, t, z, n)
+            Blist = np.reshape(Blist, (x1arr.size, x2arr.size, x3arr.size, 3))
+        else:
+            n = x1arr.size
+            Blist = self.fortran_module.specbfield.get_bfield_many_1d(x1arr, x2arr, x3arr, n)
 
         return Blist
 
-    def dBdX_many(self, coords, args=None):
+    def dBdX_many(self, x1arr, x2arr, x3arr, input1D=True, *args):
         """! Returns magnetic fields
-        @param coords array (..., 3)
-        @param arg1 parameter
+        @param x1arr the first coordinates. Should have the same length as the other two if input1D=True.
+        @param x2arr the second coordinates. Should have the same length as the other two if input1D=True.
+        @param x3arr the third coordinates. Should have the same length as the other two if input1D=True.
+        @param input1D if False, create a meshgrid with sarr, tarr and zarr, if True, treat them as a list of points
+        @param *args extra parameters
         @returns B, dBdX, the contravariant magnetic fields, the derivatives of them
         """
-        coords2d = np.atleast_2d(coords)
-        Blist = np.zeros_like(coords2d)
-        dBlist = np.zeros([coords2d.shape[0], 3, 3])
 
-        for i in range(coords2d.shape[0]):
-            coords1d = coords2d[i]
-            Blist[i], dBlist[i] = self.dBdX(coords1d)
+        x1arr = np.atleast_1d(x1arr)
+        x2arr = np.atleast_1d(x2arr)
+        x3arr = np.atleast_1d(x3arr)
+
+        if not input1D:
+            size = (x1arr.size, x2arr.size, x3arr.size)
+            s = np.broadcast_to(x1arr[:, np.newaxis, np.newaxis], size).flatten()
+            t = np.broadcast_to(x2arr[np.newaxis, :, np.newaxis], size).flatten()
+            z = np.broadcast_to(x3arr[np.newaxis, np.newaxis, :], size).flatten()
+            n = s.size
+            Blist, dBlist = self.fortran_module.specbfield.get_bfield_tangent_many_1d(s, t, z, n)
+            Blist = np.reshape(Blist, (x1arr.size, x2arr.size, x3arr.size, 3))
+            dBlist = np.reshape(dBlist, (x1arr.size, x2arr.size, x3arr.size, 3, 3))
+
+        else:
+            n = x1arr.size
+            Blist, dBlist = self.fortran_module.specbfield.get_bfield_tangent_many_1d(x1arr, x2arr, x3arr, n)
             
         return Blist, dBlist
 

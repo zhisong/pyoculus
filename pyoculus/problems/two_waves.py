@@ -59,7 +59,7 @@ class TwoWaves(ToroidalBfield):
         """! The RHS of the Hamilton's equations
         @param t the zeta coordinate
         @param qp array size 2, the \f$(p,q)\f$ coordinate
-        @param arg1 parameter for the ODE, not used here, can be set to anything
+        @param *args extra parameters for the ODE, not used here, can be set to anything
         @returns array size 2, the RHS of the ODE
         """
         q = qp[1]
@@ -74,7 +74,7 @@ class TwoWaves(ToroidalBfield):
         """! The RHS of the Hamilton's equations, with tangent
         @param t the zeta coordinate
         @param qp array size 6, the \f$(p,q,\Delta p_1, \Delta q_1, \Delta p_2, \Delta q_2 )\f$ coordinate
-        @param arg1 parameter for the ODE, not used here, can be set to anything
+        @param *args extra parameters for the ODE, not used here, can be set to anything
         @returns array size 6, the RHS of the ODE, with tangent
         """
         q = qp[1]

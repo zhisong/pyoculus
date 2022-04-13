@@ -24,10 +24,10 @@ class QFMBfield(ToroidalBfield):
         self.has_jacobian = pb.has_jacobian
         super().__init__()
     
-    def B(self, coords, args=None):
+    def B(self, coords, *args):
         """! Returns magnetic fields
         @param coords \f$(\rho,\vartheta,\zeta)\f$
-        @param arg1 parameter
+        @param *args extra parameters
         @returns the contravariant magnetic fields
         """
  
@@ -38,14 +38,14 @@ class QFMBfield(ToroidalBfield):
         coordsout = self.surfaces.get_coords(r, t, z, derivative=1, input1D=True)
         coordsin = np.array([coordsout.s[0], coordsout.t[0], coordsout.z[0]])
         B = np.atleast_2d(self.pb.B(coordsin))
-        B = self.surfaces.contra_vector_transform(B, coordsout, has_jacobian=self.pb.has_jacobian, derivative=False).flatten()
+        B = self.surfaces.contra_vector_transform(B, coordsout, has_jacobian=self.has_jacobian, derivative=False).flatten()
 
         return B
 
-    def dBdX(self, coords, args=None):
+    def dBdX(self, coords, *args):
         """! Returns magnetic fields
         @param coords \f$(s,\theta,\zeta)\f$
-        @param arg1 parameter
+        @param *args extra parameters
         @returns B, dBdX, the contravariant magnetic fields, the derivatives of them
         """
 
@@ -56,50 +56,65 @@ class QFMBfield(ToroidalBfield):
         coordsout = self.surfaces.get_coords(r, t, z, derivative=2, input1D=True)
         coordsin = np.array([coordsout.s[0], coordsout.t[0], coordsout.z[0]])
         B, dBdX = self.pb.dBdX(coordsin)
-        B, dBdX = self.surfaces.contra_vector_transform(np.atleast_2d(B), coordsout, has_jacobian=self.has_jacobian, derivative=True, dv=np.atleast_3d(dBdX))
+        B, dBdX = self.surfaces.contra_vector_transform(np.atleast_2d(B), coordsout, has_jacobian=self.has_jacobian, derivative=True, dv=dBdX[np.newaxis,:])
 
         return B[0], dBdX[0]
 
-    def B_many(self, coords, args=None):
-        """! Returns magnetic fields given multiple inputs
-        @param coords \f$(\rho,\vartheta,\zeta)\f$
-        @param args the precomputed output from self.surfaces.get_coords. If None is given then it will be computed
+    def B_many(self, x1arr, x2arr, x3arr, input1D=True, *args):
+        """! Returns magnetic fields, with multipy coordinate inputs
+        @param x1arr the first coordinates. Should have the same length as the other two if input1D=True.
+        @param x2arr the second coordinates. Should have the same length as the other two if input1D=True.
+        @param x3arr the third coordinates. Should have the same length as the other two if input1D=True.
+        @param input1D if False, create a meshgrid with sarr, tarr and zarr, if True, treat them as a list of points
+        @param *args parameter
         @returns the contravariant magnetic fields
         """
 
-        r = coords[:,0]
-        t = coords[:,1]
-        z = coords[:,2]
+        r = x1arr
+        t = x2arr
+        z = x3arr
 
-        if args is None:
-            coordsout = self.surfaces.get_coords(r, t, z, derivative=1, input1D=True)
+        if len(args) == 0:
+            coordsout = self.surfaces.get_coords(r, t, z, derivative=1, input1D=input1D)
         else:
-            coordsout = args
+            coordsout = args[0]
+            args.pop()
 
-        B = self.pb.B_many(np.stack([coordsout.s, coordsout.t, z], -1))
+        newr = coordsout.s
+        newt = coordsout.t
+        newz = coordsout.z
+
+        arr_shape = newr.shape
+
+        B = self.pb.B_many(newr.flatten(), newt.flatten(), newz.flatten(), True, *args)
+        B = np.reshape(B, np.concatenate([arr_shape, [3]]))
         B = self.surfaces.contra_vector_transform(B, coordsout, has_jacobian=self.has_jacobian)
 
         return B
 
-    def dBdX_many(self, coords, args=None):
+    def dBdX_many(self, x1arr, x2arr, x3arr, input1D=True, *args):
         """! Returns magnetic fields
-        @param coords \f$(s,\theta,\zeta)\f$
-        @param args the precomputed output from self.surfaces.get_coords. If None is given then it will be computed
+        @param x1arr the first coordinates. Should have the same length as the other two if input1D=True.
+        @param x2arr the second coordinates. Should have the same length as the other two if input1D=True.
+        @param x3arr the third coordinates. Should have the same length as the other two if input1D=True.
+        @param input1D if False, create a meshgrid with sarr, tarr and zarr, if True, treat them as a list of points
+        @param *args extra parameters
         @returns B, dBdX, the contravariant magnetic fields, the derivatives of them
         """
-        r = coords[:,0]
-        t = coords[:,1]
-        z = coords[:,2]
+        r = x1arr
+        t = x2arr
+        z = x3arr
 
-        if args is None:
-            coordsout = self.surfaces.get_coords(r, t, z, derivative=2, input1D=True)
+        if len(args)==0:
+            coordsout = self.surfaces.get_coords(r, t, z, derivative=2, input1D=input1D)
         else:
-            coordsout = args
+            coordsout = args[0]
+            args.pop()
 
-        B, dBdX = self.pb.dBdX_many(np.stack([coordsout.s, coordsout.t, z], -1))
+        B, dBdX = self.pb.dBdX_many(r, t, z, input1D, *args)
         B, dBdX = self.surfaces.contra_vector_transform(B, coordsout, has_jacobian=self.pb.has_jacobian, derivative=True, dv=dBdX)
 
-        return B
+        return B, dBdX
 
     def convert_coords(self, stz):
         """! Python wrapper for getting the xyz coordinates from stz
