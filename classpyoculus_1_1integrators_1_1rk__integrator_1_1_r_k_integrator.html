@@ -146,6 +146,8 @@ Public Attributes</h2></td></tr>
 <tr class="separator:a344470d4f6e38ccd1001ea181085d61d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aac80e51ba5212e180a62a63dcde800ab"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classpyoculus_1_1integrators_1_1rk__integrator_1_1_r_k_integrator.html#aac80e51ba5212e180a62a63dcde800ab">rtol</a></td></tr>
 <tr class="separator:aac80e51ba5212e180a62a63dcde800ab"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a762fdae6e9940863277d198b8b63c44a"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classpyoculus_1_1integrators_1_1rk__integrator_1_1_r_k_integrator.html#a762fdae6e9940863277d198b8b63c44a">nsteps</a></td></tr>
+<tr class="separator:a762fdae6e9940863277d198b8b63c44a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa130e87186251f8216ee98aac68d5a2c"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classpyoculus_1_1integrators_1_1rk__integrator_1_1_r_k_integrator.html#aa130e87186251f8216ee98aac68d5a2c">args</a></td></tr>
 <tr class="separator:aa130e87186251f8216ee98aac68d5a2c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8544f550b98047c11a09e7e81057257e"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classpyoculus_1_1integrators_1_1rk__integrator_1_1_r_k_integrator.html#a8544f550b98047c11a09e7e81057257e">integrator</a></td></tr>
@@ -199,9 +201,10 @@ Public Attributes</h2></td></tr>
   </table>
   </dd>
 </dl>
-<p><code>params['ode']</code> &ndash; callable f: rhs=f(t,x,arg1), must provide</p>
+<p><code>params['ode']</code> &ndash; callable f: rhs=f(t,x,*args), must provide</p>
 <p ><code>params['args']=None</code> &ndash; the argment that will be used to call f</p>
 <p ><code>params['rtol']=1e-7</code> &ndash; relative tolerance</p>
+<p ><code>params['nsteps']=10000</code> &ndash; the maximum number of integration steps before reporting an error</p>
 <p ><code>params['type']='dopri5'</code> &ndash; the type of integrator, 'dopri5' for RK45, 'dop853' for RK853 </p>
 
 <p>Reimplemented from <a class="el" href="classpyoculus_1_1integrators_1_1base__integrator_1_1_base_integrator.html#ad7857ea02a52e136fab27c9fb119bea0">pyoculus.integrators.base_integrator.BaseIntegrator</a>.</p>
@@ -339,6 +342,20 @@ Public Attributes</h2></td></tr>
       <table class="memname">
         <tr>
           <td class="memname">pyoculus.integrators.rk_integrator.RKIntegrator.integrator</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a762fdae6e9940863277d198b8b63c44a" name="a762fdae6e9940863277d198b8b63c44a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a762fdae6e9940863277d198b8b63c44a">&#9670;&nbsp;</a></span>nsteps</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">pyoculus.integrators.rk_integrator.RKIntegrator.nsteps</td>
         </tr>
       </table>
 </div><div class="memdoc">

@@ -52,7 +52,7 @@ var NAVTREE =
       [ "Data Types", "classes.html", null ],
       [ "Class Hierarchy", "hierarchy.html", "hierarchy" ],
       [ "Data Fields", "functions.html", [
-        [ "All", "functions.html", null ],
+        [ "All", "functions.html", "functions_dup" ],
         [ "Functions/Subroutines", "functions_func.html", null ],
         [ "Variables", "functions_vars.html", null ]
       ] ]
@@ -66,8 +66,9 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "____init_____8py.html",
-"classpyoculus_1_1problems_1_1two__waves_1_1_two_waves.html#ad5ad9f119aeae7a78bbc4b955fd250e9",
-"namespacespeccoords.html#a80b745a42dc8d6b3f78eef5fcb4b65e9"
+"classpyoculus_1_1problems_1_1spec__pjh_1_1_s_p_e_c_p_j_h.html#aa263b98d6486657bd7c0e6673f44f69b",
+"classpyoculus_1_1solvers_1_1qfm_1_1_q_f_m.html#a9122a66f7f068017f6ef1cfe0ac36d43",
+"pyvariables_8f90.html#aeaf5aee47db3b1b7b41fabeb51f41355"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

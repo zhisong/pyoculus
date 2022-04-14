@@ -1,9 +1,6 @@
 var searchData=
 [
-  ['poincare_5fplot_2epy_0',['poincare_plot.py',['../poincare__plot_8py.html',1,'']]],
-  ['pybasefn_2ef90_1',['pybasefn.f90',['../pybasefn_8f90.html',1,'']]],
-  ['pybfield_2ef90_2',['pybfield.f90',['../pybfield_8f90.html',1,'']]],
-  ['pycoords_2ef90_3',['pycoords.f90',['../pycoords_8f90.html',1,'']]],
-  ['pypjh_2ef90_4',['pyPJH.f90',['../py_p_j_h_8f90.html',1,'']]],
-  ['pyvariables_2ef90_5',['pyvariables.f90',['../pyvariables_8f90.html',1,'']]]
+  ['m3dc1_5fbfield_2epy_0',['m3dc1_bfield.py',['../m3dc1__bfield_8py.html',1,'']]],
+  ['mainpage_2edox_1',['mainpage.dox',['../mainpage_8dox.html',1,'']]],
+  ['manifolds_2epy_2',['manifolds.py',['../manifolds_8py.html',1,'']]]
 ];

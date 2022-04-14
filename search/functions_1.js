@@ -1,4 +1,7 @@
 var searchData=
 [
-  ['b_0',['B',['../classpyoculus_1_1problems_1_1bfield__problem_1_1_bfield_problem.html#a220418d75296759234e1e2df925ad1d1',1,'pyoculus.problems.bfield_problem.BfieldProblem.B()'],['../classpyoculus_1_1problems_1_1m3dc1__bfield_1_1_m3_d_c1_bfield.html#a0ba8e1a1de0acee59653e7084e3a3cea',1,'pyoculus.problems.m3dc1_bfield.M3DC1Bfield.B()'],['../classpyoculus_1_1problems_1_1simsgeo__biot__savart_1_1_simsgeo_biot_savart.html#ae8729c5f938ef89a2ce15b9834eb2119',1,'pyoculus.problems.simsgeo_biot_savart.SimsgeoBiotSavart.B()'],['../classpyoculus_1_1problems_1_1spec__bfield_1_1_s_p_e_c_bfield.html#a3be69194822784a86c60cde1d693d059',1,'pyoculus.problems.spec_bfield.SPECBfield.B()']]]
+  ['action_0',['action',['../classpyoculus_1_1solvers_1_1qfm_1_1_q_f_m.html#ae299322e73ec5536b668e73a8af8bbe4',1,'pyoculus::solvers::qfm::QFM']]],
+  ['action_5fgradient_1',['action_gradient',['../classpyoculus_1_1solvers_1_1qfm_1_1_q_f_m.html#a2f1aff33efb3f3593255d6d055cc9046',1,'pyoculus::solvers::qfm::QFM']]],
+  ['action_5fgradient_5fjacobi_2',['action_gradient_jacobi',['../classpyoculus_1_1solvers_1_1qfm_1_1_q_f_m.html#a8faf1f5bf4e341b8115cd1d090dba3ba',1,'pyoculus::solvers::qfm::QFM']]],
+  ['add_5fsurface_3',['add_surface',['../classpyoculus_1_1problems_1_1interpolate__coordinates_1_1_surfaces_toroidal.html#a13b8dc05b114d09b0d353281abf9f054',1,'pyoculus::problems::interpolate_coordinates::SurfacesToroidal']]]
 ];

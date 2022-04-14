@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['rkintegrator_0',['RKIntegrator',['../classpyoculus_1_1integrators_1_1rk__integrator_1_1_r_k_integrator.html',1,'pyoculus::integrators::rk_integrator']]]
+  ['qfm_0',['QFM',['../classpyoculus_1_1solvers_1_1qfm_1_1_q_f_m.html',1,'pyoculus::solvers::qfm']]],
+  ['qfmbfield_1',['QFMBfield',['../classpyoculus_1_1problems_1_1qfm__bfield_1_1_q_f_m_bfield.html',1,'pyoculus::problems::qfm_bfield']]]
 ];

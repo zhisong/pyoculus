@@ -25,8 +25,14 @@ var annotated_dup =
         [ "cylindrical_problem", "namespacepyoculus_1_1problems_1_1cylindrical__problem.html", [
           [ "CylindricalProblem", "classpyoculus_1_1problems_1_1cylindrical__problem_1_1_cylindrical_problem.html", "classpyoculus_1_1problems_1_1cylindrical__problem_1_1_cylindrical_problem" ]
         ] ],
+        [ "interpolate_coordinates", "namespacepyoculus_1_1problems_1_1interpolate__coordinates.html", [
+          [ "SurfacesToroidal", "classpyoculus_1_1problems_1_1interpolate__coordinates_1_1_surfaces_toroidal.html", "classpyoculus_1_1problems_1_1interpolate__coordinates_1_1_surfaces_toroidal" ]
+        ] ],
         [ "m3dc1_bfield", "namespacepyoculus_1_1problems_1_1m3dc1__bfield.html", [
           [ "M3DC1Bfield", "classpyoculus_1_1problems_1_1m3dc1__bfield_1_1_m3_d_c1_bfield.html", "classpyoculus_1_1problems_1_1m3dc1__bfield_1_1_m3_d_c1_bfield" ]
+        ] ],
+        [ "qfm_bfield", "namespacepyoculus_1_1problems_1_1qfm__bfield.html", [
+          [ "QFMBfield", "classpyoculus_1_1problems_1_1qfm__bfield_1_1_q_f_m_bfield.html", "classpyoculus_1_1problems_1_1qfm__bfield_1_1_q_f_m_bfield" ]
         ] ],
         [ "simsgeo_biot_savart", "namespacepyoculus_1_1problems_1_1simsgeo__biot__savart.html", [
           [ "SimsgeoBiotSavart", "classpyoculus_1_1problems_1_1simsgeo__biot__savart_1_1_simsgeo_biot_savart.html", "classpyoculus_1_1problems_1_1simsgeo__biot__savart_1_1_simsgeo_biot_savart" ]
@@ -65,6 +71,9 @@ var annotated_dup =
         ] ],
         [ "poincare_plot", "namespacepyoculus_1_1solvers_1_1poincare__plot.html", [
           [ "PoincarePlot", "classpyoculus_1_1solvers_1_1poincare__plot_1_1_poincare_plot.html", "classpyoculus_1_1solvers_1_1poincare__plot_1_1_poincare_plot" ]
+        ] ],
+        [ "qfm", "namespacepyoculus_1_1solvers_1_1qfm.html", [
+          [ "QFM", "classpyoculus_1_1solvers_1_1qfm_1_1_q_f_m.html", "classpyoculus_1_1solvers_1_1qfm_1_1_q_f_m" ]
         ] ]
       ] ]
     ] ]

@@ -91,6 +91,7 @@ $(document).ready(function(){initNavTree('classpyoculus_1_1problems_1_1bfield__p
 <div class="header">
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="#pub-attribs">Public Attributes</a> &#124;
 <a href="classpyoculus_1_1problems_1_1bfield__problem_1_1_bfield_problem-members.html">List of all members</a>  </div>
   <div class="headertitle"><div class="title">pyoculus.problems.bfield_problem.BfieldProblem Class Reference</div></div>
 </div><!--header-->
@@ -103,10 +104,12 @@ Inheritance diagram for pyoculus.problems.bfield_problem.BfieldProblem:</div>
   <map id="pyoculus.problems.bfield_5Fproblem.BfieldProblem_map" name="pyoculus.problems.bfield_5Fproblem.BfieldProblem_map">
 <area href="classpyoculus_1_1problems_1_1cartesian__bfield_1_1_cartesian_bfield.html" alt="pyoculus.problems.cartesian_bfield.CartesianBfield" shape="rect" coords="0,56,345,80"/>
 <area href="classpyoculus_1_1problems_1_1cylindrical__bfield_1_1_cylindrical_bfield.html" title="Class that used to setup the cylindrical bfield problem used in ODE solver." alt="pyoculus.problems.cylindrical_bfield.CylindricalBfield" shape="rect" coords="355,56,700,80"/>
-<area href="classpyoculus_1_1problems_1_1toroidal__bfield_1_1_toroidal_bfield.html" alt="pyoculus.problems.toroidal_bfield.ToroidalBfield" shape="rect" coords="710,56,1055,80"/>
+<area href="classpyoculus_1_1problems_1_1toroidal__bfield_1_1_toroidal_bfield.html" alt="pyoculus.problems.toroidal_bfield.ToroidalBfield" shape="rect" coords="1065,56,1410,80"/>
 <area href="classpyoculus_1_1problems_1_1simsgeo__biot__savart_1_1_simsgeo_biot_savart.html" alt="pyoculus.problems.simsgeo_biot_savart.SimsgeoBiotSavart" shape="rect" coords="0,112,345,136"/>
 <area href="classpyoculus_1_1problems_1_1m3dc1__bfield_1_1_m3_d_c1_bfield.html" title="Class that used to setup the M3DC1 bfield problem used in ODE solver." alt="pyoculus.problems.m3dc1_bfield.M3DC1Bfield" shape="rect" coords="355,112,700,136"/>
-<area href="classpyoculus_1_1problems_1_1spec__bfield_1_1_s_p_e_c_bfield.html" title="Class that used to setup the SPEC bfield problem for interfacing Fortran, used in ODE solver." alt="pyoculus.problems.spec_bfield.SPECBfield" shape="rect" coords="710,112,1055,136"/>
+<area href="classpyoculus_1_1problems_1_1qfm__bfield_1_1_q_f_m_bfield.html" title="Class that used to setup the bfield problem based on QFM." alt="pyoculus.problems.qfm_bfield.QFMBfield" shape="rect" coords="710,112,1055,136"/>
+<area href="classpyoculus_1_1problems_1_1spec__bfield_1_1_s_p_e_c_bfield.html" title="Class that used to setup the SPEC bfield problem for interfacing Fortran, used in ODE solver." alt="pyoculus.problems.spec_bfield.SPECBfield" shape="rect" coords="1065,112,1410,136"/>
+<area href="classpyoculus_1_1problems_1_1two__waves_1_1_two_waves.html" title="A very simple (but still hard) problem for testing the tools and methods." alt="pyoculus.problems.two_waves.TwoWaves" shape="rect" coords="1420,112,1765,136"/>
   </map>
 </div></div>
 <table class="memberdecls">
@@ -115,12 +118,24 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a4a340bcaae5e839c3055b3cba45ed005"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classpyoculus_1_1problems_1_1bfield__problem_1_1_bfield_problem.html#a4a340bcaae5e839c3055b3cba45ed005">__init__</a> (self)</td></tr>
 <tr class="memdesc:a4a340bcaae5e839c3055b3cba45ed005"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set up the problem.  <a href="classpyoculus_1_1problems_1_1bfield__problem_1_1_bfield_problem.html#a4a340bcaae5e839c3055b3cba45ed005">More...</a><br /></td></tr>
 <tr class="separator:a4a340bcaae5e839c3055b3cba45ed005"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a220418d75296759234e1e2df925ad1d1"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classpyoculus_1_1problems_1_1bfield__problem_1_1_bfield_problem.html#a220418d75296759234e1e2df925ad1d1">B</a> (self, coords, args=None)</td></tr>
-<tr class="memdesc:a220418d75296759234e1e2df925ad1d1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns magnetic fields.  <a href="classpyoculus_1_1problems_1_1bfield__problem_1_1_bfield_problem.html#a220418d75296759234e1e2df925ad1d1">More...</a><br /></td></tr>
-<tr class="separator:a220418d75296759234e1e2df925ad1d1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6f79cc08f0251834bd8f718eadc06293"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classpyoculus_1_1problems_1_1bfield__problem_1_1_bfield_problem.html#a6f79cc08f0251834bd8f718eadc06293">dBdX</a> (self, coords, args=None)</td></tr>
-<tr class="memdesc:a6f79cc08f0251834bd8f718eadc06293"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns magnetic fields.  <a href="classpyoculus_1_1problems_1_1bfield__problem_1_1_bfield_problem.html#a6f79cc08f0251834bd8f718eadc06293">More...</a><br /></td></tr>
-<tr class="separator:a6f79cc08f0251834bd8f718eadc06293"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9f363b83bcb898af34f751ca1b9f7c1b"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classpyoculus_1_1problems_1_1bfield__problem_1_1_bfield_problem.html#a9f363b83bcb898af34f751ca1b9f7c1b">B</a> (self, coords, *args)</td></tr>
+<tr class="memdesc:a9f363b83bcb898af34f751ca1b9f7c1b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns magnetic fields.  <a href="classpyoculus_1_1problems_1_1bfield__problem_1_1_bfield_problem.html#a9f363b83bcb898af34f751ca1b9f7c1b">More...</a><br /></td></tr>
+<tr class="separator:a9f363b83bcb898af34f751ca1b9f7c1b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7efa9e06135b5f1fac989b49d4b556d2"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classpyoculus_1_1problems_1_1bfield__problem_1_1_bfield_problem.html#a7efa9e06135b5f1fac989b49d4b556d2">dBdX</a> (self, coords, *args)</td></tr>
+<tr class="memdesc:a7efa9e06135b5f1fac989b49d4b556d2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns magnetic fields.  <a href="classpyoculus_1_1problems_1_1bfield__problem_1_1_bfield_problem.html#a7efa9e06135b5f1fac989b49d4b556d2">More...</a><br /></td></tr>
+<tr class="separator:a7efa9e06135b5f1fac989b49d4b556d2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab845b3b0602855d8d29143d9418dcf5f"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classpyoculus_1_1problems_1_1bfield__problem_1_1_bfield_problem.html#ab845b3b0602855d8d29143d9418dcf5f">B_many</a> (self, x1arr, x2arr, x3arr, input1D=True, *args)</td></tr>
+<tr class="memdesc:ab845b3b0602855d8d29143d9418dcf5f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns magnetic fields, with multipy coordinate inputs.  <a href="classpyoculus_1_1problems_1_1bfield__problem_1_1_bfield_problem.html#ab845b3b0602855d8d29143d9418dcf5f">More...</a><br /></td></tr>
+<tr class="separator:ab845b3b0602855d8d29143d9418dcf5f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aff3d151e5b4b5b8a1d42ad233a68710f"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classpyoculus_1_1problems_1_1bfield__problem_1_1_bfield_problem.html#aff3d151e5b4b5b8a1d42ad233a68710f">dBdX_many</a> (self, x1arr, x2arr, x3arr, input1D=True, *args)</td></tr>
+<tr class="memdesc:aff3d151e5b4b5b8a1d42ad233a68710f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns magnetic fields.  <a href="classpyoculus_1_1problems_1_1bfield__problem_1_1_bfield_problem.html#aff3d151e5b4b5b8a1d42ad233a68710f">More...</a><br /></td></tr>
+<tr class="separator:aff3d151e5b4b5b8a1d42ad233a68710f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
+Public Attributes</h2></td></tr>
+<tr class="memitem:a0e4ef6354a7fb79e70f1c34a874f4cc1"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classpyoculus_1_1problems_1_1bfield__problem_1_1_bfield_problem.html#a0e4ef6354a7fb79e70f1c34a874f4cc1">has_jacobian</a></td></tr>
+<tr class="memdesc:a0e4ef6354a7fb79e70f1c34a874f4cc1"><td class="mdescLeft">&#160;</td><td class="mdescRight">if the output magnetic field contains the jacobian factor or not  <a href="classpyoculus_1_1problems_1_1bfield__problem_1_1_bfield_problem.html#a0e4ef6354a7fb79e70f1c34a874f4cc1">More...</a><br /></td></tr>
+<tr class="separator:a0e4ef6354a7fb79e70f1c34a874f4cc1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="a4a340bcaae5e839c3055b3cba45ed005" name="a4a340bcaae5e839c3055b3cba45ed005"></a>
@@ -141,13 +156,13 @@ Public Member Functions</h2></td></tr>
 
 <p>Set up the problem. </p>
 
-<p>Reimplemented in <a class="el" href="classpyoculus_1_1problems_1_1toroidal__bfield_1_1_toroidal_bfield.html#a1d9fffee1f7d750a6c401d7a141c8d3d">pyoculus.problems.toroidal_bfield.ToroidalBfield</a>, <a class="el" href="classpyoculus_1_1problems_1_1m3dc1__bfield_1_1_m3_d_c1_bfield.html#a267950ac05cbeab156dc031368a234c2">pyoculus.problems.m3dc1_bfield.M3DC1Bfield</a>, <a class="el" href="classpyoculus_1_1problems_1_1simsgeo__biot__savart_1_1_simsgeo_biot_savart.html#abefd4dd157efbd420b073155f284fc5c">pyoculus.problems.simsgeo_biot_savart.SimsgeoBiotSavart</a>, <a class="el" href="classpyoculus_1_1problems_1_1cartesian__bfield_1_1_cartesian_bfield.html#a637ec2972f674bee031d96a49e28bf89">pyoculus.problems.cartesian_bfield.CartesianBfield</a>, <a class="el" href="classpyoculus_1_1problems_1_1cylindrical__bfield_1_1_cylindrical_bfield.html#aab70a41790fdf67168cbc59b8570047e">pyoculus.problems.cylindrical_bfield.CylindricalBfield</a>, and <a class="el" href="classpyoculus_1_1problems_1_1spec__bfield_1_1_s_p_e_c_bfield.html#a26f72c21af4992e1f6dd556facfa379f">pyoculus.problems.spec_bfield.SPECBfield</a>.</p>
+<p>Reimplemented in <a class="el" href="classpyoculus_1_1problems_1_1toroidal__bfield_1_1_toroidal_bfield.html#a1d9fffee1f7d750a6c401d7a141c8d3d">pyoculus.problems.toroidal_bfield.ToroidalBfield</a>, <a class="el" href="classpyoculus_1_1problems_1_1m3dc1__bfield_1_1_m3_d_c1_bfield.html#a267950ac05cbeab156dc031368a234c2">pyoculus.problems.m3dc1_bfield.M3DC1Bfield</a>, <a class="el" href="classpyoculus_1_1problems_1_1simsgeo__biot__savart_1_1_simsgeo_biot_savart.html#abefd4dd157efbd420b073155f284fc5c">pyoculus.problems.simsgeo_biot_savart.SimsgeoBiotSavart</a>, <a class="el" href="classpyoculus_1_1problems_1_1two__waves_1_1_two_waves.html#a23c5755aa3cc34a215033ea0174a8ca5">pyoculus.problems.two_waves.TwoWaves</a>, <a class="el" href="classpyoculus_1_1problems_1_1cartesian__bfield_1_1_cartesian_bfield.html#a637ec2972f674bee031d96a49e28bf89">pyoculus.problems.cartesian_bfield.CartesianBfield</a>, <a class="el" href="classpyoculus_1_1problems_1_1cylindrical__bfield_1_1_cylindrical_bfield.html#aab70a41790fdf67168cbc59b8570047e">pyoculus.problems.cylindrical_bfield.CylindricalBfield</a>, <a class="el" href="classpyoculus_1_1problems_1_1spec__bfield_1_1_s_p_e_c_bfield.html#a26f72c21af4992e1f6dd556facfa379f">pyoculus.problems.spec_bfield.SPECBfield</a>, and <a class="el" href="classpyoculus_1_1problems_1_1qfm__bfield_1_1_q_f_m_bfield.html#a035bc01a5fbdc593e9eea03ed52e2b28">pyoculus.problems.qfm_bfield.QFMBfield</a>.</p>
 
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
-<a id="a220418d75296759234e1e2df925ad1d1" name="a220418d75296759234e1e2df925ad1d1"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a220418d75296759234e1e2df925ad1d1">&#9670;&nbsp;</a></span>B()</h2>
+<a id="a9f363b83bcb898af34f751ca1b9f7c1b" name="a9f363b83bcb898af34f751ca1b9f7c1b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9f363b83bcb898af34f751ca1b9f7c1b">&#9670;&nbsp;</a></span>B()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -167,8 +182,8 @@ Public Member Functions</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname"><em>args</em> = <code>None</code>&#160;</td>
+          <td class="paramtype">*&#160;</td>
+          <td class="paramname"><em>args</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -182,18 +197,85 @@ Public Member Functions</h2></td></tr>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">coordinates</td><td></td></tr>
-    <tr><td class="paramname">arg1</td><td>parameter </td></tr>
+    <tr><td class="paramname">*args</td><td>extra parameters </td></tr>
   </table>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>the contravariant magnetic fields </dd></dl>
 
-<p>Reimplemented in <a class="el" href="classpyoculus_1_1problems_1_1simsgeo__biot__savart_1_1_simsgeo_biot_savart.html#ae8729c5f938ef89a2ce15b9834eb2119">pyoculus.problems.simsgeo_biot_savart.SimsgeoBiotSavart</a>, <a class="el" href="classpyoculus_1_1problems_1_1spec__bfield_1_1_s_p_e_c_bfield.html#a3be69194822784a86c60cde1d693d059">pyoculus.problems.spec_bfield.SPECBfield</a>, and <a class="el" href="classpyoculus_1_1problems_1_1m3dc1__bfield_1_1_m3_d_c1_bfield.html#a0ba8e1a1de0acee59653e7084e3a3cea">pyoculus.problems.m3dc1_bfield.M3DC1Bfield</a>.</p>
+<p>Reimplemented in <a class="el" href="classpyoculus_1_1problems_1_1qfm__bfield_1_1_q_f_m_bfield.html#a289d93f857a09fbe1ede084eea2ab371">pyoculus.problems.qfm_bfield.QFMBfield</a>, <a class="el" href="classpyoculus_1_1problems_1_1simsgeo__biot__savart_1_1_simsgeo_biot_savart.html#abd3b53f7c71f375e2834098eec7aa916">pyoculus.problems.simsgeo_biot_savart.SimsgeoBiotSavart</a>, <a class="el" href="classpyoculus_1_1problems_1_1spec__bfield_1_1_s_p_e_c_bfield.html#ad3ed5dd1053098b7f07f81cc2ffe89cd">pyoculus.problems.spec_bfield.SPECBfield</a>, and <a class="el" href="classpyoculus_1_1problems_1_1m3dc1__bfield_1_1_m3_d_c1_bfield.html#a3829e2ac340bdd4ae8f3a0fc71b52314">pyoculus.problems.m3dc1_bfield.M3DC1Bfield</a>.</p>
 
 </div>
 </div>
-<a id="a6f79cc08f0251834bd8f718eadc06293" name="a6f79cc08f0251834bd8f718eadc06293"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a6f79cc08f0251834bd8f718eadc06293">&#9670;&nbsp;</a></span>dBdX()</h2>
+<a id="ab845b3b0602855d8d29143d9418dcf5f" name="ab845b3b0602855d8d29143d9418dcf5f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab845b3b0602855d8d29143d9418dcf5f">&#9670;&nbsp;</a></span>B_many()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">def pyoculus.problems.bfield_problem.BfieldProblem.B_many </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>x1arr</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>x2arr</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>x3arr</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>input1D</em> = <code>True</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">*&#160;</td>
+          <td class="paramname"><em>args</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Returns magnetic fields, with multipy coordinate inputs. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">x1arr</td><td>the first coordinates. Should have the same length as the other two if input1D=True. </td></tr>
+    <tr><td class="paramname">x2arr</td><td>the second coordinates. Should have the same length as the other two if input1D=True. </td></tr>
+    <tr><td class="paramname">x3arr</td><td>the third coordinates. Should have the same length as the other two if input1D=True. </td></tr>
+    <tr><td class="paramname">input1D</td><td>if False, create a meshgrid with sarr, tarr and zarr, if True, treat them as a list of points </td></tr>
+    <tr><td class="paramname">*args</td><td>extra parameters </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>the contravariant magnetic fields </dd></dl>
+
+<p>Reimplemented in <a class="el" href="classpyoculus_1_1problems_1_1qfm__bfield_1_1_q_f_m_bfield.html#a42013c671cf8f9d660de917b5210f3fa">pyoculus.problems.qfm_bfield.QFMBfield</a>, and <a class="el" href="classpyoculus_1_1problems_1_1spec__bfield_1_1_s_p_e_c_bfield.html#a85654a9b0bd6c67e8da50070a00fad07">pyoculus.problems.spec_bfield.SPECBfield</a>.</p>
+
+</div>
+</div>
+<a id="a7efa9e06135b5f1fac989b49d4b556d2" name="a7efa9e06135b5f1fac989b49d4b556d2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7efa9e06135b5f1fac989b49d4b556d2">&#9670;&nbsp;</a></span>dBdX()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -213,8 +295,8 @@ Public Member Functions</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname"><em>args</em> = <code>None</code>&#160;</td>
+          <td class="paramtype">*&#160;</td>
+          <td class="paramname"><em>args</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -228,13 +310,97 @@ Public Member Functions</h2></td></tr>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">coordinates</td><td></td></tr>
-    <tr><td class="paramname">arg1</td><td>parameter </td></tr>
+    <tr><td class="paramname">*args</td><td>extra parameters </td></tr>
   </table>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>B, dBdX, the contravariant magnetic fields, the derivatives of them </dd></dl>
 
-<p>Reimplemented in <a class="el" href="classpyoculus_1_1problems_1_1simsgeo__biot__savart_1_1_simsgeo_biot_savart.html#a8c4605ef245ecd062caee18c190cfda1">pyoculus.problems.simsgeo_biot_savart.SimsgeoBiotSavart</a>, and <a class="el" href="classpyoculus_1_1problems_1_1spec__bfield_1_1_s_p_e_c_bfield.html#a34516c53faedc750110218f114b1339b">pyoculus.problems.spec_bfield.SPECBfield</a>.</p>
+<p>Reimplemented in <a class="el" href="classpyoculus_1_1problems_1_1qfm__bfield_1_1_q_f_m_bfield.html#a6caa9e597a07914bdaad6d935e7fb653">pyoculus.problems.qfm_bfield.QFMBfield</a>, <a class="el" href="classpyoculus_1_1problems_1_1simsgeo__biot__savart_1_1_simsgeo_biot_savart.html#a5eb3e7e80073e1b89cecd51f1269bfc2">pyoculus.problems.simsgeo_biot_savart.SimsgeoBiotSavart</a>, and <a class="el" href="classpyoculus_1_1problems_1_1spec__bfield_1_1_s_p_e_c_bfield.html#a889a49a1d603475a727f81958f507275">pyoculus.problems.spec_bfield.SPECBfield</a>.</p>
+
+</div>
+</div>
+<a id="aff3d151e5b4b5b8a1d42ad233a68710f" name="aff3d151e5b4b5b8a1d42ad233a68710f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aff3d151e5b4b5b8a1d42ad233a68710f">&#9670;&nbsp;</a></span>dBdX_many()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">def pyoculus.problems.bfield_problem.BfieldProblem.dBdX_many </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>x1arr</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>x2arr</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>x3arr</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>input1D</em> = <code>True</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">*&#160;</td>
+          <td class="paramname"><em>args</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Returns magnetic fields. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">x1arr</td><td>the first coordinates. Should have the same length as the other two if input1D=True. </td></tr>
+    <tr><td class="paramname">x2arr</td><td>the second coordinates. Should have the same length as the other two if input1D=True. </td></tr>
+    <tr><td class="paramname">x3arr</td><td>the third coordinates. Should have the same length as the other two if input1D=True. </td></tr>
+    <tr><td class="paramname">input1D</td><td>if False, create a meshgrid with sarr, tarr and zarr, if True, treat them as a list of points </td></tr>
+    <tr><td class="paramname">*args</td><td>extra parameters </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>B, dBdX, the contravariant magnetic fields, the derivatives of them </dd></dl>
+
+<p>Reimplemented in <a class="el" href="classpyoculus_1_1problems_1_1qfm__bfield_1_1_q_f_m_bfield.html#a3baa44194bbcb79acb984daa0ada64b3">pyoculus.problems.qfm_bfield.QFMBfield</a>, and <a class="el" href="classpyoculus_1_1problems_1_1spec__bfield_1_1_s_p_e_c_bfield.html#aed58cf80935a783f80ec59d5ac49e80a">pyoculus.problems.spec_bfield.SPECBfield</a>.</p>
+
+</div>
+</div>
+<h2 class="groupheader">Member Data Documentation</h2>
+<a id="a0e4ef6354a7fb79e70f1c34a874f4cc1" name="a0e4ef6354a7fb79e70f1c34a874f4cc1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0e4ef6354a7fb79e70f1c34a874f4cc1">&#9670;&nbsp;</a></span>has_jacobian</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">pyoculus.problems.bfield_problem.BfieldProblem.has_jacobian</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>if the output magnetic field contains the jacobian factor or not </p>
 
 </div>
 </div>

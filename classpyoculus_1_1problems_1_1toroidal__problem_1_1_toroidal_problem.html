@@ -102,10 +102,11 @@ Inheritance diagram for pyoculus.problems.toroidal_problem.ToroidalProblem:</div
  <div class="center">
   <img src="classpyoculus_1_1problems_1_1toroidal__problem_1_1_toroidal_problem.png" usemap="#pyoculus.problems.toroidal_5Fproblem.ToroidalProblem_map" alt=""/>
   <map id="pyoculus.problems.toroidal_5Fproblem.ToroidalProblem_map" name="pyoculus.problems.toroidal_5Fproblem.ToroidalProblem_map">
-<area href="classpyoculus_1_1problems_1_1base__problem_1_1_base_problem.html" title="Abstract class that used to drive calculation." alt="pyoculus.problems.base_problem.BaseProblem" shape="rect" coords="161,0,473,24"/>
-<area href="classpyoculus_1_1problems_1_1toroidal__bfield_1_1_toroidal_bfield.html" alt="pyoculus.problems.toroidal_bfield.ToroidalBfield" shape="rect" coords="0,112,312,136"/>
-<area href="classpyoculus_1_1problems_1_1two__waves_1_1_two_waves.html" title="A very simple (but still hard) problem for testing the tools and methods." alt="pyoculus.problems.two_waves.TwoWaves" shape="rect" coords="322,112,634,136"/>
-<area href="classpyoculus_1_1problems_1_1spec__bfield_1_1_s_p_e_c_bfield.html" title="Class that used to setup the SPEC bfield problem for interfacing Fortran, used in ODE solver." alt="pyoculus.problems.spec_bfield.SPECBfield" shape="rect" coords="0,168,312,192"/>
+<area href="classpyoculus_1_1problems_1_1base__problem_1_1_base_problem.html" title="Abstract class that used to drive calculation." alt="pyoculus.problems.base_problem.BaseProblem" shape="rect" coords="322,0,634,24"/>
+<area href="classpyoculus_1_1problems_1_1toroidal__bfield_1_1_toroidal_bfield.html" alt="pyoculus.problems.toroidal_bfield.ToroidalBfield" shape="rect" coords="322,112,634,136"/>
+<area href="classpyoculus_1_1problems_1_1qfm__bfield_1_1_q_f_m_bfield.html" title="Class that used to setup the bfield problem based on QFM." alt="pyoculus.problems.qfm_bfield.QFMBfield" shape="rect" coords="0,168,312,192"/>
+<area href="classpyoculus_1_1problems_1_1spec__bfield_1_1_s_p_e_c_bfield.html" title="Class that used to setup the SPEC bfield problem for interfacing Fortran, used in ODE solver." alt="pyoculus.problems.spec_bfield.SPECBfield" shape="rect" coords="322,168,634,192"/>
+<area href="classpyoculus_1_1problems_1_1two__waves_1_1_two_waves.html" title="A very simple (but still hard) problem for testing the tools and methods." alt="pyoculus.problems.two_waves.TwoWaves" shape="rect" coords="644,168,956,192"/>
   </map>
 </div></div>
 <table class="memberdecls">
@@ -114,23 +115,23 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a539003c9e1461a26ebdf89029ce7be24"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classpyoculus_1_1problems_1_1toroidal__problem_1_1_toroidal_problem.html#a539003c9e1461a26ebdf89029ce7be24">__init__</a> (self)</td></tr>
 <tr class="memdesc:a539003c9e1461a26ebdf89029ce7be24"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set up the problem with two cyclical coordinates, e.g.  <a href="classpyoculus_1_1problems_1_1toroidal__problem_1_1_toroidal_problem.html#a539003c9e1461a26ebdf89029ce7be24">More...</a><br /></td></tr>
 <tr class="separator:a539003c9e1461a26ebdf89029ce7be24"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a290ab18dcf7e87fbfdd39f112aadd693"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classpyoculus_1_1problems_1_1toroidal__problem_1_1_toroidal_problem.html#a290ab18dcf7e87fbfdd39f112aadd693">f</a> (self, zeta, st, args=None)</td></tr>
-<tr class="memdesc:a290ab18dcf7e87fbfdd39f112aadd693"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns ODE RHS.  <a href="classpyoculus_1_1problems_1_1toroidal__problem_1_1_toroidal_problem.html#a290ab18dcf7e87fbfdd39f112aadd693">More...</a><br /></td></tr>
-<tr class="separator:a290ab18dcf7e87fbfdd39f112aadd693"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3e47f7ccf6aa91052c5a5952506ffcdc"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classpyoculus_1_1problems_1_1toroidal__problem_1_1_toroidal_problem.html#a3e47f7ccf6aa91052c5a5952506ffcdc">f_tangent</a> (self, t, st, args=None)</td></tr>
-<tr class="memdesc:a3e47f7ccf6aa91052c5a5952506ffcdc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns ODE RHS, with tangent.  <a href="classpyoculus_1_1problems_1_1toroidal__problem_1_1_toroidal_problem.html#a3e47f7ccf6aa91052c5a5952506ffcdc">More...</a><br /></td></tr>
-<tr class="separator:a3e47f7ccf6aa91052c5a5952506ffcdc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a09c4191499ca20599391982fd59b2971"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classpyoculus_1_1problems_1_1toroidal__problem_1_1_toroidal_problem.html#a09c4191499ca20599391982fd59b2971">f</a> (self, zeta, st, *args)</td></tr>
+<tr class="memdesc:a09c4191499ca20599391982fd59b2971"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns ODE RHS.  <a href="classpyoculus_1_1problems_1_1toroidal__problem_1_1_toroidal_problem.html#a09c4191499ca20599391982fd59b2971">More...</a><br /></td></tr>
+<tr class="separator:a09c4191499ca20599391982fd59b2971"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adeb767d07f0dadfc1b59e14f14c58560"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classpyoculus_1_1problems_1_1toroidal__problem_1_1_toroidal_problem.html#adeb767d07f0dadfc1b59e14f14c58560">f_tangent</a> (self, t, st, *args)</td></tr>
+<tr class="memdesc:adeb767d07f0dadfc1b59e14f14c58560"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns ODE RHS, with tangent.  <a href="classpyoculus_1_1problems_1_1toroidal__problem_1_1_toroidal_problem.html#adeb767d07f0dadfc1b59e14f14c58560">More...</a><br /></td></tr>
+<tr class="separator:adeb767d07f0dadfc1b59e14f14c58560"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:acd5ea0832e716a7b95dc5da9f326433d"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classpyoculus_1_1problems_1_1toroidal__problem_1_1_toroidal_problem.html#acd5ea0832e716a7b95dc5da9f326433d">convert_coords</a> (self, coord1)</td></tr>
 <tr class="memdesc:acd5ea0832e716a7b95dc5da9f326433d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Converts coordinates, identity here.  <a href="classpyoculus_1_1problems_1_1toroidal__problem_1_1_toroidal_problem.html#acd5ea0832e716a7b95dc5da9f326433d">More...</a><br /></td></tr>
 <tr class="separator:acd5ea0832e716a7b95dc5da9f326433d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:afc15c0cd4cf6a498cfb30197cac0b11e"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classpyoculus_1_1problems_1_1base__problem_1_1_base_problem.html#afc15c0cd4cf6a498cfb30197cac0b11e">__init__</a> (self)</td></tr>
 <tr class="separator:afc15c0cd4cf6a498cfb30197cac0b11e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5bae7b9b3198b39c66631abd82791f98"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classpyoculus_1_1problems_1_1base__problem_1_1_base_problem.html#a5bae7b9b3198b39c66631abd82791f98">f</a> (self, t, y, args=None)</td></tr>
-<tr class="memdesc:a5bae7b9b3198b39c66631abd82791f98"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns ODE RHS.  <a href="classpyoculus_1_1problems_1_1base__problem_1_1_base_problem.html#a5bae7b9b3198b39c66631abd82791f98">More...</a><br /></td></tr>
-<tr class="separator:a5bae7b9b3198b39c66631abd82791f98"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac9e92ba38c3bfe727b43d58137bbb5bd"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classpyoculus_1_1problems_1_1base__problem_1_1_base_problem.html#ac9e92ba38c3bfe727b43d58137bbb5bd">f_tangent</a> (self, t, y, args=None)</td></tr>
-<tr class="memdesc:ac9e92ba38c3bfe727b43d58137bbb5bd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns ODE RHS, with tangent.  <a href="classpyoculus_1_1problems_1_1base__problem_1_1_base_problem.html#ac9e92ba38c3bfe727b43d58137bbb5bd">More...</a><br /></td></tr>
-<tr class="separator:ac9e92ba38c3bfe727b43d58137bbb5bd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac38a070b433b9c2b8cd2b6837eabbe20"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classpyoculus_1_1problems_1_1base__problem_1_1_base_problem.html#ac38a070b433b9c2b8cd2b6837eabbe20">f</a> (self, t, y, *args)</td></tr>
+<tr class="memdesc:ac38a070b433b9c2b8cd2b6837eabbe20"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns ODE RHS.  <a href="classpyoculus_1_1problems_1_1base__problem_1_1_base_problem.html#ac38a070b433b9c2b8cd2b6837eabbe20">More...</a><br /></td></tr>
+<tr class="separator:ac38a070b433b9c2b8cd2b6837eabbe20"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acde79b4ab910bafdc194019916dd95fc"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classpyoculus_1_1problems_1_1base__problem_1_1_base_problem.html#acde79b4ab910bafdc194019916dd95fc">f_tangent</a> (self, t, y, *args)</td></tr>
+<tr class="memdesc:acde79b4ab910bafdc194019916dd95fc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns ODE RHS, with tangent.  <a href="classpyoculus_1_1problems_1_1base__problem_1_1_base_problem.html#acde79b4ab910bafdc194019916dd95fc">More...</a><br /></td></tr>
+<tr class="separator:acde79b4ab910bafdc194019916dd95fc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aca3e107db92e8d0b85378c2b8804d590"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classpyoculus_1_1problems_1_1base__problem_1_1_base_problem.html#aca3e107db92e8d0b85378c2b8804d590">convert_coords</a> (self, coord1)</td></tr>
 <tr class="memdesc:aca3e107db92e8d0b85378c2b8804d590"><td class="mdescLeft">&#160;</td><td class="mdescRight">Converts coordinates (for example \(s,\theta,\zeta\) to \(R,Z,\varphi\))  <a href="classpyoculus_1_1problems_1_1base__problem_1_1_base_problem.html#aca3e107db92e8d0b85378c2b8804d590">More...</a><br /></td></tr>
 <tr class="separator:aca3e107db92e8d0b85378c2b8804d590"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -179,7 +180,7 @@ Public Attributes</h2></td></tr>
  
 <p>Reimplemented from <a class="el" href="classpyoculus_1_1problems_1_1base__problem_1_1_base_problem.html#afc15c0cd4cf6a498cfb30197cac0b11e">pyoculus.problems.base_problem.BaseProblem</a>.</p>
 
-<p>Reimplemented in <a class="el" href="classpyoculus_1_1problems_1_1toroidal__bfield_1_1_toroidal_bfield.html#a1d9fffee1f7d750a6c401d7a141c8d3d">pyoculus.problems.toroidal_bfield.ToroidalBfield</a>, <a class="el" href="classpyoculus_1_1problems_1_1two__waves_1_1_two_waves.html#a23c5755aa3cc34a215033ea0174a8ca5">pyoculus.problems.two_waves.TwoWaves</a>, and <a class="el" href="classpyoculus_1_1problems_1_1spec__bfield_1_1_s_p_e_c_bfield.html#a26f72c21af4992e1f6dd556facfa379f">pyoculus.problems.spec_bfield.SPECBfield</a>.</p>
+<p>Reimplemented in <a class="el" href="classpyoculus_1_1problems_1_1toroidal__bfield_1_1_toroidal_bfield.html#a1d9fffee1f7d750a6c401d7a141c8d3d">pyoculus.problems.toroidal_bfield.ToroidalBfield</a>, <a class="el" href="classpyoculus_1_1problems_1_1two__waves_1_1_two_waves.html#a23c5755aa3cc34a215033ea0174a8ca5">pyoculus.problems.two_waves.TwoWaves</a>, <a class="el" href="classpyoculus_1_1problems_1_1spec__bfield_1_1_s_p_e_c_bfield.html#a26f72c21af4992e1f6dd556facfa379f">pyoculus.problems.spec_bfield.SPECBfield</a>, and <a class="el" href="classpyoculus_1_1problems_1_1qfm__bfield_1_1_q_f_m_bfield.html#a035bc01a5fbdc593e9eea03ed52e2b28">pyoculus.problems.qfm_bfield.QFMBfield</a>.</p>
 
 </div>
 </div>
@@ -221,12 +222,12 @@ Public Attributes</h2></td></tr>
 
 <p>Reimplemented from <a class="el" href="classpyoculus_1_1problems_1_1base__problem_1_1_base_problem.html#aca3e107db92e8d0b85378c2b8804d590">pyoculus.problems.base_problem.BaseProblem</a>.</p>
 
-<p>Reimplemented in <a class="el" href="classpyoculus_1_1problems_1_1two__waves_1_1_two_waves.html#ad5ad9f119aeae7a78bbc4b955fd250e9">pyoculus.problems.two_waves.TwoWaves</a>, and <a class="el" href="classpyoculus_1_1problems_1_1spec__bfield_1_1_s_p_e_c_bfield.html#aeb3cb0811a4a953b9241084b7b09e82d">pyoculus.problems.spec_bfield.SPECBfield</a>.</p>
+<p>Reimplemented in <a class="el" href="classpyoculus_1_1problems_1_1two__waves_1_1_two_waves.html#ad5ad9f119aeae7a78bbc4b955fd250e9">pyoculus.problems.two_waves.TwoWaves</a>, <a class="el" href="classpyoculus_1_1problems_1_1qfm__bfield_1_1_q_f_m_bfield.html#a66fec3da24492046a5a5e1140d47d91a">pyoculus.problems.qfm_bfield.QFMBfield</a>, and <a class="el" href="classpyoculus_1_1problems_1_1spec__bfield_1_1_s_p_e_c_bfield.html#aeb3cb0811a4a953b9241084b7b09e82d">pyoculus.problems.spec_bfield.SPECBfield</a>.</p>
 
 </div>
 </div>
-<a id="a290ab18dcf7e87fbfdd39f112aadd693" name="a290ab18dcf7e87fbfdd39f112aadd693"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a290ab18dcf7e87fbfdd39f112aadd693">&#9670;&nbsp;</a></span>f()</h2>
+<a id="a09c4191499ca20599391982fd59b2971" name="a09c4191499ca20599391982fd59b2971"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a09c4191499ca20599391982fd59b2971">&#9670;&nbsp;</a></span>f()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -252,8 +253,8 @@ Public Attributes</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname"><em>args</em> = <code>None</code>&#160;</td>
+          <td class="paramtype">*&#160;</td>
+          <td class="paramname"><em>args</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -268,20 +269,20 @@ Public Attributes</h2></td></tr>
   <table class="params">
     <tr><td class="paramname">zeta</td><td>cylindrical angle in ODE </td></tr>
     <tr><td class="paramname">st</td><td>\((s, \theta)\) in ODE </td></tr>
-    <tr><td class="paramname">arg1</td><td>parameter for the ODE </td></tr>
+    <tr><td class="paramname">*args</td><td>extra parameters for the ODE </td></tr>
   </table>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>the RHS of the ODE </dd></dl>
 
-<p>Reimplemented from <a class="el" href="classpyoculus_1_1problems_1_1base__problem_1_1_base_problem.html#a5bae7b9b3198b39c66631abd82791f98">pyoculus.problems.base_problem.BaseProblem</a>.</p>
+<p>Reimplemented from <a class="el" href="classpyoculus_1_1problems_1_1base__problem_1_1_base_problem.html#ac38a070b433b9c2b8cd2b6837eabbe20">pyoculus.problems.base_problem.BaseProblem</a>.</p>
 
-<p>Reimplemented in <a class="el" href="classpyoculus_1_1problems_1_1two__waves_1_1_two_waves.html#ac7d546bc3d5c0bbd5b67740e83ab27b4">pyoculus.problems.two_waves.TwoWaves</a>, and <a class="el" href="classpyoculus_1_1problems_1_1toroidal__bfield_1_1_toroidal_bfield.html#a6010bf17ab0b2405d3c3848cd5c748ae">pyoculus.problems.toroidal_bfield.ToroidalBfield</a>.</p>
+<p>Reimplemented in <a class="el" href="classpyoculus_1_1problems_1_1two__waves_1_1_two_waves.html#ac7d546bc3d5c0bbd5b67740e83ab27b4">pyoculus.problems.two_waves.TwoWaves</a>, and <a class="el" href="classpyoculus_1_1problems_1_1toroidal__bfield_1_1_toroidal_bfield.html#adcf1a8a37edf8a94e741ed36d399c867">pyoculus.problems.toroidal_bfield.ToroidalBfield</a>.</p>
 
 </div>
 </div>
-<a id="a3e47f7ccf6aa91052c5a5952506ffcdc" name="a3e47f7ccf6aa91052c5a5952506ffcdc"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a3e47f7ccf6aa91052c5a5952506ffcdc">&#9670;&nbsp;</a></span>f_tangent()</h2>
+<a id="adeb767d07f0dadfc1b59e14f14c58560" name="adeb767d07f0dadfc1b59e14f14c58560"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#adeb767d07f0dadfc1b59e14f14c58560">&#9670;&nbsp;</a></span>f_tangent()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -307,8 +308,8 @@ Public Attributes</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname"><em>args</em> = <code>None</code>&#160;</td>
+          <td class="paramtype">*&#160;</td>
+          <td class="paramname"><em>args</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -323,15 +324,15 @@ Public Attributes</h2></td></tr>
   <table class="params">
     <tr><td class="paramname">zeta</td><td>cylindrical angle in ODE </td></tr>
     <tr><td class="paramname">st</td><td>\((s, \theta, ds_1, d\theta_1, ds_2, d\theta_2)\) in ODE </td></tr>
-    <tr><td class="paramname">arg1</td><td>parameter for the ODE </td></tr>
+    <tr><td class="paramname">*args</td><td>extra parameters for the ODE </td></tr>
   </table>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>the RHS of the ODE, with tangent </dd></dl>
 
-<p>Reimplemented from <a class="el" href="classpyoculus_1_1problems_1_1base__problem_1_1_base_problem.html#ac9e92ba38c3bfe727b43d58137bbb5bd">pyoculus.problems.base_problem.BaseProblem</a>.</p>
+<p>Reimplemented from <a class="el" href="classpyoculus_1_1problems_1_1base__problem_1_1_base_problem.html#acde79b4ab910bafdc194019916dd95fc">pyoculus.problems.base_problem.BaseProblem</a>.</p>
 
-<p>Reimplemented in <a class="el" href="classpyoculus_1_1problems_1_1two__waves_1_1_two_waves.html#a262dfa61b07d252ba9201cc67f16aca3">pyoculus.problems.two_waves.TwoWaves</a>, and <a class="el" href="classpyoculus_1_1problems_1_1toroidal__bfield_1_1_toroidal_bfield.html#a75a3d596adc8ec4e7393f93ea9c012af">pyoculus.problems.toroidal_bfield.ToroidalBfield</a>.</p>
+<p>Reimplemented in <a class="el" href="classpyoculus_1_1problems_1_1two__waves_1_1_two_waves.html#a262dfa61b07d252ba9201cc67f16aca3">pyoculus.problems.two_waves.TwoWaves</a>, and <a class="el" href="classpyoculus_1_1problems_1_1toroidal__bfield_1_1_toroidal_bfield.html#ad799305b3922cf1ee8da1315e64e12c5">pyoculus.problems.toroidal_bfield.ToroidalBfield</a>.</p>
 
 </div>
 </div>

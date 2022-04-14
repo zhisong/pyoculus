@@ -97,6 +97,10 @@ $(document).ready(function(){initNavTree('namespacespecbfield.html',''); initRes
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions/Subroutines</h2></td></tr>
+<tr class="memitem:a8130c9bc5a7d1ed5dd1fd272f0587248"><td class="memItemLeft" align="right" valign="top">subroutine&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacespecbfield.html#a8130c9bc5a7d1ed5dd1fd272f0587248">get_bfield_many_1d</a> (n, s, t, z, Bstz)</td></tr>
+<tr class="separator:a8130c9bc5a7d1ed5dd1fd272f0587248"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a967049e8b5cdb5e7495642b3aaa337dd"><td class="memItemLeft" align="right" valign="top">subroutine&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacespecbfield.html#a967049e8b5cdb5e7495642b3aaa337dd">get_bfield_tangent_many_1d</a> (n, s, t, z, Bstz, dBstz)</td></tr>
+<tr class="separator:a967049e8b5cdb5e7495642b3aaa337dd"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a70e5d85cfcad55f6a5221d66207838ab"><td class="memItemLeft" align="right" valign="top">subroutine&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacespecbfield.html#a70e5d85cfcad55f6a5221d66207838ab">get_bfield</a> (stz, Bstz)</td></tr>
 <tr class="separator:a70e5d85cfcad55f6a5221d66207838ab"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a640683164e1e8e0c138e14610ab873ca"><td class="memItemLeft" align="right" valign="top">subroutine&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacespecbfield.html#a640683164e1e8e0c138e14610ab873ca">get_bfield_tangent</a> (stz, Bstz, dBstz)</td></tr>
@@ -131,6 +135,52 @@ Functions/Subroutines</h2></td></tr>
 
 </div>
 </div>
+<a id="a8130c9bc5a7d1ed5dd1fd272f0587248" name="a8130c9bc5a7d1ed5dd1fd272f0587248"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8130c9bc5a7d1ed5dd1fd272f0587248">&#9670;&nbsp;</a></span>get_bfield_many_1d()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">subroutine specbfield::get_bfield_many_1d </td>
+          <td>(</td>
+          <td class="paramtype">integer, intent(in)&#160;</td>
+          <td class="paramname"><em>n</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">real(kind=real_kind), dimension(n), intent(in)&#160;</td>
+          <td class="paramname"><em>s</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">real(kind=real_kind), dimension(n), intent(in)&#160;</td>
+          <td class="paramname"><em>t</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">real(kind=real_kind), dimension(n), intent(in)&#160;</td>
+          <td class="paramname"><em>z</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">real(kind=real_kind), dimension(n, 3), intent(out)&#160;</td>
+          <td class="paramname"><em>Bstz</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
 <a id="a640683164e1e8e0c138e14610ab873ca" name="a640683164e1e8e0c138e14610ab873ca"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a640683164e1e8e0c138e14610ab873ca">&#9670;&nbsp;</a></span>get_bfield_tangent()</h2>
 
@@ -153,6 +203,58 @@ Functions/Subroutines</h2></td></tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">real(kind=real_kind), dimension(3,3), intent(out)&#160;</td>
+          <td class="paramname"><em>dBstz</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a967049e8b5cdb5e7495642b3aaa337dd" name="a967049e8b5cdb5e7495642b3aaa337dd"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a967049e8b5cdb5e7495642b3aaa337dd">&#9670;&nbsp;</a></span>get_bfield_tangent_many_1d()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">subroutine specbfield::get_bfield_tangent_many_1d </td>
+          <td>(</td>
+          <td class="paramtype">integer, intent(in)&#160;</td>
+          <td class="paramname"><em>n</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">real(kind=real_kind), dimension(n), intent(in)&#160;</td>
+          <td class="paramname"><em>s</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">real(kind=real_kind), dimension(n), intent(in)&#160;</td>
+          <td class="paramname"><em>t</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">real(kind=real_kind), dimension(n), intent(in)&#160;</td>
+          <td class="paramname"><em>z</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">real(kind=real_kind), dimension(n, 3), intent(out)&#160;</td>
+          <td class="paramname"><em>Bstz</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">real(kind=real_kind), dimension(n, 3,3), intent(out)&#160;</td>
           <td class="paramname"><em>dBstz</em>&#160;</td>
         </tr>
         <tr>

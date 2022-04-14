@@ -1,6 +1,8 @@
 var searchData=
 [
-  ['toroidalbfield_0',['ToroidalBfield',['../classpyoculus_1_1problems_1_1toroidal__bfield_1_1_toroidal_bfield.html',1,'pyoculus::problems::toroidal_bfield']]],
-  ['toroidalproblem_1',['ToroidalProblem',['../classpyoculus_1_1problems_1_1toroidal__problem_1_1_toroidal_problem.html',1,'pyoculus::problems::toroidal_problem']]],
-  ['twowaves_2',['TwoWaves',['../classpyoculus_1_1problems_1_1two__waves_1_1_two_waves.html',1,'pyoculus::problems::two_waves']]]
+  ['simsgeobiotsavart_0',['SimsgeoBiotSavart',['../classpyoculus_1_1problems_1_1simsgeo__biot__savart_1_1_simsgeo_biot_savart.html',1,'pyoculus::problems::simsgeo_biot_savart']]],
+  ['specbfield_1',['SPECBfield',['../classpyoculus_1_1problems_1_1spec__bfield_1_1_s_p_e_c_bfield.html',1,'pyoculus::problems::spec_bfield']]],
+  ['specpjh_2',['SPECPJH',['../classpyoculus_1_1problems_1_1spec__pjh_1_1_s_p_e_c_p_j_h.html',1,'pyoculus::problems::spec_pjh']]],
+  ['specproblem_3',['SPECProblem',['../classpyoculus_1_1problems_1_1spec__problem_1_1_s_p_e_c_problem.html',1,'pyoculus::problems::spec_problem']]],
+  ['surfacestoroidal_4',['SurfacesToroidal',['../classpyoculus_1_1problems_1_1interpolate__coordinates_1_1_surfaces_toroidal.html',1,'pyoculus::problems::interpolate_coordinates']]]
 ];

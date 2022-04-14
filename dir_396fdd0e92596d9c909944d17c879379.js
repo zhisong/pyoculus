@@ -17,8 +17,12 @@ var dir_396fdd0e92596d9c909944d17c879379 =
     [ "cylindrical_problem.py", "cylindrical__problem_8py.html", [
       [ "pyoculus.problems.cylindrical_problem.CylindricalProblem", "classpyoculus_1_1problems_1_1cylindrical__problem_1_1_cylindrical_problem.html", "classpyoculus_1_1problems_1_1cylindrical__problem_1_1_cylindrical_problem" ]
     ] ],
+    [ "interpolate_coordinates.py", "interpolate__coordinates_8py.html", "interpolate__coordinates_8py" ],
     [ "m3dc1_bfield.py", "m3dc1__bfield_8py.html", [
       [ "pyoculus.problems.m3dc1_bfield.M3DC1Bfield", "classpyoculus_1_1problems_1_1m3dc1__bfield_1_1_m3_d_c1_bfield.html", "classpyoculus_1_1problems_1_1m3dc1__bfield_1_1_m3_d_c1_bfield" ]
+    ] ],
+    [ "qfm_bfield.py", "qfm__bfield_8py.html", [
+      [ "pyoculus.problems.qfm_bfield.QFMBfield", "classpyoculus_1_1problems_1_1qfm__bfield_1_1_q_f_m_bfield.html", "classpyoculus_1_1problems_1_1qfm__bfield_1_1_q_f_m_bfield" ]
     ] ],
     [ "simsgeo_biot_savart.py", "simsgeo__biot__savart_8py.html", [
       [ "pyoculus.problems.simsgeo_biot_savart.SimsgeoBiotSavart", "classpyoculus_1_1problems_1_1simsgeo__biot__savart_1_1_simsgeo_biot_savart.html", "classpyoculus_1_1problems_1_1simsgeo__biot__savart_1_1_simsgeo_biot_savart" ]

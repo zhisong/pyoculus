@@ -17,5 +17,6 @@ var dir_60937f6f500ebfbda6b19897660e9329 =
     [ "manifolds.py", "manifolds_8py.html", null ],
     [ "poincare_plot.py", "poincare__plot_8py.html", [
       [ "pyoculus.solvers.poincare_plot.PoincarePlot", "classpyoculus_1_1solvers_1_1poincare__plot_1_1_poincare_plot.html", "classpyoculus_1_1solvers_1_1poincare__plot_1_1_poincare_plot" ]
-    ] ]
+    ] ],
+    [ "qfm.py", "qfm_8py.html", "qfm_8py" ]
 ];
