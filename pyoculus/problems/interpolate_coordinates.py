@@ -295,7 +295,7 @@ class SurfacesToroidal:
                 coords.dds[..., 0] * dtdt[..., nax]
                 + dsdr[..., nax] * coords.ddt[..., 1]
                 - coords.ddt[..., 0] * dsdt[..., nax]
-                - dtdr * coords.dds[..., 1]
+                - dtdr[..., nax] * coords.dds[..., 1]
             )
 
         return coords
