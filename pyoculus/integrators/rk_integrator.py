@@ -18,11 +18,13 @@ class RKIntegrator(BaseIntegrator):
         """! Sets up the ODE solver
         @param params dict, the parameters used in the ODE solver
 
-        <code>params['ode']</code> -- callable f: rhs=f(t,x,arg1), must provide
+        <code>params['ode']</code> -- callable f: rhs=f(t,x,*args), must provide
 
         <code>params['args']=None</code> -- the argment that will be used to call f
 
         <code>params['rtol']=1e-7</code> -- relative tolerance
+
+        <code>params['nsteps']=10000</code> -- the maximum number of integration steps before reporting an error
 
         <code>params['type']='dopri5'</code> -- the type of integrator, 'dopri5' for RK45, 'dop853' for RK853
         """
@@ -46,13 +48,17 @@ class RKIntegrator(BaseIntegrator):
             params["rtol"] = 1e-7  # set to default value
         self.rtol = params["rtol"]
 
+        if "nsteps" not in params.keys():
+            params["nsteps"] = 10000
+        self.nsteps = params["nsteps"]
+
         if "args" not in params.keys():
-            params["args"] = None
+            params["args"] = ()
         self.args = params["args"]
 
         # set up the integrator
         self.integrator = ode(self.rhs).set_integrator(
-            params["type"], rtol=params["rtol"]
+            params["type"], rtol=params["rtol"], nsteps=self.nsteps
         )
 
         super().__init__(params)
@@ -63,9 +69,9 @@ class RKIntegrator(BaseIntegrator):
         @param x the start of coordinates
         """
 
-        self.integrator.set_initial_value(x, t).set_f_params(self._params["args"])
+        self.integrator.set_initial_value(x, t).set_f_params(*self._params["args"])
         #try:
-        testoutput = self.rhs(t, x, self.args)
+        testoutput = self.rhs(t, x, *self.args)
         #except:
             #print("ODE function not callable")
             #raise
@@ -95,5 +101,5 @@ class RKIntegrator(BaseIntegrator):
         return RKIntegrator(self._params)
 
     @staticmethod
-    def _test_fun(t, y, args):
+    def _test_fun(t, y, *args):
         return [0.1 * np.cos(y[1]), -y[0]]

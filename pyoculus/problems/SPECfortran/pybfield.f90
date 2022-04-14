@@ -10,6 +10,53 @@ MODULE SPECbfield
   CONTAINS
 
 !-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!
+  SUBROUTINE get_bfield_many_1d( n, s, t, z, Bstz )
+  !f2py threadsafe
+    USE SPECtypedefns, ONLY : REAL_KIND
+
+    IMPLICIT NONE
+
+    INTEGER, INTENT(IN)                ::       n
+    REAL(KIND=REAL_KIND), INTENT(IN)   ::       s(n), t(n), z(n)
+    REAL(KIND=REAL_KIND), INTENT(OUT)  ::       Bstz(n, 3)
+
+    INTEGER :: i
+    REAL(KIND=REAL_KIND) :: stz(3)
+
+    DO i = 1, n
+
+      stz = (/s(i), t(i), z(i)/)
+
+      CALL get_bfield(stz, Bstz(i, 1:3))
+    
+    ENDDO
+
+  END SUBROUTINE get_bfield_many_1D
+
+  SUBROUTINE get_bfield_tangent_many_1d( n, s, t, z, Bstz, dBstz )
+  !f2py threadsafe
+    USE SPECtypedefns, ONLY : REAL_KIND
+
+    IMPLICIT NONE
+
+    INTEGER, INTENT(IN)                ::       n
+    REAL(KIND=REAL_KIND), INTENT(IN)   ::       s(n), t(n), z(n)
+    REAL(KIND=REAL_KIND), INTENT(OUT)  ::       Bstz(n, 3), dBstz(n, 3,3)
+
+    INTEGER :: i
+    REAL(KIND=REAL_KIND) :: stz(3)
+
+    DO i = 1, n
+
+      stz = (/s(i), t(i), z(i)/)
+
+      CALL get_bfield_tangent(stz, Bstz(i,1:3), dBstz(i,1:3,1:3))
+    
+    ENDDO
+
+  END SUBROUTINE get_bfield_tangent_many_1D
+
+!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!
 
   SUBROUTINE get_bfield( stz, Bstz )
 !f2py threadsafe
@@ -121,7 +168,7 @@ subroutine get_bfield_tangent( stz, Bstz, dBstz )
     REAL(KIND=REAL_KIND), INTENT(OUT)  ::       dBstz(3,3)
     
     INTEGER              :: lvol, ii, ll, mi, ni
-    REAL(KIND=REAL_KIND) :: teta, lss, sbar, arg, carg, sarg, dBu(1:3,0:2), zeta
+    REAL(KIND=REAL_KIND) :: teta, lss, sbar, arg, carg, sarg, dBu(1:3,0:3), zeta
     REAL(KIND=REAL_KIND) :: cheby(0:Lrad,0:2), zernike(0:Lrad,0:Mpol,0:2)
     
     REAL(KIND=REAL_KIND) :: TT(0:Lrad,0:2) ! this is almost identical to cheby; 17 Dec 15;
@@ -150,7 +197,7 @@ subroutine get_bfield_tangent( stz, Bstz, dBstz )
 
 !-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!
 
-    dBu(1:3,0:2) = zero ! initialize summation;
+    dBu = zero ! initialize summation;
   
 !-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!
   
@@ -184,6 +231,10 @@ subroutine get_bfield_tangent( stz, Bstz, dBstz )
       ;dBu(1,2) = dBu(1,2) + mi * SUM(( - mi * Aze(1:Lrad+1,ii) - ni * Ate(1:Lrad+1,ii) ) * TT(0:Lrad,0)) * carg
       ;dBu(2,2) = dBu(2,2) - mi * SUM((                         -      Aze(1:Lrad+1,ii) ) * TT(0:Lrad,1)) * sarg
       ;dBu(3,2) = dBu(3,2) - mi * SUM((        Ate(1:Lrad+1,ii)                         ) * TT(0:Lrad,1)) * sarg
+      ! dzeta
+      ;dBu(1,3) = dBu(1,3) - ni * SUM(( - mi * Aze(1:Lrad+1,ii) - ni * Ate(1:Lrad+1,ii) ) * TT(0:Lrad,0)) * carg
+      ;dBu(2,3) = dBu(2,3) + ni * SUM((                         -      Aze(1:Lrad+1,ii) ) * TT(0:Lrad,1)) * sarg
+      ;dBu(3,3) = dBu(3,3) + ni * SUM((        Ate(1:Lrad+1,ii)                         ) * TT(0:Lrad,1)) * sarg
       IF( NOTstellsym ) THEN ! include non-symmetric harmonics; 28 Jan 13;
         ! no derivative
         dBu(1,0) = dBu(1,0) + SUM(( + mi * Azo(1:Lrad+1,ii) + ni * Ato(1:Lrad+1,ii) ) * TT(0:Lrad,0)) * carg
@@ -197,9 +248,11 @@ subroutine get_bfield_tangent( stz, Bstz, dBstz )
         dBu(1,2) = dBu(1,2) - mi * SUM(( + mi * Azo(1:Lrad+1,ii) + ni * Ato(1:Lrad+1,ii) ) * TT(0:Lrad,0)) * sarg
         dBu(2,2) = dBu(2,2) + mi * SUM((                         -      Azo(1:Lrad+1,ii) ) * TT(0:Lrad,1)) * carg
         dBu(3,2) = dBu(3,2) + mi * SUM((        Ato(1:Lrad+1,ii)                         ) * TT(0:Lrad,1)) * carg
+        ! dzeta
+        dBu(1,3) = dBu(1,3) + ni * SUM(( + mi * Azo(1:Lrad+1,ii) + ni * Ato(1:Lrad+1,ii) ) * TT(0:Lrad,0)) * sarg
+        dBu(2,3) = dBu(2,3) - ni * SUM((                         -      Azo(1:Lrad+1,ii) ) * TT(0:Lrad,1)) * carg
+        dBu(3,3) = dBu(3,3) - ni * SUM((        Ato(1:Lrad+1,ii)                         ) * TT(0:Lrad,1)) * carg
       ENDIF
-   
-    ! dzeta is not useful so keep it zero
 
 ! !-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!
    
@@ -208,7 +261,7 @@ subroutine get_bfield_tangent( stz, Bstz, dBstz )
 ! !-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!
 
     Bstz = dBu(1:3,0)
-    dBstz(1:3,1:2) = dBu(1:3,1:2)
+    dBstz(1:3,1:3) = TRANSPOSE(dBu(1:3,1:3))
 
 ! !-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!
 

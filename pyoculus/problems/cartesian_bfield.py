@@ -17,11 +17,11 @@ class CartesianBfield(CylindricalProblem, BfieldProblem):
 
         super().__init__(R0, Z0, Nfp)
 
-    def f_RZ(self, phi, RZ, args=None):
+    def f_RZ(self, phi, RZ, *args):
         """! Returns ODE RHS
         @param phi cylindrical angle in ODE
         @param RZ \f$(R, Z)\f$ in ODE
-        @param args parameter for the ODE
+        @param *args parameter for the ODE
         @returns the RHS of the ODE
         """
 
@@ -34,7 +34,7 @@ class CartesianBfield(CylindricalProblem, BfieldProblem):
             Z
         ])
         
-        B = np.array([self.B(xyz, args)]).T
+        B = np.array([self.B(xyz, *args)]).T
 
         invJacobian = self._inv_Jacobian(R,phi,Z)
 
@@ -44,11 +44,11 @@ class CartesianBfield(CylindricalProblem, BfieldProblem):
 
         return np.array([dRdt, dZdt])
 
-    def f_RZ_tangent(self, phi, RZ, args=None):
+    def f_RZ_tangent(self, phi, RZ, *args):
         """! Returns ODE RHS, with tangent
         @param zeta cylindrical angle in ODE
         @param RZ \f$(R, Z, dR_1, dZ_1, dR_2, dZ_2)\f$ in ODE
-        @param arg1 parameter for the ODE
+        @param *args extra parameters for the ODE
         @returns the RHS of the ODE, with tangent
         """
         R = RZ[0]
@@ -65,7 +65,7 @@ class CartesianBfield(CylindricalProblem, BfieldProblem):
             Z
         ])
         
-        B, dBdX = self.dBdX(xyz, args)
+        B, dBdX = self.dBdX(xyz, *args)
         B = np.array(B).T
         Bx = B[0,0]
         By = B[1,0]

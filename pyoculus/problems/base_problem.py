@@ -58,9 +58,9 @@
 #     class SomeProblem(BaseProblem):
 #         def __init__(self, params):
 #             """some codes to initialize the problem"""
-#         def f(self, t, y, args=None):
+#         def f(self, t, y, *args):
 #             """some codes compute the RHS (F) of the ODEs given t and y"""
-#         def f_tangent(self, t, y, args=None):
+#         def f_tangent(self, t, y, *args):
 #             """some codes compute the ODEs and the tangent the ODEs given t and y, y contains two tangent vectors"""
 #         def convert_coords(self, coord1):
 #             """some codes compute the coordinate transformation"""
@@ -77,20 +77,20 @@ class BaseProblem:
         self.poincare_plot_xlabel = "y"
         self.poincare_plot_ylabel = "x"
 
-    def f(self, t, y, args=None):
+    def f(self, t, y, *args):
         """! Returns ODE RHS
         @param t time in ODE
         @param y variables in ODE
-        @param arg1 parameter for the ODE
+        @param *args parameter for the ODE
         @returns the RHS of the ODE
         """
         raise NotImplementedError("A problem class should implement member function f")
 
-    def f_tangent(self, t, y, args=None):
+    def f_tangent(self, t, y, *args):
         """! Returns ODE RHS, with tangent
         @param t time in ODE
         @param y \f$\bf y\f$ variables in ODE and \f$\Delta \mathbf{y}_1\f$, \f$\Delta \mathbf{y}_2\f$
-        @param arg1 parameter for the ODE
+        @param *args parameter for the ODE
         @returns the RHS of the ODE, with tangent
         """
         raise NotImplementedError(

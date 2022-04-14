@@ -22,7 +22,7 @@ class SimsgeoBiotSavart(CartesianBfield):
 
         self._bs = bs
 
-    def B(self, coords, args=None):
+    def B(self, coords, *args):
         """! The magnetic field, being used by parent class CartesianBfield
         @param coords array with coordinates \f$(x, y z)\f$
         @returns \f$(B_x, B_y, B_z)\f$
@@ -32,7 +32,7 @@ class SimsgeoBiotSavart(CartesianBfield):
         Bfield=self._bs.B()
         return Bfield[0]
 
-    def dBdX(self, coords, args=None):
+    def dBdX(self, coords, *args):
         """! The derivative of the magnetic field, being used by parent class CartesianBfield
         @param coords array with coordinates \f$(x, y z)\f$
         @returns B, dBdX, B and \f$\partial (B_x, B_y, B_z)/\partial (x,y,z)\f$

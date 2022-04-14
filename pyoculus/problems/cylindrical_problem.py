@@ -18,29 +18,29 @@ class CylindricalProblem(BaseProblem):
         self._Z0 = Z0
         self.Nfp = Nfp
 
-    def f_RZ(self, phi, RZ, args=None):
+    def f_RZ(self, phi, RZ, *args):
         """! Returns ODE RHS
         @param zeta cylindrical angle in ODE
         @param RZ \f$(R, Z)\f$ in ODE
-        @param arg1 parameter for the ODE
+        @param *args extra parameters for the ODE
         @returns the RHS of the ODE
         """
         raise NotImplementedError(
             "A CylindricalProblem class should implement member function f"
         )
 
-    def f_RZ_tangent(self, phi, RZ, args=None):
+    def f_RZ_tangent(self, phi, RZ, *args):
         """! Returns ODE RHS, with tangent
         @param zeta cylindrical angle in ODE
         @param RZ \f$(R, Z, dR_1, dZ_1, dR_2, dZ_2)\f$ in ODE
-        @param arg1 parameter for the ODE
+        @param *args extra parameters for the ODE
         @returns the RHS of the ODE, with tangent
         """
         raise NotImplementedError(
             "A CylindricalProblem class should implement member function f_tangent"
         )
 
-    def f(self, zeta, y, args=None):
+    def f(self, zeta, y, *args):
         """! Returns ODE RHS
         @param zeta cylindrical angle in ODE
         @param y \f$(R, Z, R_0, Z_0, \theta)
@@ -68,7 +68,7 @@ class CylindricalProblem(BaseProblem):
 
         return np.array([dR, dZ, dR0, dZ0, dtheta])
 
-    def f_tangent(self, zeta, y, args=None):
+    def f_tangent(self, zeta, y, *args):
         """! Returns ODE RHS
         @param zeta cylindrical angle in ODE
         @param y \f$(R, Z, R_0, Z_0, \theta, dR_1, dZ_1, dR_2, dZ_2)

@@ -13,27 +13,27 @@ class ToroidalBfield(ToroidalProblem, BfieldProblem):
         """! Set up the problem with two cyclical coordinates, e.g. \f[ (s, \theta, \zeta)  \f]"""
         super().__init__()
 
-    def f(self, zeta, st, args=None):
+    def f(self, zeta, st, *args):
         """! Returns ODE RHS
         @param zeta cylindrical angle in ODE
         @param st \f$(s, \theta)\f$ in ODE
-        @param arg1 parameter for the ODE
+        @param *args extra parameters for the ODE
         @returns the RHS of the ODE
         """
         stz = np.array([st[0], st[1], zeta])
-        B = self.B(stz, args)
+        B = self.B(stz, *args)
         f = np.array([B[0] / B[2], B[1] / B[2]])
         return f
 
-    def f_tangent(self, zeta, st, args=None):
+    def f_tangent(self, zeta, st, *args):
         """! Returns ODE RHS, with tangent
         @param zeta cylindrical angle in ODE
         @param st \f$(s, \theta, ds_1, d\theta_1, ds_2, d\theta_2)\f$ in ODE
-        @param arg1 parameter for the ODE
+        @param *args extra parameters for the ODE
         @returns the RHS of the ODE, with tangent
         """
         stz = np.array([st[0], st[1], zeta])
-        Bu, dBu = self.dBdX(stz, args)
+        Bu, dBu = self.dBdX(stz, *args)
 
         deltax = np.reshape(st[2:], [2,2])
         gBzeta = Bu[2]
