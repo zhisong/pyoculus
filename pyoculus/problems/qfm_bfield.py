@@ -15,6 +15,7 @@ class QFMBfield(ToroidalBfield):
         @param pb  the TorodialBfield problem we will used as the original coordinates and fields
         @param surfaces  the QFM surfaces
         """
+        super().__init__()
         self.pb = pb
         self.surfaces = surfaces
         self.poincare_plot_type = pb.poincare_plot_type
@@ -22,7 +23,7 @@ class QFMBfield(ToroidalBfield):
         self.poincare_plot_ylabel = pb.poincare_plot_ylabel
         self.Nfp = pb.Nfp
         self.has_jacobian = pb.has_jacobian
-        super().__init__()
+
     
     def B(self, coords, *args):
         """! Returns magnetic fields

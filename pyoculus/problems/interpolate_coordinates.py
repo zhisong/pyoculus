@@ -75,6 +75,20 @@ class SurfacesToroidal:
             * self.Nfp
         )
 
+    def remove_surface(self, i: int):
+        """! Remove a surface
+        @param i the id of the surface
+        """
+        self.scn = np.delete(self.scn, i, 0)
+        self.tsn = np.delete(self.tsn, i, 0)
+        if not self.sym:
+            self.tcn = np.delete(self.tcn, i, 0)
+            self.ssn = np.delete(self.ssn, i, 0)
+
+        self.rhosurfs = np.delete(self.rhosurfs, i, 0)
+
+        self.nsurfaces = len(self.rhosurfs)
+
     def add_surface(self, rho: float, scn, tsn, ssn=None, tcn=None):
         """! Adding a surface into the system with radial label rho
         @param rho the new coordinate \f$\rho\f$ for this new surface
@@ -95,6 +109,7 @@ class SurfacesToroidal:
             self.ssn = np.insert(self.ssn, i, ssn, 0)
 
         self.rhosurfs = np.insert(self.rhosurfs, i, rho, 0)
+        self.nsurfaces = len(self.rhosurfs)
 
     def replace_surface(
         self, idx: int, rho: float = None, scn=None, tsn=None, ssn=None, tcn=None
