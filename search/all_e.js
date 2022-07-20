@@ -15,6 +15,7 @@ var searchData=
   ['nstart_12',['nstart',['../classpyoculus_1_1solvers_1_1flux__surface__gr_1_1_flux_surface_g_r.html#af71bc64b3b62afd13fdc8a1e61731128',1,'pyoculus::solvers::flux_surface_gr::FluxSurfaceGR']]],
   ['nsteps_13',['nsteps',['../classpyoculus_1_1integrators_1_1rk__integrator_1_1_r_k_integrator.html#a762fdae6e9940863277d198b8b63c44a',1,'pyoculus::integrators::rk_integrator::RKIntegrator']]],
   ['nsurfaces_14',['nsurfaces',['../classpyoculus_1_1problems_1_1interpolate__coordinates_1_1_surfaces_toroidal.html#a191255e23eb8482558687b7f1d821a82',1,'pyoculus::problems::interpolate_coordinates::SurfacesToroidal']]],
-  ['ntor_15',['Ntor',['../classpyoculus_1_1problems_1_1spec__problem_1_1_s_p_e_c_problem.html#ab4d307bea0892bffd0fbb034fcea64fd',1,'pyoculus::problems::spec_problem::SPECProblem']]],
-  ['ntor_16',['ntor',['../classpyoculus_1_1problems_1_1interpolate__coordinates_1_1_surfaces_toroidal.html#aab1b25b26cb9a68d82870c2c12118ab7',1,'pyoculus.problems.interpolate_coordinates.SurfacesToroidal.ntor()'],['../namespacespecvariables.html#a8b4d9ef1589b5245e3e3dd8a0d376158',1,'specvariables::ntor()']]]
+  ['ntor_15',['ntor',['../classpyoculus_1_1problems_1_1interpolate__coordinates_1_1_surfaces_toroidal.html#aab1b25b26cb9a68d82870c2c12118ab7',1,'pyoculus::problems::interpolate_coordinates::SurfacesToroidal']]],
+  ['ntor_16',['Ntor',['../classpyoculus_1_1problems_1_1spec__problem_1_1_s_p_e_c_problem.html#ab4d307bea0892bffd0fbb034fcea64fd',1,'pyoculus::problems::spec_problem::SPECProblem']]],
+  ['ntor_17',['ntor',['../namespacespecvariables.html#a8b4d9ef1589b5245e3e3dd8a0d376158',1,'specvariables']]]
 ];

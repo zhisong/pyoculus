@@ -10,6 +10,7 @@ var classpyoculus_1_1problems_1_1interpolate__coordinates_1_1_surfaces_toroidal 
     [ "metric_transform", "classpyoculus_1_1problems_1_1interpolate__coordinates_1_1_surfaces_toroidal.html#a8fa6469d9d6a5a9686ff892087b6ffa8", null ],
     [ "plot", "classpyoculus_1_1problems_1_1interpolate__coordinates_1_1_surfaces_toroidal.html#a3c9dfce0028b313b0b6a5f1dcd8cd7db", null ],
     [ "read_surfaces_from_file", "classpyoculus_1_1problems_1_1interpolate__coordinates_1_1_surfaces_toroidal.html#aa6e2ac560fac47df3db38277b6a22155", null ],
+    [ "remove_surface", "classpyoculus_1_1problems_1_1interpolate__coordinates_1_1_surfaces_toroidal.html#a039b3a9d9abd4a2e751759bf1214e525", null ],
     [ "replace_surface", "classpyoculus_1_1problems_1_1interpolate__coordinates_1_1_surfaces_toroidal.html#afcb604ab9628b573bf859aefb3ad146c", null ],
     [ "write_surfaces_to_file", "classpyoculus_1_1problems_1_1interpolate__coordinates_1_1_surfaces_toroidal.html#ac005b07bfa5436b8ac4a8d32d13b3280", null ],
     [ "mpol", "classpyoculus_1_1problems_1_1interpolate__coordinates_1_1_surfaces_toroidal.html#a63683a06d6354766e9acc58ad51d714f", null ],

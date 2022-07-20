@@ -1,11 +1,13 @@
 var NAVTREEINDEX2 =
 {
+"classpyoculus_1_1solvers_1_1qfm_1_1_q_f_m.html#a8faf1f5bf4e341b8115cd1d090dba3ba":[3,0,0,2,5,0,3],
+"classpyoculus_1_1solvers_1_1qfm_1_1_q_f_m.html#a8faf1f5bf4e341b8115cd1d090dba3ba":[2,0,0,3,5,0,3],
 "classpyoculus_1_1solvers_1_1qfm_1_1_q_f_m.html#a9122a66f7f068017f6ef1cfe0ac36d43":[2,0,0,3,5,0,8],
 "classpyoculus_1_1solvers_1_1qfm_1_1_q_f_m.html#a9122a66f7f068017f6ef1cfe0ac36d43":[3,0,0,2,5,0,8],
 "classpyoculus_1_1solvers_1_1qfm_1_1_q_f_m.html#aa4480219c48f77d4eada4c21d27f3d00":[3,0,0,2,5,0,9],
 "classpyoculus_1_1solvers_1_1qfm_1_1_q_f_m.html#aa4480219c48f77d4eada4c21d27f3d00":[2,0,0,3,5,0,9],
-"classpyoculus_1_1solvers_1_1qfm_1_1_q_f_m.html#ae294fb4956550ebc0fdd10b6b0059fd3":[2,0,0,3,5,0,7],
 "classpyoculus_1_1solvers_1_1qfm_1_1_q_f_m.html#ae294fb4956550ebc0fdd10b6b0059fd3":[3,0,0,2,5,0,7],
+"classpyoculus_1_1solvers_1_1qfm_1_1_q_f_m.html#ae294fb4956550ebc0fdd10b6b0059fd3":[2,0,0,3,5,0,7],
 "classpyoculus_1_1solvers_1_1qfm_1_1_q_f_m.html#ae299322e73ec5536b668e73a8af8bbe4":[3,0,0,2,5,0,1],
 "classpyoculus_1_1solvers_1_1qfm_1_1_q_f_m.html#ae299322e73ec5536b668e73a8af8bbe4":[2,0,0,3,5,0,1],
 "classpyoculus_1_1solvers_1_1qfm_1_1_q_f_m.html#aefa9aac76a7fd210d22995a379500abc":[3,0,0,2,5,0,5],
@@ -25,8 +27,8 @@ var NAVTREEINDEX2 =
 "files.html":[4,0],
 "fixed__point_8py.html":[4,0,1,3,2],
 "flux__surface__gr_8py.html":[4,0,1,3,3],
-"functions.html":[3,3,0,0],
 "functions.html":[3,3,0],
+"functions.html":[3,3,0,0],
 "functions_a.html":[3,3,0,1],
 "functions_b.html":[3,3,0,2],
 "functions_c.html":[3,3,0,3],
@@ -52,8 +54,8 @@ var NAVTREEINDEX2 =
 "functions_y.html":[3,3,0,21],
 "functions_z.html":[3,3,0,22],
 "hierarchy.html":[3,2],
-"index.html":[],
 "index.html":[0],
+"index.html":[],
 "index.html#autotoc_md0":[0,0],
 "index.html#autotoc_md1":[0,0,0],
 "index.html#autotoc_md2":[0,0,1],
@@ -247,7 +249,5 @@ var NAVTREEINDEX2 =
 "pyvariables_8f90.html#abd7137715fcd78b5a4364339d7a95837":[4,0,1,2,0,4,30],
 "pyvariables_8f90.html#ac7a36e4dfc2876a050ba08208d60be2a":[4,0,1,2,0,4,16],
 "pyvariables_8f90.html#aca281c8119fd9b8d7ddc81b522363019":[4,0,1,2,0,4,24],
-"pyvariables_8f90.html#ad1b9cfce558c3a5056c3c15a19bdbf1f":[4,0,1,2,0,4,27],
-"pyvariables_8f90.html#ad202492d8b1de731246cf13bd043dc6d":[4,0,1,2,0,4,11],
-"pyvariables_8f90.html#aead637195238fbd0aa489c4a29189125":[4,0,1,2,0,4,32]
+"pyvariables_8f90.html#ad1b9cfce558c3a5056c3c15a19bdbf1f":[4,0,1,2,0,4,27]
 };
