@@ -13,9 +13,10 @@ var searchData=
   ['toroidal_5fproblem_2epy_10',['toroidal_problem.py',['../toroidal__problem_8py.html',1,'']]],
   ['toroidalbfield_11',['ToroidalBfield',['../classpyoculus_1_1problems_1_1toroidal__bfield_1_1_toroidal_bfield.html',1,'pyoculus::problems::toroidal_bfield']]],
   ['toroidalproblem_12',['ToroidalProblem',['../classpyoculus_1_1problems_1_1toroidal__problem_1_1_toroidal_problem.html',1,'pyoculus::problems::toroidal_problem']]],
-  ['tsn_13',['tsn',['../classpyoculus_1_1problems_1_1interpolate__coordinates_1_1_surfaces_toroidal.html#ad874f6fa56536bf060d85d15b5a5c195',1,'pyoculus::problems::interpolate_coordinates::SurfacesToroidal']]],
-  ['twelve_14',['twelve',['../namespacespecconstants.html#afdc97e03af4dc811fd8610b0dc23107e',1,'specconstants']]],
-  ['two_15',['two',['../namespacespecconstants.html#af4609c37c684638af39fe024c640c1bf',1,'specconstants']]],
-  ['two_5fwaves_2epy_16',['two_waves.py',['../two__waves_8py.html',1,'']]],
-  ['twowaves_17',['TwoWaves',['../classpyoculus_1_1problems_1_1two__waves_1_1_two_waves.html',1,'pyoculus::problems::two_waves']]]
+  ['try_13',['try',['../namespacepyoculus.html#a20d4dae126b8ebf77052d06d9ec93726',1,'pyoculus']]],
+  ['tsn_14',['tsn',['../classpyoculus_1_1problems_1_1interpolate__coordinates_1_1_surfaces_toroidal.html#ad874f6fa56536bf060d85d15b5a5c195',1,'pyoculus::problems::interpolate_coordinates::SurfacesToroidal']]],
+  ['twelve_15',['twelve',['../namespacespecconstants.html#afdc97e03af4dc811fd8610b0dc23107e',1,'specconstants']]],
+  ['two_16',['two',['../namespacespecconstants.html#af4609c37c684638af39fe024c640c1bf',1,'specconstants']]],
+  ['two_5fwaves_2epy_17',['two_waves.py',['../two__waves_8py.html',1,'']]],
+  ['twowaves_18',['TwoWaves',['../classpyoculus_1_1problems_1_1two__waves_1_1_two_waves.html',1,'pyoculus::problems::two_waves']]]
 ];

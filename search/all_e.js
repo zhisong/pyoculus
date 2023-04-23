@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['nax_0',['nax',['../namespacepyoculus_1_1problems_1_1interpolate__coordinates.html#a590304a71a7572c8cf4a861d0ca304ac',1,'pyoculus.problems.interpolate_coordinates.nax()'],['../namespacepyoculus_1_1solvers_1_1qfm.html#a040dac511a6480da7c673b6816318899',1,'pyoculus.solvers.qfm.nax()']]],
+  ['nax_0',['nax',['../namespacepyoculus_1_1problems_1_1interpolate__coordinates.html#acb53a5ea9b58f056a728466c6b1e1f73',1,'pyoculus.problems.interpolate_coordinates.nax()'],['../namespacepyoculus_1_1solvers_1_1qfm.html#a92fed5a9f2c7f6de7b55bbdf67c16aed',1,'pyoculus.solvers.qfm.nax()']]],
   ['nfft_5fmultiplier_1',['nfft_multiplier',['../classpyoculus_1_1solvers_1_1qfm_1_1_q_f_m.html#ae294fb4956550ebc0fdd10b6b0059fd3',1,'pyoculus::solvers::qfm::QFM']]],
   ['nfp_2',['Nfp',['../classpyoculus_1_1solvers_1_1poincare__plot_1_1_poincare_plot.html#a9314e329fa2ae0569a517c97b61ab3dd',1,'pyoculus::solvers::poincare_plot::PoincarePlot']]],
   ['nfp_3',['nfp',['../namespacespecvariables.html#a73d642d7552a672f0e39258014cbe2f9',1,'specvariables']]],

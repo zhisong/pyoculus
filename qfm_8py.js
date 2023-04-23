@@ -5,5 +5,5 @@ var qfm_8py =
     [ "irfft2D", "qfm_8py.html#af068510334410eac8ca5ca24532a2bbe", null ],
     [ "rfft1D", "qfm_8py.html#a00f4de6d7c3f09976f0621a2192ea7bb", null ],
     [ "rfft2D", "qfm_8py.html#a9deaf5379c031608de49f9fb2d963e91", null ],
-    [ "nax", "qfm_8py.html#a040dac511a6480da7c673b6816318899", null ]
+    [ "nax", "qfm_8py.html#a92fed5a9f2c7f6de7b55bbdf67c16aed", null ]
 ];

@@ -25,19 +25,7 @@
 var NAVTREE =
 [
   [ "pyoculus", "index.html", [
-    [ "pyoculus Manual", "index.html", [
-      [ "pyoculus", "index.html#autotoc_md0", [
-        [ "Installation", "index.html#autotoc_md1", null ],
-        [ "Usage", "index.html#autotoc_md2", null ],
-        [ "Documentation", "index.html#autotoc_md3", null ],
-        [ "SPEC magnetic field and Pressure Jump Hamiltonian (PJH)", "index.html#autotoc_md4", [
-          [ "Pre-requisite", "index.html#autotoc_md5", null ],
-          [ "Compilation", "index.html#autotoc_md6", null ]
-        ] ],
-        [ "Developers", "index.html#autotoc_md7", null ],
-        [ "Link to the original Oculus package:", "index.html#autotoc_md8", null ]
-      ] ]
-    ] ],
+    [ "pyoculus Manual", "index.html", "index" ],
     [ "Todo List", "todo.html", null ],
     [ "Modules", "namespaces.html", [
       [ "Modules List", "namespaces.html", "namespaces_dup" ],
@@ -47,9 +35,9 @@ var NAVTREE =
         [ "Variables", "namespacemembers_vars.html", null ]
       ] ]
     ] ],
-    [ "Data Types List", "annotated.html", [
+    [ "Data Types", "annotated.html", [
       [ "Data Types List", "annotated.html", "annotated_dup" ],
-      [ "Data Types", "classes.html", null ],
+      [ "Data Type Index", "classes.html", null ],
       [ "Class Hierarchy", "hierarchy.html", "hierarchy" ],
       [ "Data Fields", "functions.html", [
         [ "All", "functions.html", "functions_dup" ],
@@ -66,9 +54,9 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "____init_____8py.html",
-"classpyoculus_1_1problems_1_1spec__pjh_1_1_s_p_e_c_p_j_h.html#a958d756495e065919480209e18705acb",
-"classpyoculus_1_1solvers_1_1qfm_1_1_q_f_m.html#a8faf1f5bf4e341b8115cd1d090dba3ba",
-"pyvariables_8f90.html#ad202492d8b1de731246cf13bd043dc6d"
+"classpyoculus_1_1problems_1_1spec__bfield_1_1_s_p_e_c_bfield.html",
+"classpyoculus_1_1solvers_1_1lyapunov__exponent_1_1_lyapunov_exponent.html#ab333e198aefa6596d559af3ee9013c69",
+"namespacespecpjh.html"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

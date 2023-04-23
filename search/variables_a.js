@@ -1,21 +1,11 @@
 var searchData=
 [
-  ['nax_0',['nax',['../namespacepyoculus_1_1problems_1_1interpolate__coordinates.html#a590304a71a7572c8cf4a861d0ca304ac',1,'pyoculus.problems.interpolate_coordinates.nax()'],['../namespacepyoculus_1_1solvers_1_1qfm.html#a040dac511a6480da7c673b6816318899',1,'pyoculus.solvers.qfm.nax()']]],
-  ['nfft_5fmultiplier_1',['nfft_multiplier',['../classpyoculus_1_1solvers_1_1qfm_1_1_q_f_m.html#ae294fb4956550ebc0fdd10b6b0059fd3',1,'pyoculus::solvers::qfm::QFM']]],
-  ['nfp_2',['Nfp',['../classpyoculus_1_1solvers_1_1poincare__plot_1_1_poincare_plot.html#a9314e329fa2ae0569a517c97b61ab3dd',1,'pyoculus::solvers::poincare_plot::PoincarePlot']]],
-  ['nfp_3',['nfp',['../namespacespecvariables.html#a73d642d7552a672f0e39258014cbe2f9',1,'specvariables']]],
-  ['nfp_4',['Nfp',['../classpyoculus_1_1solvers_1_1qfm_1_1_q_f_m.html#a9122a66f7f068017f6ef1cfe0ac36d43',1,'pyoculus.solvers.qfm.QFM.Nfp()'],['../classpyoculus_1_1solvers_1_1lyapunov__exponent_1_1_lyapunov_exponent.html#ae02b18c18c9490ebaca44239eb45d9c4',1,'pyoculus.solvers.lyapunov_exponent.LyapunovExponent.Nfp()'],['../classpyoculus_1_1solvers_1_1flux__surface__gr_1_1_flux_surface_g_r.html#acea2a9b7e3f76a273206be9512e3cec9',1,'pyoculus.solvers.flux_surface_gr.FluxSurfaceGR.Nfp()'],['../classpyoculus_1_1solvers_1_1fixed__point_1_1_fixed_point.html#ad2749f389ae4aba35301788bee524676',1,'pyoculus.solvers.fixed_point.FixedPoint.Nfp()'],['../classpyoculus_1_1problems_1_1two__waves_1_1_two_waves.html#a1c71b202927e929caef1fdcd99718810',1,'pyoculus.problems.two_waves.TwoWaves.Nfp()'],['../classpyoculus_1_1problems_1_1spec__problem_1_1_s_p_e_c_problem.html#aec5e0811512684636bab273e663ed98d',1,'pyoculus.problems.spec_problem.SPECProblem.Nfp()'],['../classpyoculus_1_1problems_1_1qfm__bfield_1_1_q_f_m_bfield.html#a29d0ab3a3eb4d99a7176c7faf7dcb2d3',1,'pyoculus.problems.qfm_bfield.QFMBfield.Nfp()'],['../classpyoculus_1_1problems_1_1interpolate__coordinates_1_1_surfaces_toroidal.html#afe02b7501a450640a0ee7b4ece28dce6',1,'pyoculus.problems.interpolate_coordinates.SurfacesToroidal.Nfp()'],['../classpyoculus_1_1problems_1_1cylindrical__problem_1_1_cylindrical_problem.html#a87557d3198e83b93daa37cda035eb3e1',1,'pyoculus.problems.cylindrical_problem.CylindricalProblem.Nfp()']]],
-  ['nine_5',['nine',['../namespacespecconstants.html#ad1b9cfce558c3a5056c3c15a19bdbf1f',1,'specconstants']]],
-  ['niter_6',['niter',['../classpyoculus_1_1solvers_1_1fixed__point_1_1_fixed_point.html#aca414847879c1e0525d82ff3b1df0509',1,'pyoculus::solvers::fixed_point::FixedPoint']]],
-  ['notstellsym_7',['NOTstellsym',['../classpyoculus_1_1problems_1_1spec__problem_1_1_s_p_e_c_problem.html#a201fce443756f1f5ae65a2f849a21574',1,'pyoculus::problems::spec_problem::SPECProblem']]],
-  ['notstellsym_8',['notstellsym',['../namespacespecvariables.html#a65a62514b141b25e6129dbd9f4d565db',1,'specvariables']]],
-  ['nppts_9',['nPpts',['../classpyoculus_1_1solvers_1_1lyapunov__exponent_1_1_lyapunov_exponent.html#a16efffa79fa66de8441db31d59231436',1,'pyoculus::solvers::lyapunov_exponent::LyapunovExponent']]],
-  ['nrestart_10',['nrestart',['../classpyoculus_1_1solvers_1_1fixed__point_1_1_fixed_point.html#afe3b5e917b619e881bcd0dd3af43816c',1,'pyoculus::solvers::fixed_point::FixedPoint']]],
-  ['nsave_11',['nsave',['../classpyoculus_1_1solvers_1_1lyapunov__exponent_1_1_lyapunov_exponent.html#acb49f0efc16a21001d3b2dfc8130c29a',1,'pyoculus::solvers::lyapunov_exponent::LyapunovExponent']]],
-  ['nstart_12',['nstart',['../classpyoculus_1_1solvers_1_1flux__surface__gr_1_1_flux_surface_g_r.html#af71bc64b3b62afd13fdc8a1e61731128',1,'pyoculus::solvers::flux_surface_gr::FluxSurfaceGR']]],
-  ['nsteps_13',['nsteps',['../classpyoculus_1_1integrators_1_1rk__integrator_1_1_r_k_integrator.html#a762fdae6e9940863277d198b8b63c44a',1,'pyoculus::integrators::rk_integrator::RKIntegrator']]],
-  ['nsurfaces_14',['nsurfaces',['../classpyoculus_1_1problems_1_1interpolate__coordinates_1_1_surfaces_toroidal.html#a191255e23eb8482558687b7f1d821a82',1,'pyoculus::problems::interpolate_coordinates::SurfacesToroidal']]],
-  ['ntor_15',['ntor',['../classpyoculus_1_1problems_1_1interpolate__coordinates_1_1_surfaces_toroidal.html#aab1b25b26cb9a68d82870c2c12118ab7',1,'pyoculus::problems::interpolate_coordinates::SurfacesToroidal']]],
-  ['ntor_16',['Ntor',['../classpyoculus_1_1problems_1_1spec__problem_1_1_s_p_e_c_problem.html#ab4d307bea0892bffd0fbb034fcea64fd',1,'pyoculus::problems::spec_problem::SPECProblem']]],
-  ['ntor_17',['ntor',['../namespacespecvariables.html#a8b4d9ef1589b5245e3e3dd8a0d376158',1,'specvariables']]]
+  ['meanresidue_0',['MeanResidue',['../classpyoculus_1_1solvers_1_1fixed__point_1_1_fixed_point.html#a3dba01c1b05c630866cd455a2f9e07f5',1,'pyoculus::solvers::fixed_point::FixedPoint']]],
+  ['mn_1',['mn',['../namespacespecvariables.html#a7eec58da9bda76a8656193b2c662f364',1,'specvariables']]],
+  ['mpol_2',['mpol',['../classpyoculus_1_1problems_1_1interpolate__coordinates_1_1_surfaces_toroidal.html#a63683a06d6354766e9acc58ad51d714f',1,'pyoculus::problems::interpolate_coordinates::SurfacesToroidal']]],
+  ['mpol_3',['Mpol',['../classpyoculus_1_1problems_1_1spec__problem_1_1_s_p_e_c_problem.html#a6744fc54390f1c801119492afef9d72a',1,'pyoculus::problems::spec_problem::SPECProblem']]],
+  ['mpol_4',['mpol',['../namespacespecvariables.html#ab7da79c6d5b995ccd9724cd355478e73',1,'specvariables']]],
+  ['mu0_5',['mu0',['../namespacespecconstants.html#aca281c8119fd9b8d7ddc81b522363019',1,'specconstants']]],
+  ['mvol_6',['Mvol',['../classpyoculus_1_1problems_1_1spec__problem_1_1_s_p_e_c_problem.html#a8e9464d116d7eab103037183c453167b',1,'pyoculus::problems::spec_problem::SPECProblem']]],
+  ['mvol_7',['mvol',['../namespacespecvariables.html#a7442ec759e802194ed3f33832c0d7479',1,'specvariables']]]
 ];

@@ -9,10 +9,10 @@ var namespaces_dup =
       [ "get_zernike_rm", "namespacespecbasefn.html#a9d89f02b46b6d55c535c7b9634a64e9c", null ]
     ] ],
     [ "specbfield", "namespacespecbfield.html", [
-      [ "get_bfield", "namespacespecbfield.html#a70e5d85cfcad55f6a5221d66207838ab", null ],
-      [ "get_bfield_many_1d", "namespacespecbfield.html#a8130c9bc5a7d1ed5dd1fd272f0587248", null ],
-      [ "get_bfield_tangent", "namespacespecbfield.html#a640683164e1e8e0c138e14610ab873ca", null ],
-      [ "get_bfield_tangent_many_1d", "namespacespecbfield.html#a967049e8b5cdb5e7495642b3aaa337dd", null ]
+      [ "get_bfield", "namespacespecbfield.html#a6500101df88642d30c2f5a332932c044", null ],
+      [ "get_bfield_many_1d", "namespacespecbfield.html#a8720a4d29cd5839df49ece0d78756518", null ],
+      [ "get_bfield_tangent", "namespacespecbfield.html#a1c3b145b1b1519677e5a159f5f93f3b0", null ],
+      [ "get_bfield_tangent_many_1d", "namespacespecbfield.html#ae04879fa5e0aeb595c19c83a4ed5a49a", null ]
     ] ],
     [ "specconstants", "namespacespecconstants.html", [
       [ "eight", "namespacespecconstants.html#a2fe2f55b9ddc50794aa0f77b74d992db", null ],
@@ -42,13 +42,13 @@ var namespaces_dup =
       [ "zero", "namespacespecconstants.html#aa55b4bd9eea90bf6c9f648f21fd06948", null ]
     ] ],
     [ "speccoords", "namespacespeccoords.html", [
-      [ "get_metric_interface", "namespacespeccoords.html#a80b745a42dc8d6b3f78eef5fcb4b65e9", null ],
-      [ "get_xyz", "namespacespeccoords.html#ad84efdda6cfe7d5c09f07ed610e99398", null ]
+      [ "get_metric_interface", "namespacespeccoords.html#ae07755db02041fa96b8e686440b47780", null ],
+      [ "get_xyz", "namespacespeccoords.html#a829458c9b45f292a35ca1018d46dabaf", null ]
     ] ],
     [ "specpjh", "namespacespecpjh.html", [
       [ "destroy_pjh", "namespacespecpjh.html#a6e69307ec6a4e755796b1746edbb8e88", null ],
       [ "get_b2_interface", "namespacespecpjh.html#a4d5eff8690a6cdac360f43cbd5183685", null ],
-      [ "get_covariant_field", "namespacespecpjh.html#a2287c2bbc52124aa207cf08f5c465307", null ],
+      [ "get_covariant_field", "namespacespecpjh.html#a75701a8e555d3c2e5749a6e2fb3a54b5", null ],
       [ "get_pjhfield", "namespacespecpjh.html#a1aa07329218a9bfc3d5c6dda9e15583e", null ],
       [ "get_pjhfield_tangent", "namespacespecpjh.html#aa721f885bb3eef78de7dcf0e3194cd77", null ],
       [ "init_pjh", "namespacespecpjh.html#aa11c5ee3a60b1fa911ead2e05a89ff59", null ]

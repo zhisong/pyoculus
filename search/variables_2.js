@@ -1,5 +1,8 @@
 var searchData=
 [
-  ['eight_0',['eight',['../namespacespecconstants.html#a2fe2f55b9ddc50794aa0f77b74d992db',1,'specconstants']]],
-  ['eleven_1',['eleven',['../namespacespecconstants.html#a82b2cf902b90724c4b9abe576d20f67e',1,'specconstants']]]
+  ['di_0',['di',['../classpyoculus_1_1solvers_1_1lyapunov__exponent_1_1_lyapunov_exponent.html#ab333e198aefa6596d559af3ee9013c69',1,'pyoculus::solvers::lyapunov_exponent::LyapunovExponent']]],
+  ['dic_1',['dic',['../classpyoculus_1_1solvers_1_1lyapunov__exponent_1_1_lyapunov_exponent.html#ad325db93a7e3d03acb5393b7a533cbe3',1,'pyoculus::solvers::lyapunov_exponent::LyapunovExponent']]],
+  ['dp_2',['dp',['../classpyoculus_1_1problems_1_1spec__pjh_1_1_s_p_e_c_p_j_h.html#ae577c0204bcc3231141a9114a63acec9',1,'pyoculus::problems::spec_pjh::SPECPJH']]],
+  ['dt_3',['dt',['../classpyoculus_1_1solvers_1_1lyapunov__exponent_1_1_lyapunov_exponent.html#ac0b575d238715deede864da450e94a52',1,'pyoculus.solvers.lyapunov_exponent.LyapunovExponent.dt()'],['../classpyoculus_1_1solvers_1_1poincare__plot_1_1_poincare_plot.html#a65f70f1896dc943813c7035d7710d68e',1,'pyoculus.solvers.poincare_plot.PoincarePlot.dt()']]],
+  ['dzeta_4',['dzeta',['../classpyoculus_1_1solvers_1_1fixed__point_1_1_fixed_point.html#aa5c26f17066861d36bec0cca89570752',1,'pyoculus::solvers::fixed_point::FixedPoint']]]
 ];

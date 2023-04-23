@@ -6,6 +6,8 @@ var classpyoculus_1_1problems_1_1cylindrical__problem_1_1_cylindrical_problem =
     [ "f_RZ_tangent", "classpyoculus_1_1problems_1_1cylindrical__problem_1_1_cylindrical_problem.html#af4da03535be10c3eb35ca4e4f62168e1", null ],
     [ "f_tangent", "classpyoculus_1_1problems_1_1cylindrical__problem_1_1_cylindrical_problem.html#adc3e5715789b389485094059da5707f8", null ],
     [ "set_axis", "classpyoculus_1_1problems_1_1cylindrical__problem_1_1_cylindrical_problem.html#ab2a65600bd771235666d08464de0a723", null ],
+    [ "_R0", "classpyoculus_1_1problems_1_1cylindrical__problem_1_1_cylindrical_problem.html#ac1d2b9ed17261fc8d1bd74d2fa5c6b09", null ],
+    [ "_Z0", "classpyoculus_1_1problems_1_1cylindrical__problem_1_1_cylindrical_problem.html#a56d1d70ea6c0e053e0ff269d3b167f3e", null ],
     [ "Nfp", "classpyoculus_1_1problems_1_1cylindrical__problem_1_1_cylindrical_problem.html#a87557d3198e83b93daa37cda035eb3e1", null ],
     [ "poincare_plot_type", "classpyoculus_1_1problems_1_1cylindrical__problem_1_1_cylindrical_problem.html#a9883d353cf2e65ada3d7eb4b365f2d5e", null ],
     [ "poincare_plot_xlabel", "classpyoculus_1_1problems_1_1cylindrical__problem_1_1_cylindrical_problem.html#a9e98d62fbf257048bfd58e4e91b4fa59", null ],
