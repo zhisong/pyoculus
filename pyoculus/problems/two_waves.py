@@ -55,47 +55,47 @@ class TwoWaves(ToroidalBfield):
         """
         self.k = k
 
-    def f(self, t, qp, arg1=None):
-        """! The RHS of the Hamilton's equations
-        @param t the zeta coordinate
-        @param qp array size 2, the \f$(p,q)\f$ coordinate
-        @param *args extra parameters for the ODE, not used here, can be set to anything
-        @returns array size 2, the RHS of the ODE
+    def B(self, coords, *args):
+        """! Returns magnetic fields
+        @param coordinates
+        @param *args extra parameters
+        @returns the contravariant magnetic fields
         """
-        q = qp[1]
-        p = qp[0]
+        q = coords[1]
+        p = coords[0]
+        t = coords[2]
 
         dqdt = p
         dpdt = -self.k * (np.sin(2 * q - t) + np.sin(3 * q - 2 * t))
+        dtdt = 1
 
-        return np.array([dpdt, dqdt], dtype=np.float64)
+        return np.array([dpdt, dqdt, dtdt], dtype=np.float64)
 
-    def f_tangent(self, t, qp, arg1=None):
-        """! The RHS of the Hamilton's equations, with tangent
-        @param t the zeta coordinate
-        @param qp array size 6, the \f$(p,q,\Delta p_1, \Delta q_1, \Delta p_2, \Delta q_2 )\f$ coordinate
-        @param *args extra parameters for the ODE, not used here, can be set to anything
-        @returns array size 6, the RHS of the ODE, with tangent
+    def dBdX(self, coords, *args):
+        """! Returns magnetic fields
+        @param coordinates
+        @param *args extra parameters
+        @returns B, dBdX, the contravariant magnetic fields, the derivatives of them
         """
-        q = qp[1]
-        p = qp[0]
-
-        dpq = np.array([[qp[2], qp[4]], [qp[3], qp[5]]], dtype=np.float64)
-        M = np.zeros([2, 2], dtype=np.float64)
+        q = coords[1]
+        p = coords[0]
+        t = coords[2]
 
         dqdt = p
         dpdt = -self.k * (np.sin(2 * q - t) + np.sin(3 * q - 2 * t))
+        dtdt = 1
 
-        M[0, 0] = 0.0
-        M[0, 1] = -self.k * (2.0 * np.cos(2 * q - t) + 3.0 * np.cos(3 * q - 2 * t))
-        M[1, 0] = 1.0
-        M[1, 1] = 0.0
+        dpdq = -self.k * (2.0 * np.cos(2 * q - t) + 3.0 * np.cos(3 * q - 2 * t))
+        dqdp = 1.0
 
-        dqp = np.matmul(M, dpq)
+        dBu = np.zeros([3, 3], dtype=np.float64)
 
-        return np.array(
-            [dpdt, dqdt, dqp[0, 0], dqp[1, 0], dqp[0, 1], dqp[1, 1]], dtype=np.float64
-        )
+        dBu[0, 1] = dqdp
+        dBu[1, 0] = dpdq
+
+        Bu = np.array([dpdt, dqdt, dtdt], dtype=np.float64)
+
+        return Bu, dBu
 
     def convert_coords(self, incoords):
         """! Convert coordinates for Poincare plots
@@ -110,3 +110,82 @@ class TwoWaves(ToroidalBfield):
             ],
             dtype=np.float64,
         )
+    
+    def B_many(self, x1arr, x2arr, x3arr, input1D=True, *args):
+        """! Returns magnetic fields, with multipy coordinate inputs
+        @param x1arr the first coordinates. Should have the same length as the other two if input1D=True.
+        @param x2arr the second coordinates. Should have the same length as the other two if input1D=True.
+        @param x3arr the third coordinates. Should have the same length as the other two if input1D=True.
+        @param input1D if False, create a meshgrid with sarr, tarr and zarr, if True, treat them as a list of points
+        @param *args extra parameters
+        @returns the contravariant magnetic fields
+        """
+        x1arr = np.atleast_1d(x1arr)
+        x2arr = np.atleast_1d(x2arr)
+        x3arr = np.atleast_1d(x3arr)
+
+        if not input1D:
+            size = (x1arr.size, x2arr.size, x3arr.size)
+            p = np.broadcast_to(x1arr[:, np.newaxis, np.newaxis], size).flatten()
+            q = np.broadcast_to(x2arr[np.newaxis, :, np.newaxis], size).flatten()
+            t = np.broadcast_to(x3arr[np.newaxis, np.newaxis, :], size).flatten()
+            n = p.size
+
+        else:
+            p = x1arr
+            q = x2arr
+            t = x3arr
+            n = p.size
+
+        dqdt = p
+        dpdt = -self.k * (np.sin(2 * q - t) + np.sin(3 * q - 2 * t))
+        dtdt = np.ones_like(p)
+
+        Blist = np.stack([dpdt, dqdt, dtdt], -1)
+
+        return Blist
+
+    def dBdX_many(self, x1arr, x2arr, x3arr, input1D=True, *args):
+        """! Returns magnetic fields
+        @param x1arr the first coordinates. Should have the same length as the other two if input1D=True.
+        @param x2arr the second coordinates. Should have the same length as the other two if input1D=True.
+        @param x3arr the third coordinates. Should have the same length as the other two if input1D=True.
+        @param input1D if False, create a meshgrid with sarr, tarr and zarr, if True, treat them as a list of points
+        @param *args extra parameters
+        @returns B, dBdX, the contravariant magnetic fields, the derivatives of them
+        """
+        x1arr = np.atleast_1d(x1arr)
+        x2arr = np.atleast_1d(x2arr)
+        x3arr = np.atleast_1d(x3arr)
+
+        if not input1D:
+            size = (x1arr.size, x2arr.size, x3arr.size)
+            p = np.broadcast_to(x1arr[:, np.newaxis, np.newaxis], size).flatten()
+            q = np.broadcast_to(x2arr[np.newaxis, :, np.newaxis], size).flatten()
+            t = np.broadcast_to(x3arr[np.newaxis, np.newaxis, :], size).flatten()
+            n = p.size
+
+        else:
+            p = x1arr
+            q = x2arr
+            t = x3arr
+            n = p.size
+
+        dqdt = p
+        dpdt = -self.k * (np.sin(2 * q - t) + np.sin(3 * q - 2 * t))
+        dtdt = np.ones_like(p)
+
+        Blist = np.stack([dpdt, dqdt, dtdt], -1)
+
+        dpdq = -self.k * (2.0 * np.cos(2 * q - t) + 3.0 * np.cos(3 * q - 2 * t))
+        dqdp = np.ones_like(dpdq)
+
+        zeros = np.zeros_like(dpdq)
+
+        dBplist = np.stack([zeros, dpdq, zeros], -1)
+        dBqlist = np.stack([dqdp, zeros, zeros], -1)
+        dBtlist = np.stack([zeros, zeros, zeros], -1)
+
+        dBlist = np.stack([dBplist, dBqlist, dBtlist], -1)
+
+        return Blist, dBlist
