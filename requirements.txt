@@ -1,5 +1,5 @@
 setuptools
 wheel
-numpy
+numpy <= 1.21.5
 scipy
 matplotlib
