@@ -1,0 +1,27 @@
+name: Build and upload to PyPI
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Install gfortran
+        run: sudo apt install gfortran
+        if: ! command -v gfortran &>/dev/null
+      - name: Build
+        run: python setup.py sdist bdist_wheel
+  upload:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: pypa/gh-action-pypi-publish@release/v1
+        with:
+          user: ${{ secrets.PYPI_USERNAME }}
+          password: ${{ secrets.PYPI_PASSWORD }}
+          repository: https://pypi.org/pypi
+
