@@ -1,11 +1,11 @@
 var classpyoculus_1_1solvers_1_1fixed__point_1_1_fixed_point =
 [
-    [ "__init__", "classpyoculus_1_1solvers_1_1fixed__point_1_1_fixed_point.html#aa58fe2d53d97aa5997cdb8397af5b29d", null ],
-    [ "_newton_method_1", "classpyoculus_1_1solvers_1_1fixed__point_1_1_fixed_point.html#a9c4a86623cb5582d4d00d706cdb880af", null ],
-    [ "_newton_method_2", "classpyoculus_1_1solvers_1_1fixed__point_1_1_fixed_point.html#a4834bc049e599c482fc6c9d463ef61d4", null ],
-    [ "_newton_method_3", "classpyoculus_1_1solvers_1_1fixed__point_1_1_fixed_point.html#a922eb5dca9e4a53db76612b4cc9712c0", null ],
-    [ "compute", "classpyoculus_1_1solvers_1_1fixed__point_1_1_fixed_point.html#ad6382f3bc3392fb144b98ad2c1729e50", null ],
-    [ "plot", "classpyoculus_1_1solvers_1_1fixed__point_1_1_fixed_point.html#a9f6aeeb5712466bb00af1e806b11b9c7", null ],
+    [ "__init__", "classpyoculus_1_1solvers_1_1fixed__point_1_1_fixed_point.html#a64547137a525163fc41ef8aa9ead19cb", null ],
+    [ "_newton_method_1", "classpyoculus_1_1solvers_1_1fixed__point_1_1_fixed_point.html#acf740472743bdff27340ea7084987532", null ],
+    [ "_newton_method_2", "classpyoculus_1_1solvers_1_1fixed__point_1_1_fixed_point.html#a5a667a860f08807919012172501d7ef7", null ],
+    [ "_newton_method_3", "classpyoculus_1_1solvers_1_1fixed__point_1_1_fixed_point.html#a027a9daa596338b8c5829c194a2fbdaf", null ],
+    [ "compute", "classpyoculus_1_1solvers_1_1fixed__point_1_1_fixed_point.html#a581bd36f6b372c4bd4292ebc36de833b", null ],
+    [ "plot", "classpyoculus_1_1solvers_1_1fixed__point_1_1_fixed_point.html#abeba58a7412f75bb805a115c666216ce", null ],
     [ "_is_cylindrical_problem", "classpyoculus_1_1solvers_1_1fixed__point_1_1_fixed_point.html#a42b0a83adee1cd0fdb7847e964b0d94c", null ],
     [ "dzeta", "classpyoculus_1_1solvers_1_1fixed__point_1_1_fixed_point.html#aa5c26f17066861d36bec0cca89570752", null ],
     [ "GreenesResidue", "classpyoculus_1_1solvers_1_1fixed__point_1_1_fixed_point.html#a2a538eacf697cdf19fb05d26f8e94f46", null ],

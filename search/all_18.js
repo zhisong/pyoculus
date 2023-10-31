@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['y_0',['y',['../classpyoculus_1_1solvers_1_1fixed__point_1_1_fixed_point.html#a3790ba2e935a410c8fdc946fb6b78dc8',1,'pyoculus.solvers.fixed_point.FixedPoint.y()'],['../classpyoculus_1_1solvers_1_1poincare__plot_1_1_poincare_plot.html#a2cd35b901b29230aa4788d7c3f504ec6',1,'pyoculus.solvers.poincare_plot.PoincarePlot.y()']]]
+  ['usage_0',['usage',['../index.html#autotoc_md2',1,'Usage'],['../classpyoculus_1_1problems_1_1spec__pjh_1_1_s_p_e_c_p_j_h.html#autotoc_md15',1,'Usage']]],
+  ['usage_20in_20python_3a_1',['Usage in Python:',['../namespacespecpjh.html#autotoc_md20',1,'']]]
 ];

@@ -1,6 +1,13 @@
 var searchData=
 [
-  ['eight_0',['eight',['../namespacespecconstants.html#a2fe2f55b9ddc50794aa0f77b74d992db',1,'specconstants']]],
-  ['eleven_1',['eleven',['../namespacespecconstants.html#a82b2cf902b90724c4b9abe576d20f67e',1,'specconstants']]],
-  ['expandcf_2',['expandcf',['../namespacepyoculus_1_1irrationals_1_1continued__fraction.html#a4093bb9fa403964fc172b53c59fb9080',1,'pyoculus::irrationals::continued_fraction']]]
+  ['b_0',['b',['../classpyoculus_1_1problems_1_1two__waves_1_1_two_waves.html#a5e7effa8f8885fd08b320799e9795a4a',1,'pyoculus.problems.two_waves.TwoWaves.B()'],['../classpyoculus_1_1problems_1_1spec__bfield_1_1_s_p_e_c_bfield.html#a2d51bcbef853876e08e2367bf0531400',1,'pyoculus.problems.spec_bfield.SPECBfield.B()'],['../classpyoculus_1_1problems_1_1simsgeo__biot__savart_1_1_simsgeo_biot_savart.html#ad9886d5f4efca1b310bc8cd477ce93b0',1,'pyoculus.problems.simsgeo_biot_savart.SimsgeoBiotSavart.B()'],['../classpyoculus_1_1problems_1_1qfm__bfield_1_1_q_f_m_bfield.html#a692f383d40718634fd6e16f1c7cd5fc1',1,'pyoculus.problems.qfm_bfield.QFMBfield.B()'],['../classpyoculus_1_1problems_1_1bfield__problem_1_1_bfield_problem.html#a832e1cad0b486567871a5e4c7be42e14',1,'pyoculus.problems.bfield_problem.BfieldProblem.B()'],['../classpyoculus_1_1problems_1_1m3dc1__bfield_1_1_m3_d_c1_bfield.html#ad3218e1cd16beb1f529b88602dcb4ea5',1,'pyoculus.problems.m3dc1_bfield.M3DC1Bfield.B()']]],
+  ['b_5fmany_1',['b_many',['../classpyoculus_1_1problems_1_1two__waves_1_1_two_waves.html#a4561e5fa2cf047d44571b1d5969fc412',1,'pyoculus.problems.two_waves.TwoWaves.B_many()'],['../classpyoculus_1_1problems_1_1spec__bfield_1_1_s_p_e_c_bfield.html#aa409b994a074b75eb01294c104e89ff4',1,'pyoculus.problems.spec_bfield.SPECBfield.B_many()'],['../classpyoculus_1_1problems_1_1qfm__bfield_1_1_q_f_m_bfield.html#a8ad140cc60046cb463874040290b2c19',1,'pyoculus.problems.qfm_bfield.QFMBfield.B_many()'],['../classpyoculus_1_1problems_1_1bfield__problem_1_1_bfield_problem.html#a57d635bb88a6aa4f69cbdc0c3717b33c',1,'pyoculus.problems.bfield_problem.BfieldProblem.B_many()']]],
+  ['base_5fintegrator_2epy_2',['base_integrator.py',['../base__integrator_8py.html',1,'']]],
+  ['base_5fproblem_2epy_3',['base_problem.py',['../base__problem_8py.html',1,'']]],
+  ['base_5fsolver_2epy_4',['base_solver.py',['../base__solver_8py.html',1,'']]],
+  ['baseintegrator_5',['BaseIntegrator',['../classpyoculus_1_1integrators_1_1base__integrator_1_1_base_integrator.html',1,'pyoculus::integrators::base_integrator']]],
+  ['baseproblem_6',['BaseProblem',['../classpyoculus_1_1problems_1_1base__problem_1_1_base_problem.html',1,'pyoculus::problems::base_problem']]],
+  ['basesolver_7',['BaseSolver',['../classpyoculus_1_1solvers_1_1base__solver_1_1_base_solver.html',1,'pyoculus::solvers::base_solver']]],
+  ['bfield_5fproblem_2epy_8',['bfield_problem.py',['../bfield__problem_8py.html',1,'']]],
+  ['bfieldproblem_9',['BfieldProblem',['../classpyoculus_1_1problems_1_1bfield__problem_1_1_bfield_problem.html',1,'pyoculus::problems::bfield_problem']]]
 ];

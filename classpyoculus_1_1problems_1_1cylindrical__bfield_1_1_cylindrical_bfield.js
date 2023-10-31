@@ -1,5 +1,5 @@
 var classpyoculus_1_1problems_1_1cylindrical__bfield_1_1_cylindrical_bfield =
 [
-    [ "__init__", "classpyoculus_1_1problems_1_1cylindrical__bfield_1_1_cylindrical_bfield.html#aab70a41790fdf67168cbc59b8570047e", null ],
-    [ "f_RZ", "classpyoculus_1_1problems_1_1cylindrical__bfield_1_1_cylindrical_bfield.html#ac18ff8b7fe8bd74db6810f9fbea46370", null ]
+    [ "__init__", "classpyoculus_1_1problems_1_1cylindrical__bfield_1_1_cylindrical_bfield.html#a22ae1964f1657a259d548d9973317cf0", null ],
+    [ "f_RZ", "classpyoculus_1_1problems_1_1cylindrical__bfield_1_1_cylindrical_bfield.html#aab3aace8484f7408d44bcd296399f56d", null ]
 ];

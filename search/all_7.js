@@ -1,22 +1,13 @@
 var searchData=
 [
-  ['get_5fb2_5finterface_0',['get_b2_interface',['../namespacespecpjh.html#a4d5eff8690a6cdac360f43cbd5183685',1,'specpjh']]],
-  ['get_5fbfield_1',['get_bfield',['../namespacespecbfield.html#a6500101df88642d30c2f5a332932c044',1,'specbfield']]],
-  ['get_5fbfield_5fmany_5f1d_2',['get_bfield_many_1d',['../namespacespecbfield.html#a8720a4d29cd5839df49ece0d78756518',1,'specbfield']]],
-  ['get_5fbfield_5ftangent_3',['get_bfield_tangent',['../namespacespecbfield.html#a1c3b145b1b1519677e5a159f5f93f3b0',1,'specbfield']]],
-  ['get_5fbfield_5ftangent_5fmany_5f1d_4',['get_bfield_tangent_many_1d',['../namespacespecbfield.html#ae04879fa5e0aeb595c19c83a4ed5a49a',1,'specbfield']]],
-  ['get_5fcheby_5',['get_cheby',['../namespacespecbasefn.html#a49831e1bf3bfadcc878f497364d002bd',1,'specbasefn']]],
-  ['get_5fcheby_5fd2_6',['get_cheby_d2',['../namespacespecbasefn.html#a600732d82699331810eed1f70baff964',1,'specbasefn']]],
-  ['get_5fcoords_7',['get_coords',['../classpyoculus_1_1problems_1_1interpolate__coordinates_1_1_surfaces_toroidal.html#aeb50eb1ffef5319da73665d2b584c6e0',1,'pyoculus::problems::interpolate_coordinates::SurfacesToroidal']]],
-  ['get_5fcovariant_5ffield_8',['get_covariant_field',['../classpyoculus_1_1problems_1_1spec__pjh_1_1_s_p_e_c_p_j_h.html#aa263b98d6486657bd7c0e6673f44f69b',1,'pyoculus.problems.spec_pjh.SPECPJH.get_covariant_field()'],['../namespacespecpjh.html#a75701a8e555d3c2e5749a6e2fb3a54b5',1,'specpjh::get_covariant_field()']]],
-  ['get_5fmetric_5finterface_9',['get_metric_interface',['../namespacespeccoords.html#ae07755db02041fa96b8e686440b47780',1,'speccoords']]],
-  ['get_5fpjhfield_10',['get_pjhfield',['../namespacespecpjh.html#a1aa07329218a9bfc3d5c6dda9e15583e',1,'specpjh']]],
-  ['get_5fpjhfield_5ftangent_11',['get_pjhfield_tangent',['../namespacespecpjh.html#aa721f885bb3eef78de7dcf0e3194cd77',1,'specpjh']]],
-  ['get_5fsolution_12',['get_solution',['../classpyoculus_1_1integrators_1_1base__integrator_1_1_base_integrator.html#ad8cc2fd62f25bee9fc09154847281f7f',1,'pyoculus::integrators::base_integrator::BaseIntegrator']]],
-  ['get_5fxyz_13',['get_xyz',['../namespacespeccoords.html#a829458c9b45f292a35ca1018d46dabaf',1,'speccoords']]],
-  ['get_5fzernike_14',['get_zernike',['../namespacespecbasefn.html#abfc0986df8800b4c6fccbe198e1e70b5',1,'specbasefn']]],
-  ['get_5fzernike_5fd2_15',['get_zernike_d2',['../namespacespecbasefn.html#abc98e31448defa7c4366f249b37a0a44',1,'specbasefn']]],
-  ['get_5fzernike_5frm_16',['get_zernike_rm',['../namespacespecbasefn.html#a9d89f02b46b6d55c535c7b9634a64e9c',1,'specbasefn']]],
-  ['goldenmean_17',['goldenmean',['../namespacespecconstants.html#a8712b1ffa131fd4b6c75b2f266ceb4b5',1,'specconstants']]],
-  ['greenesresidue_18',['GreenesResidue',['../classpyoculus_1_1solvers_1_1fixed__point_1_1_fixed_point.html#a2a538eacf697cdf19fb05d26f8e94f46',1,'pyoculus::solvers::fixed_point::FixedPoint']]]
+  ['dbdx_0',['dbdx',['../classpyoculus_1_1problems_1_1qfm__bfield_1_1_q_f_m_bfield.html#ae24f5a2847c17d0b50d28cd57c1b9c18',1,'pyoculus.problems.qfm_bfield.QFMBfield.dBdX()'],['../classpyoculus_1_1problems_1_1simsgeo__biot__savart_1_1_simsgeo_biot_savart.html#ab48966f29b9d01f54a395ed271be463d',1,'pyoculus.problems.simsgeo_biot_savart.SimsgeoBiotSavart.dBdX()'],['../classpyoculus_1_1problems_1_1spec__bfield_1_1_s_p_e_c_bfield.html#a9faa78637075e129d153743f55268121',1,'pyoculus.problems.spec_bfield.SPECBfield.dBdX()'],['../classpyoculus_1_1problems_1_1two__waves_1_1_two_waves.html#a93b702540a097f9d4b98a2e07eba3b21',1,'pyoculus.problems.two_waves.TwoWaves.dBdX()'],['../classpyoculus_1_1problems_1_1bfield__problem_1_1_bfield_problem.html#a77f490c49c5c905bc464e6ce19a01ec9',1,'pyoculus.problems.bfield_problem.BfieldProblem.dBdX(self, coords, *args)']]],
+  ['dbdx_5fmany_1',['dbdx_many',['../classpyoculus_1_1problems_1_1bfield__problem_1_1_bfield_problem.html#afc5a6dfad5180dfc7f90877dfab83dc8',1,'pyoculus.problems.bfield_problem.BfieldProblem.dBdX_many()'],['../classpyoculus_1_1problems_1_1qfm__bfield_1_1_q_f_m_bfield.html#a7610112f64553a6545c046c8a8856a9c',1,'pyoculus.problems.qfm_bfield.QFMBfield.dBdX_many()'],['../classpyoculus_1_1problems_1_1spec__bfield_1_1_s_p_e_c_bfield.html#a3a0df76cde0b736278eae31eea8e88e6',1,'pyoculus.problems.spec_bfield.SPECBfield.dBdX_many()'],['../classpyoculus_1_1problems_1_1two__waves_1_1_two_waves.html#acf89141b78215cc6f04c041ee66aa7d7',1,'pyoculus.problems.two_waves.TwoWaves.dBdX_many()']]],
+  ['destroy_5fpjh_2',['destroy_pjh',['../namespacespecpjh.html#a6e69307ec6a4e755796b1746edbb8e88',1,'specpjh']]],
+  ['developers_3',['Developers',['../index.html#autotoc_md7',1,'']]],
+  ['di_4',['di',['../classpyoculus_1_1solvers_1_1lyapunov__exponent_1_1_lyapunov_exponent.html#ab333e198aefa6596d559af3ee9013c69',1,'pyoculus::solvers::lyapunov_exponent::LyapunovExponent']]],
+  ['dic_5',['dic',['../classpyoculus_1_1solvers_1_1lyapunov__exponent_1_1_lyapunov_exponent.html#ad325db93a7e3d03acb5393b7a533cbe3',1,'pyoculus::solvers::lyapunov_exponent::LyapunovExponent']]],
+  ['documentation_6',['Documentation',['../index.html#autotoc_md3',1,'']]],
+  ['dp_7',['dp',['../classpyoculus_1_1problems_1_1spec__pjh_1_1_s_p_e_c_p_j_h.html#ae577c0204bcc3231141a9114a63acec9',1,'pyoculus::problems::spec_pjh::SPECPJH']]],
+  ['dt_8',['dt',['../classpyoculus_1_1solvers_1_1lyapunov__exponent_1_1_lyapunov_exponent.html#ac0b575d238715deede864da450e94a52',1,'pyoculus.solvers.lyapunov_exponent.LyapunovExponent.dt'],['../classpyoculus_1_1solvers_1_1poincare__plot_1_1_poincare_plot.html#a65f70f1896dc943813c7035d7710d68e',1,'pyoculus.solvers.poincare_plot.PoincarePlot.dt']]],
+  ['dzeta_9',['dzeta',['../classpyoculus_1_1solvers_1_1fixed__point_1_1_fixed_point.html#aa5c26f17066861d36bec0cca89570752',1,'pyoculus::solvers::fixed_point::FixedPoint']]]
 ];

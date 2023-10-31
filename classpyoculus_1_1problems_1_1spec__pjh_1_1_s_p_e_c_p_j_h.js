@@ -1,11 +1,11 @@
 var classpyoculus_1_1problems_1_1spec__pjh_1_1_s_p_e_c_p_j_h =
 [
-    [ "__init__", "classpyoculus_1_1problems_1_1spec__pjh_1_1_s_p_e_c_p_j_h.html#ad540e686837de9b439c41fbd4d10a2f2", null ],
-    [ "convert_coords", "classpyoculus_1_1problems_1_1spec__pjh_1_1_s_p_e_c_p_j_h.html#a922965efcb47f16066aca1db1ad0504a", null ],
-    [ "f", "classpyoculus_1_1problems_1_1spec__pjh_1_1_s_p_e_c_p_j_h.html#adf0c07ff64c020426108b4055e7b322a", null ],
-    [ "f_tangent", "classpyoculus_1_1problems_1_1spec__pjh_1_1_s_p_e_c_p_j_h.html#a19965a3a86752c3da923a48322036367", null ],
-    [ "get_covariant_field", "classpyoculus_1_1problems_1_1spec__pjh_1_1_s_p_e_c_p_j_h.html#aa263b98d6486657bd7c0e6673f44f69b", null ],
-    [ "set_PJH_parameters", "classpyoculus_1_1problems_1_1spec__pjh_1_1_s_p_e_c_p_j_h.html#a442d721470b1fbe4e72b41ffd41fcaea", null ],
+    [ "__init__", "classpyoculus_1_1problems_1_1spec__pjh_1_1_s_p_e_c_p_j_h.html#a54d5a72e94a1e35a6c5430e6281a4994", null ],
+    [ "convert_coords", "classpyoculus_1_1problems_1_1spec__pjh_1_1_s_p_e_c_p_j_h.html#a3846df472faed77fb5d5ce4bb159073a", null ],
+    [ "f", "classpyoculus_1_1problems_1_1spec__pjh_1_1_s_p_e_c_p_j_h.html#a6bcfa6972b47cd578d5efb24cdbf81d6", null ],
+    [ "f_tangent", "classpyoculus_1_1problems_1_1spec__pjh_1_1_s_p_e_c_p_j_h.html#ab9efdb70c1f2f319f31751a77a4ae547", null ],
+    [ "get_covariant_field", "classpyoculus_1_1problems_1_1spec__pjh_1_1_s_p_e_c_p_j_h.html#a60324d1702a95d49e91a362cdacd5578", null ],
+    [ "set_PJH_parameters", "classpyoculus_1_1problems_1_1spec__pjh_1_1_s_p_e_c_p_j_h.html#aa6f7f987ccd3767b533b52e6f33ee764", null ],
     [ "dp", "classpyoculus_1_1problems_1_1spec__pjh_1_1_s_p_e_c_p_j_h.html#ae577c0204bcc3231141a9114a63acec9", null ],
     [ "initialized", "classpyoculus_1_1problems_1_1spec__pjh_1_1_s_p_e_c_p_j_h.html#aa4aa984dc21698fbb547f2fa086ebd5b", null ],
     [ "innout", "classpyoculus_1_1problems_1_1spec__pjh_1_1_s_p_e_c_p_j_h.html#a6f7bafc2633a884949e694a1f489a6aa", null ],
