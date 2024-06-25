@@ -50,11 +50,10 @@ setup(
     package_data={"": ["pyoculus/problems/SPECfortran/*.f90"]},
     include_package_data=True,
     install_requires=[
-    "numpy>=2.0",
+    "numpy>1.2.1",
     "scipy",
     "importlib-metadata ; python_version<'3.8'",
     "matplotlib",
     ],
-    ext_modules=[ext1],
-    setup_requires=["wheel", "numpy>=1.21"],
+    ext_modules=[ext1]
 )
