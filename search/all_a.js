@@ -9,7 +9,7 @@ var searchData=
   ['get_5fcheby_6',['get_cheby',['../namespacespecbasefn.html#a49831e1bf3bfadcc878f497364d002bd',1,'specbasefn']]],
   ['get_5fcheby_5fd2_7',['get_cheby_d2',['../namespacespecbasefn.html#a600732d82699331810eed1f70baff964',1,'specbasefn']]],
   ['get_5fcoords_8',['get_coords',['../classpyoculus_1_1problems_1_1interpolate__coordinates_1_1_surfaces_toroidal.html#a430fec038abf67cdd73188fdd901fb10',1,'pyoculus::problems::interpolate_coordinates::SurfacesToroidal']]],
-  ['get_5fcovariant_5ffield_9',['get_covariant_field',['../namespacespecpjh.html#a75701a8e555d3c2e5749a6e2fb3a54b5',1,'specpjh::get_covariant_field()'],['../classpyoculus_1_1problems_1_1spec__pjh_1_1_s_p_e_c_p_j_h.html#a60324d1702a95d49e91a362cdacd5578',1,'pyoculus.problems.spec_pjh.SPECPJH.get_covariant_field()']]],
+  ['get_5fcovariant_5ffield_9',['get_covariant_field',['../classpyoculus_1_1problems_1_1spec__pjh_1_1_s_p_e_c_p_j_h.html#a60324d1702a95d49e91a362cdacd5578',1,'pyoculus.problems.spec_pjh.SPECPJH.get_covariant_field()'],['../namespacespecpjh.html#a75701a8e555d3c2e5749a6e2fb3a54b5',1,'specpjh::get_covariant_field()']]],
   ['get_5fmetric_5finterface_10',['get_metric_interface',['../namespacespeccoords.html#ae07755db02041fa96b8e686440b47780',1,'speccoords']]],
   ['get_5fpjhfield_11',['get_pjhfield',['../namespacespecpjh.html#a1aa07329218a9bfc3d5c6dda9e15583e',1,'specpjh']]],
   ['get_5fpjhfield_5ftangent_12',['get_pjhfield_tangent',['../namespacespecpjh.html#aa721f885bb3eef78de7dcf0e3194cd77',1,'specpjh']]],

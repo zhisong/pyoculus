@@ -28,6 +28,7 @@ var searchData=
   ['pyoculus_3a_3asolvers_3a_3afixed_5fpoint_25',['fixed_point',['../namespacepyoculus_1_1solvers_1_1fixed__point.html',1,'pyoculus::solvers']]],
   ['pyoculus_3a_3asolvers_3a_3aflux_5fsurface_5fgr_26',['flux_surface_gr',['../namespacepyoculus_1_1solvers_1_1flux__surface__gr.html',1,'pyoculus::solvers']]],
   ['pyoculus_3a_3asolvers_3a_3alyapunov_5fexponent_27',['lyapunov_exponent',['../namespacepyoculus_1_1solvers_1_1lyapunov__exponent.html',1,'pyoculus::solvers']]],
-  ['pyoculus_3a_3asolvers_3a_3apoincare_5fplot_28',['poincare_plot',['../namespacepyoculus_1_1solvers_1_1poincare__plot.html',1,'pyoculus::solvers']]],
-  ['pyoculus_3a_3asolvers_3a_3aqfm_29',['qfm',['../namespacepyoculus_1_1solvers_1_1qfm.html',1,'pyoculus::solvers']]]
+  ['pyoculus_3a_3asolvers_3a_3amanifolds_28',['manifolds',['../namespacepyoculus_1_1solvers_1_1manifolds.html',1,'pyoculus::solvers']]],
+  ['pyoculus_3a_3asolvers_3a_3apoincare_5fplot_29',['poincare_plot',['../namespacepyoculus_1_1solvers_1_1poincare__plot.html',1,'pyoculus::solvers']]],
+  ['pyoculus_3a_3asolvers_3a_3aqfm_30',['qfm',['../namespacepyoculus_1_1solvers_1_1qfm.html',1,'pyoculus::solvers']]]
 ];

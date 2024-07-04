@@ -1,5 +1,6 @@
 var NAVTREEINDEX3 =
 {
+"namespacespecconstants.html#aeaf5aee47db3b1b7b41fabeb51f41355":[2,0,3,13],
 "namespacespecconstants.html#aebceab658607740f018b0456e6a5b1ed":[2,0,3,17],
 "namespacespecconstants.html#af4609c37c684638af39fe024c640c1bf":[2,0,3,22],
 "namespacespecconstants.html#afb7f945629e23fb17338af7caaf8dbe4":[2,0,3,11],
