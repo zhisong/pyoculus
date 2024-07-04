@@ -33,7 +33,7 @@ with open("README.md", "r") as fh:
 
 setup(
     name="pyoculus",
-    version='0.3.1',
+    version='0.3.2',
     description="A Python version of Oculus - The eye into the chaos: a comprehensive magnetic field diagnostic package for non-integrable, toroidal magnetic fields",
     long_description=long_description,
     long_description_content_type="text/markdown",
@@ -50,11 +50,10 @@ setup(
     package_data={"": ["pyoculus/problems/SPECfortran/*.f90"]},
     include_package_data=True,
     install_requires=[
-    "numpy",
+    "numpy>1.21.1",
     "scipy",
     "importlib-metadata ; python_version<'3.8'",
     "matplotlib",
     ],
-    ext_modules=[ext1],
-    setup_requires=["wheel"],
+    ext_modules=[ext1]
 )
