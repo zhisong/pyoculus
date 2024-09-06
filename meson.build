@@ -5,7 +5,6 @@ add_languages('fortran', native: false)
 
 fortran_compiler = meson.get_compiler('fortran')
 
-add_project_arguments('-DFFLAGS=-ffree-line-length-none', language : 'c')
 
 f90flags = []
 if fortran_compiler.get_id() == 'gcc'
@@ -13,33 +12,9 @@ if fortran_compiler.get_id() == 'gcc'
 endif
 
 f90flags += '-O3'
-
+add_project_arguments(f90flags, language: 'fortran')
 
 py3 = import('python').find_installation(pure: false)
-py3_dep = py3.dependency()
-
-incdir_numpy = run_command(
-    py3, '-c',
-    'import numpy; print(numpy.get_include())',
-    check: true,
-).stdout().strip()
-
-inc_np = include_directories(incdir_numpy)
-
-incdir_f2py = incdir_numpy / '..' / '..' / 'f2py' / 'src'
-inc_f2py = include_directories(incdir_f2py)
-fortranobject_c = incdir_f2py / 'fortranobject.c'
-
-# Share this object across multiple modules.
-fortranobject_lib = static_library('_fortranobject',
-  fortranobject_c,
-  dependencies: py3_dep,
-  include_directories: [inc_np, inc_f2py],
-)
-fortranobject_dep = declare_dependency(
-  link_with: fortranobject_lib,
-  include_directories: [inc_np, inc_f2py],
-)
 
 sourcefiles = files(
         'pyoculus/problems/SPECfortran/pyvariables.f90',
@@ -49,22 +24,31 @@ sourcefiles = files(
         'pyoculus/problems/SPECfortran/pyPJH.f90'
 )
 
-compiled_fortran = custom_target('pyoculus_spec_fortran_module',
+python_version = py3.version().split('.')
+python_major = python_version[0]
+python_minor = python_version[1]
+architecture = host_machine.cpu_family()
+system = host_machine.system()
+
+# Construct the output filename
+### assuming gnu compiler, this gets too unmaintaiable if I make frankenlogic to get the filename
+module_name = 'pyoculus_spec_fortran_module'
+output_ext = 'cpython-' + python_major + python_minor + '-' + architecture + '-' + system + '-gnu.so'
+
+
+fortran_sharedobject = custom_target(module_name,
   input : sourcefiles,
-  output: 'pyoculus_spec_fortran_modulemodule.c',
-  command : [py3, '-m', 'numpy.f2py',  '-m', 'pyoculus_spec_fortran_module', '@INPUT@'],
+  output : module_name +'.'+ output_ext,
+  command : [py3, '-m', 'numpy.f2py', '-c', '-m', 'pyoculus_spec_fortran_module', '@INPUT@', '--opt=' + ' '.join(f90flags)],
   install : true,
   install_dir : py3.get_install_dir()
 )
 
-py3.extension_module('pyoculus_spec_fortran_module', 
-                    sourcefiles, compiled_fortran, 
-                    dependencies: fortranobject_dep, 
-                    install: true, 
-                    fortran_args: f90flags)
-
 py3.install_sources(
            'pyoculus/__init__.py',
+            subdir: 'pyoculus' 
+            )
+py3.install_sources(
            'pyoculus/problems/m3dc1_bfield.py',
            'pyoculus/problems/cylindrical_problem.py',
            'pyoculus/problems/interpolate_coordinates.py',
@@ -81,10 +65,16 @@ py3.install_sources(
            'pyoculus/problems/bfield_problem.py',
            'pyoculus/problems/toroidal_problem.py',
            'pyoculus/problems/cartesian_bfield.py',
+            subdir: 'pyoculus/problems'
+            )
+py3.install_sources(
            'pyoculus/integrators/sdc_integrator.py',
            'pyoculus/integrators/base_integrator.py',
            'pyoculus/integrators/__init__.py',
            'pyoculus/integrators/rk_integrator.py',
+            subdir: 'pyoculus/integrators' 
+            )
+py3.install_sources(
            'pyoculus/solvers/__init__.py',
            'pyoculus/solvers/flux_surface_gr.py',
            'pyoculus/solvers/manifolds.py',
@@ -93,8 +83,10 @@ py3.install_sources(
            'pyoculus/solvers/lyapunov_exponent.py',
            'pyoculus/solvers/poincare_plot.py',
            'pyoculus/solvers/fixed_point.py',
+            subdir: 'pyoculus/solvers' 
+            )
+py3.install_sources(
            'pyoculus/irrationals/continued_fraction.py',
            'pyoculus/irrationals/__init__.py',
-            subdir: 'pyoculus' 
+            subdir: 'pyoculus/irrationals' 
 )
-
