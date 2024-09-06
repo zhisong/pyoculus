@@ -29,11 +29,14 @@ python_major = python_version[0]
 python_minor = python_version[1]
 architecture = host_machine.cpu_family()
 system = host_machine.system()
+if system == 'linux'
+  system = 'linux-gnu'
+endif
 
 # Construct the output filename
 ### assuming gnu compiler, this gets too unmaintaiable if I make frankenlogic to get the filename
 module_name = 'pyoculus_spec_fortran_module'
-output_ext = 'cpython-' + python_major + python_minor + '-' + architecture + '-' + system + '-gnu.so'
+output_ext = 'cpython-' + python_major + python_minor + '-' + architecture + '-' + system + '.so'
 
 
 fortran_sharedobject = custom_target(module_name,
