@@ -1,8 +1,39 @@
 [build-system]
-requires = ["setuptools",
-            "wheel", 
-            "numpy>=2.0.0; python_version > '3.8'",
-            "oldest-supported-numpy; python_version <= '3.8'"]
-build-backend = "setuptools.build_meta"
+requires = [
+    "meson",
+    "meson-python", 
+    "ninja", 
+    "numpy>=2.0; python_version>'3.8'",
+    "oldest-supported-numpy; python_version<='3.8'",
+]
+build-backend = "mesonpy"
 
+[project]
+name="pyoculus"
+version='0.3.2'
+description="A Python version of Oculus - The eye into the chaos: a comprehensive magnetic field diagnostic package for non-integrable, toroidal magnetic fields"
+readme = "README.md"
+classifiers=[
+    "Development Status :: 3 - Alpha",
+    "License :: OSI Approved :: MIT License ",
+    "Programming Language :: Python :: 3",
+    "Topic :: Scientific/Engineering",
+]
 
+authors = [
+    { name = "Zhisong Zhu"},
+    { name = "Arunav Kumar"},
+    { name = "Stuart Hudson"},
+    { name = "Christopher Berg Smiet", email = "christopher.smiet@epfl.ch" },
+    { name = "Ludovic Rais" }
+]
+maintainers = [
+    { name = "Zhisong Zhu"},
+    { name = "Christopher Berg Smiet", email = "christopher.smiet@epfl.ch" },
+]
+license = {text = "MIT"}
+dependencies=[
+    "numpy>1.21.1",
+    "scipy",
+    "matplotlib",
+    ]
