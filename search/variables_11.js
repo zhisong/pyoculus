@@ -8,7 +8,7 @@ var searchData=
   ['third_5',['third',['../namespacespecconstants.html#a6de0cac6297cf9c54da354c3eca5eecf',1,'specconstants']]],
   ['thousand_6',['thousand',['../namespacespecconstants.html#a03b7a16f05cbb65f677ebdc6ce6a8ed6',1,'specconstants']]],
   ['three_7',['three',['../namespacespecconstants.html#a48f56a764cbd16a31de735dcc1e52f38',1,'specconstants']]],
-  ['tsn_8',['tsn',['../classpyoculus_1_1problems_1_1interpolate__coordinates_1_1_surfaces_toroidal.html#ad874f6fa56536bf060d85d15b5a5c195',1,'pyoculus::problems::interpolate_coordinates::SurfacesToroidal']]],
+  ['tsn_8',['tsn',['../classpyoculus_1_1problems_1_1interpolate__coordinates_1_1_surfaces_toroidal.html#ad874f6fa56536bf060d85d15b5a5c195',1,'pyoculus.problems.interpolate_coordinates.SurfacesToroidal.tsn'],['../classpyoculus_1_1problems_1_1interpolate__coordinates_1_1_surfaces_toroidal.html#a2c7c225d790d6c99f81fb0c9b65ce6fe',1,'pyoculus.problems.interpolate_coordinates.SurfacesToroidal.tsn']]],
   ['twelve_9',['twelve',['../namespacespecconstants.html#afdc97e03af4dc811fd8610b0dc23107e',1,'specconstants']]],
   ['two_10',['two',['../namespacespecconstants.html#af4609c37c684638af39fe024c640c1bf',1,'specconstants']]]
 ];

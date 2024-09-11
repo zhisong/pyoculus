@@ -54,9 +54,9 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "____init_____8py.html",
-"classpyoculus_1_1problems_1_1spec__bfield_1_1_s_p_e_c_bfield.html",
-"classpyoculus_1_1solvers_1_1lyapunov__exponent_1_1_lyapunov_exponent.html#a819d0eb5a0e40349148cb24643bd31b3",
-"namespacespecconstants.html#aeaf5aee47db3b1b7b41fabeb51f41355"
+"classpyoculus_1_1problems_1_1simsgeo__biot__savart_1_1_simsgeo_biot_savart.html#ab48966f29b9d01f54a395ed271be463d",
+"classpyoculus_1_1solvers_1_1lyapunov__exponent_1_1_lyapunov_exponent.html#a4ea5c720a703bccda4e5be977df50e59",
+"namespacespecconstants.html#ad202492d8b1de731246cf13bd043dc6d"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

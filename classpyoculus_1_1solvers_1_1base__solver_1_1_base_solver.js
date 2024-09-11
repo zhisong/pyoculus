@@ -8,5 +8,5 @@ var classpyoculus_1_1solvers_1_1base__solver_1_1_base_solver =
     [ "_integrator_type", "classpyoculus_1_1solvers_1_1base__solver_1_1_base_solver.html#a2c367219846d18d72abad7b96a1cfa3e", null ],
     [ "_params", "classpyoculus_1_1solvers_1_1base__solver_1_1_base_solver.html#aaae5385e11fa448fdf7fc59e84b88eaf", null ],
     [ "_problem", "classpyoculus_1_1solvers_1_1base__solver_1_1_base_solver.html#a13603c9c22541e27bf8ba591e92f1099", null ],
-    [ "successful", "classpyoculus_1_1solvers_1_1base__solver_1_1_base_solver.html#a0aac56774ed3f8cd67e1d01d0e8427e0", null ]
+    [ "successful", "classpyoculus_1_1solvers_1_1base__solver_1_1_base_solver.html#ae56b004862db0c252fccca81f43202ef", null ]
 ];

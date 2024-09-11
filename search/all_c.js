@@ -1,7 +1,7 @@
 var searchData=
 [
   ['ic_0',['ic',['../classpyoculus_1_1solvers_1_1lyapunov__exponent_1_1_lyapunov_exponent.html#a819d0eb5a0e40349148cb24643bd31b3',1,'pyoculus::solvers::lyapunov_exponent::LyapunovExponent']]],
-  ['igeometry_1',['Igeometry',['../classpyoculus_1_1problems_1_1spec__bfield_1_1_s_p_e_c_bfield.html#aff9fde124230f4e80d4a837aa243206a',1,'pyoculus.problems.spec_bfield.SPECBfield.Igeometry'],['../classpyoculus_1_1problems_1_1spec__problem_1_1_s_p_e_c_problem.html#a44d55781ac3f5eaf95a58d34bdaf927c',1,'pyoculus.problems.spec_problem.SPECProblem.Igeometry']]],
+  ['igeometry_1',['Igeometry',['../classpyoculus_1_1problems_1_1spec__bfield_1_1_s_p_e_c_bfield.html#abff70a879a780d33465147ca737e8e86',1,'pyoculus.problems.spec_bfield.SPECBfield.Igeometry'],['../classpyoculus_1_1problems_1_1spec__problem_1_1_s_p_e_c_problem.html#a44d55781ac3f5eaf95a58d34bdaf927c',1,'pyoculus.problems.spec_problem.SPECProblem.Igeometry']]],
   ['igeometry_2',['igeometry',['../namespacespecvariables.html#a3d75c18bd50625e4c6d2fc909f03daf3',1,'specvariables']]],
   ['ile_3',['ile',['../classpyoculus_1_1solvers_1_1lyapunov__exponent_1_1_lyapunov_exponent.html#a70e3e3c69e51d322a5276aa9d37a8a09',1,'pyoculus::solvers::lyapunov_exponent::LyapunovExponent']]],
   ['im_4',['im',['../namespacespecvariables.html#a272ea0f9d6d9d89c69a944669a0f8bec',1,'specvariables']]],
@@ -10,7 +10,7 @@ var searchData=
   ['in1_7',['in1',['../namespacespecvariables.html#a7e9eef020bbbb683d41e3816a7e1a794',1,'specvariables']]],
   ['init_5fpjh_8',['init_pjh',['../namespacespecpjh.html#aa11c5ee3a60b1fa911ead2e05a89ff59',1,'specpjh']]],
   ['initial_20p_5ftheta_20and_20plusminus_9',['Hint for choosing the initial p_theta and plusminus',['../classpyoculus_1_1problems_1_1spec__pjh_1_1_s_p_e_c_p_j_h.html#autotoc_md16',1,'']]],
-  ['initialized_10',['initialized',['../classpyoculus_1_1problems_1_1spec__pjh_1_1_s_p_e_c_p_j_h.html#aa4aa984dc21698fbb547f2fa086ebd5b',1,'pyoculus::problems::spec_pjh::SPECPJH']]],
+  ['initialized_10',['initialized',['../classpyoculus_1_1problems_1_1spec__pjh_1_1_s_p_e_c_p_j_h.html#ac8f9277a0166236bee8d48d427179a31',1,'pyoculus::problems::spec_pjh::SPECPJH']]],
   ['innout_11',['innout',['../classpyoculus_1_1problems_1_1spec__pjh_1_1_s_p_e_c_p_j_h.html#a6f7bafc2633a884949e694a1f489a6aa',1,'pyoculus::problems::spec_pjh::SPECPJH']]],
   ['installation_12',['Installation',['../index.html#autotoc_md1',1,'']]],
   ['integrate_13',['integrate',['../classpyoculus_1_1integrators_1_1base__integrator_1_1_base_integrator.html#a08e91a720755b55392913368edc1c664',1,'pyoculus.integrators.base_integrator.BaseIntegrator.integrate()'],['../classpyoculus_1_1integrators_1_1rk__integrator_1_1_r_k_integrator.html#abdea372b16b3bbe7194192091acfffd3',1,'pyoculus.integrators.rk_integrator.RKIntegrator.integrate(self, tend)']]],
@@ -24,7 +24,7 @@ var searchData=
   ['irfft2d_21',['irfft2D',['../namespacepyoculus_1_1solvers_1_1qfm.html#afd693c788b7b1f5283defd2b135af230',1,'pyoculus::solvers::qfm']]],
   ['is_5fsuccessful_22',['is_successful',['../classpyoculus_1_1solvers_1_1base__solver_1_1_base_solver.html#a9082693808bb048887d07aab314eaa11',1,'pyoculus::solvers::base_solver::BaseSolver']]],
   ['is_5ftheta_5ffixed_23',['is_theta_fixed',['../classpyoculus_1_1solvers_1_1fixed__point_1_1_fixed_point.html#ad9575765c0d051dcf8b92fb28407b3fd',1,'pyoculus::solvers::fixed_point::FixedPoint']]],
-  ['is_5fz_5ffixed_24',['is_Z_fixed',['../classpyoculus_1_1solvers_1_1fixed__point_1_1_fixed_point.html#a915a498e96c5adf325e89d12e048586b',1,'pyoculus::solvers::fixed_point::FixedPoint']]],
+  ['is_5fz_5ffixed_24',['is_Z_fixed',['../classpyoculus_1_1solvers_1_1fixed__point_1_1_fixed_point.html#ad14fda1fd59cf2e463460c4f389a2833',1,'pyoculus::solvers::fixed_point::FixedPoint']]],
   ['ivol_25',['ivol',['../classpyoculus_1_1problems_1_1spec__problem_1_1_s_p_e_c_problem.html#a0066d8c95192eb444cbf4ef733ba0caa',1,'pyoculus.problems.spec_problem.SPECProblem.ivol'],['../namespacespecvariables.html#a9ed1a162938b818c1f1ea89fcb7c2e74',1,'specvariables::ivol']]],
   ['izbc_26',['izbc',['../namespacespecvariables.html#a604d68bd6b13859d249f120c1973bfed',1,'specvariables']]],
   ['izbs_27',['izbs',['../namespacespecvariables.html#aa220bdc033244a77592ccf4ccec7160a',1,'specvariables']]]

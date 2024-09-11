@@ -16,7 +16,7 @@ var searchData=
   ['toroidal_5fproblem_2epy_13',['toroidal_problem.py',['../toroidal__problem_8py.html',1,'']]],
   ['toroidalbfield_14',['ToroidalBfield',['../classpyoculus_1_1problems_1_1toroidal__bfield_1_1_toroidal_bfield.html',1,'pyoculus::problems::toroidal_bfield']]],
   ['toroidalproblem_15',['ToroidalProblem',['../classpyoculus_1_1problems_1_1toroidal__problem_1_1_toroidal_problem.html',1,'pyoculus::problems::toroidal_problem']]],
-  ['tsn_16',['tsn',['../classpyoculus_1_1problems_1_1interpolate__coordinates_1_1_surfaces_toroidal.html#ad874f6fa56536bf060d85d15b5a5c195',1,'pyoculus::problems::interpolate_coordinates::SurfacesToroidal']]],
+  ['tsn_16',['tsn',['../classpyoculus_1_1problems_1_1interpolate__coordinates_1_1_surfaces_toroidal.html#ad874f6fa56536bf060d85d15b5a5c195',1,'pyoculus.problems.interpolate_coordinates.SurfacesToroidal.tsn'],['../classpyoculus_1_1problems_1_1interpolate__coordinates_1_1_surfaces_toroidal.html#a2c7c225d790d6c99f81fb0c9b65ce6fe',1,'pyoculus.problems.interpolate_coordinates.SurfacesToroidal.tsn']]],
   ['twelve_17',['twelve',['../namespacespecconstants.html#afdc97e03af4dc811fd8610b0dc23107e',1,'specconstants']]],
   ['two_18',['two',['../namespacespecconstants.html#af4609c37c684638af39fe024c640c1bf',1,'specconstants']]],
   ['two_20variables_19',['General ODEs with two variables',['../classpyoculus_1_1problems_1_1base__problem_1_1_base_problem.html#autotoc_md12',1,'']]],
