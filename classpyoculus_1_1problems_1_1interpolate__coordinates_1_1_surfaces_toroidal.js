@@ -24,7 +24,6 @@ var classpyoculus_1_1problems_1_1interpolate__coordinates_1_1_surfaces_toroidal 
     [ "_tcn_d1", "classpyoculus_1_1problems_1_1interpolate__coordinates_1_1_surfaces_toroidal.html#a7d05aea8630b5dde625046a52be4088d", null ],
     [ "_tcn_d2", "classpyoculus_1_1problems_1_1interpolate__coordinates_1_1_surfaces_toroidal.html#a78839761fc5bf1914732394094fbc77c", null ],
     [ "_tcn_int", "classpyoculus_1_1problems_1_1interpolate__coordinates_1_1_surfaces_toroidal.html#a7b7af31c94828517f71b32a810e20c52", null ],
-    [ "_tcn_int", "classpyoculus_1_1problems_1_1interpolate__coordinates_1_1_surfaces_toroidal.html#acfbbd1ac808e28cf86dbb6aae797b941", null ],
     [ "_tsn_d1", "classpyoculus_1_1problems_1_1interpolate__coordinates_1_1_surfaces_toroidal.html#a0a5e3b90d3252ff53c34b818c00aea8c", null ],
     [ "_tsn_d2", "classpyoculus_1_1problems_1_1interpolate__coordinates_1_1_surfaces_toroidal.html#af1a08488bd0dc2cda8776dfba75483f3", null ],
     [ "_tsn_int", "classpyoculus_1_1problems_1_1interpolate__coordinates_1_1_surfaces_toroidal.html#a4e6e7b3d5ce0ebb212771a62e3857d2a", null ],
@@ -37,6 +36,5 @@ var classpyoculus_1_1problems_1_1interpolate__coordinates_1_1_surfaces_toroidal 
     [ "ssn", "classpyoculus_1_1problems_1_1interpolate__coordinates_1_1_surfaces_toroidal.html#a5157f9180ad363df81c162bfb95647f3", null ],
     [ "sym", "classpyoculus_1_1problems_1_1interpolate__coordinates_1_1_surfaces_toroidal.html#a97bc7d210a2e5a1e920479ca805f01f1", null ],
     [ "tcn", "classpyoculus_1_1problems_1_1interpolate__coordinates_1_1_surfaces_toroidal.html#a58ed47bc7b1055e6312ebae7478ce61f", null ],
-    [ "tsn", "classpyoculus_1_1problems_1_1interpolate__coordinates_1_1_surfaces_toroidal.html#ad874f6fa56536bf060d85d15b5a5c195", null ],
-    [ "tsn", "classpyoculus_1_1problems_1_1interpolate__coordinates_1_1_surfaces_toroidal.html#a2c7c225d790d6c99f81fb0c9b65ce6fe", null ]
+    [ "tsn", "classpyoculus_1_1problems_1_1interpolate__coordinates_1_1_surfaces_toroidal.html#ad874f6fa56536bf060d85d15b5a5c195", null ]
 ];
