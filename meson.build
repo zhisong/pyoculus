@@ -4,17 +4,33 @@ project('pyoculus', 'c', version : '0.4.01',  meson_version: '>= 0.64.0',
 add_languages('fortran', native: false)
 
 fortran_compiler = meson.get_compiler('fortran')
+message('fortran compiler id is ' + fortran_compiler.get_id())
 
 
 f90flags = []
 if fortran_compiler.get_id() == 'gcc'
     f90flags += '-ffree-line-length-none'
+    message('adding -ffree-line-length-flag')
 endif
 
 f90flags += '-O3'
-add_project_arguments(f90flags, language: 'fortran')
+add_global_arguments(f90flags, language: 'fortran')
+    
 
 py3 = import('python').find_installation(pure: false)
+py_dep = py3.dependency()
+
+incdir_numpy = run_command(py3,
+  ['-c', 'import os; os.chdir(".."); import numpy; print(numpy.get_include())'],
+  check : true
+).stdout().strip()
+
+incdir_f2py = run_command(py3,
+    ['-c', 'import os; os.chdir(".."); import numpy.f2py; print(numpy.f2py.get_include())'],
+    check : true
+).stdout().strip()
+
+inc_np = include_directories(incdir_numpy, incdir_f2py)
 
 sourcefiles = files(
         'pyoculus/problems/SPECfortran/pyvariables.f90',
@@ -24,27 +40,21 @@ sourcefiles = files(
         'pyoculus/problems/SPECfortran/pyPJH.f90'
 )
 
-python_version = py3.version().split('.')
-python_major = python_version[0]
-python_minor = python_version[1]
-architecture = host_machine.cpu_family()
-system = host_machine.system()
-if system == 'linux'
-  system = 'linux-gnu'
-endif
-
-# Construct the output filename
-### assuming gnu compiler, this gets too unmaintaiable if I make frankenlogic to get the filename
 module_name = 'pyoculus_spec_fortran_module'
-output_ext = 'cpython-' + python_major + python_minor + '-' + architecture + '-' + system + '.so'
 
 
-fortran_sharedobject = custom_target(module_name,
-  input : sourcefiles,
-  output : module_name +'.'+ output_ext,
-  command : [py3, '-m', 'numpy.f2py', '-c', '-m', 'pyoculus_spec_fortran_module', '@INPUT@', '--opt=' + ' '.join(f90flags)],
-  install : true,
-  install_dir : py3.get_install_dir()
+pyoculus_spec_fortran_module_source = custom_target('pyoculus_spec_fortran_module.c',
+  input : sourcefiles,  
+  output : [module_name+'module.c', module_name+'-f2pywrappers2.f90'],
+  command : [py3, '-m', 'numpy.f2py', '@INPUT@', '-m', module_name, '--lower']
+)
+
+py3.extension_module(module_name, 
+  [sourcefiles, pyoculus_spec_fortran_module_source],
+  incdir_f2py / 'fortranobject.c',
+  include_directories: inc_np,
+  dependencies : py_dep,
+  install : true
 )
 
 py3.install_sources(
